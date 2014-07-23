@@ -120,47 +120,21 @@
 
 <div class="ui-page page3 <%= r=='info' ? 'js-active':'' %>">
     <div class="ui-page-content">
-        <div class="ui-tab js-active" id="page3-tab1" role="tabpanel">
-            <div class="page3-tab1-top">
-                <!-- 买过 -->
-                <p class="tab-info">您买过这些酒</p>
-                <ul class="jiu-li">
-                    <li class="jiu-single">
-                        <img src="images/jiu.jpg" alt="">
-                        <div class="jiu-info">
-                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
-                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
-                            <p class="jiu-price">单价: ￥<span>128</span></p>
-                        </div>
-                        <label class="to-right" for="">></label>
-                    </li>
-                    <li class="jiu-single">
-                        <img src="images/jiu.jpg" alt="">
-                        <div class="jiu-info">
-                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
-                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
-                            <p class="jiu-price">单价: ￥<span>128</span></p>
-                        </div>
-                        <label class="to-right" for="">></label>
-                    </li>
-                </ul>
-            </div>
-        </div>
 
-        <div class="ui-tab" id="page3-tab2" role="tabpanel">
+        <div class="ui-tab js-active" id="page3-tab2" role="tabpanel">
             <div class="page3-tab2-top">
                  <!-- 券 -->
                 <p class="quan-title quan-title-f">现金券</p>
                 <div class="quan-wrapper quan-xian">
                     <div class="quan">
-                        <span class="quan-num" id="countup" data-from="0" data-to="342">342</span>
+                        <span class="quan-num" id="my_cash_num" data-from="0" data-to="0">0</span>
                         <span class="quan-yuan">元</span>
                         <button class="ui-button ui-info">申请提现</button>
                         <a class="quan-link" href="#">推荐给更多好友申请更多现金券>></a>
                     </div>
                 </div>
             </div>
-            <div class="page3-tab2-bot">
+<!--             <div class="page3-tab2-bot">
                 <p class="quan-title">代金券</p>
                 <div class="quan-wrapper quan-dai">
                     <div class="quan">
@@ -169,16 +143,29 @@
                         <a class="quan-link" href="#">查看如何获取更多代金券>></a>
                     </div>
                 </div>
-            </div>
+            </div> -->
         </div>
 
         <div class="ui-tab" id="page3-tab3" role="tabpanel">
             <!-- 地址 -->
-        </div>
+            <p class="tab-info">用过的地址</p>
+            <ul class="j-address my-address-list">
+                <li class="j-single j-address-item j-default" style="display:none"  data-toggle="dialog" data-target="#addressActionsheet" data-type="actionsheet" data-effect="from-bottom" data-cache="false">
+                    <div class="j-info">
+                        <p class="j-detail"><span class="j-province"></span><span class="j-shi"></span><span class="j-qu"></span><span class="j-lu"></span></p>
+                        <p class="j-detail"><span class='j-name'></span><span class="j-tel"></span></p>
+                    </div>
+                    <span class="list-right-forward vertical-middle ui-icon ion-ios7-arrow-forward" style="display:table-cell;vertical-align:middle"></span>                    
+                </li>                
+                <li class="j-single j-add">
+                    <div class="j-info">
+                        <p>添加地址</p>
+                    </div>
+                    <span class="list-right-forward vertical-middle ui-icon ion-ios7-arrow-forward" style="display:table-cell;vertical-align:middle"></span>
+                </li>
+            </ul>
+        </div>            
 
-        <div class="ui-tab" id="page3-tab4" role="tabpanel">
-            <!-- 我 -->
-        </div>
     </div>
 </div>
 
@@ -187,7 +174,7 @@
         <div class="ui-tab js-active" id="page4-tab1" role="tabpanel">
             <!-- 地址 -->
             <p class="tab-info">配送地址</p>
-            <ul class="j-address">
+            <ul class="j-address cart-address-list">
                 <!-- 选择的地址 -->
                 <li class="j-single j-address-item" style="display:none">
                     <div class="j-info">
@@ -249,6 +236,15 @@
     </div>
 </div>
 
+<div id="addressActionsheet" role="dialog" class="ui-dialog" aria-labelledby="addressActionsheetLable" aria-hidden="true">
+    <div class="js-dialog-content ui-actionsheet">
+        <ul>
+            <li role="button" data-action="setDefault" data-dismiss="dialog">设为默认</li>
+            <li role="button" data-action="delete" data-dismiss="dialog">删除地址</li>
+        </ul>
+        <a role="button" data-dismiss="dialog" class="ui-actionsheet-cancel">取消</a>
+    </div>
+</div>
 <!-- <div class="popout-container" id="changeCartNumActionsheet" style="display:none">
     <div class="popout-content">
         <input type="number" value='1'>
