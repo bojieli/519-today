@@ -307,7 +307,7 @@ require([
             }
             var addr = r.pop();
             while(addr){
-                $(".j-address").prepend(addr);
+                $(".cart-address-list").prepend(addr);
                 addr = r.pop();
             }
             $li.remove();
@@ -329,7 +329,7 @@ require([
             }
             addr = r.pop();
             while(addr){
-                $(".j-address").prepend(addr);
+                $(".my-address-list").prepend(addr);
                 addr = r.pop();
             }
             $myli.remove();
