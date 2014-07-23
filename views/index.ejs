@@ -1,0 +1,263 @@
+<% include layoutTop %>
+
+<div class="ui-top-bar">    
+    <div class="ui-tab page1  <%= r=='home' ? 'js-active':'' %>">
+        <ul class="ui-groupbutton" role="tablist">
+            <li class="ui-button js-active" data-toggle="tab" data-target="#page1-tab1" aria-controls="tab1" role="tab">推荐</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab2" role="tab">白酒</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab3" role="tab">红酒</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab4" role="tab">啤酒</li>
+        </ul>
+    </div>
+    <div class="ui-tab page2 <%= r=='shopcart' ? 'js-active':'' %>">
+        <span class="top-bar-title">购物车</span>
+    </div>
+    <div class="ui-tab page3 <%= r=='info' ? 'js-active':'' %>">
+        <ul class="ui-groupbutton" role="tablist">
+            <li class="ui-button js-active" data-toggle="tab" data-target="#page3-tab1" aria-controls="tab1" role="tab">买过</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page3-tab2" aria-controls="tab2" role="tab">券</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page3-tab3" aria-controls="tab3" role="tab">地址</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page3-tab4" aria-controls="tab4" role="tab">我</li>
+        </ul>
+    </div>
+    <div class="ui-tab page4">
+            <a class="f-left my-top-bar" data-toggle="tab" data-target=".page2" role="button">
+                <span class="ui-icon ion-ios7-arrow-back"></span>
+                <span class="ui-label">购物车</span>
+            </a> 
+    </div>    
+</div>
+
+<div class="ui-bottom-bar js-no-bounce" role="toolbar"> <!-- tabindex="0" 在android上会触发一个高亮边框 -->
+    <!-- 尾部内容 -->
+    <a class="ui-bottom-bar-button  <%= r=='home' ? 'js-active':'' %> goto-page1" role="button" data-toggle="tab" data-target=".page1">
+        <span class="ui-icon ion-home"></span>
+        <span class="ui-label">首页</span>
+    </a>
+    <a class="ui-bottom-bar-button <%= r=='shopcart' ? 'js-active':'' %> go-to-page2" role="button" data-toggle="tab" data-target=".page2">
+        <span class="ui-icon ion-ios7-cart-outline"></span>
+        <span class="ui-label">购物车</span>
+    </a>
+    <a class="ui-bottom-bar-button <%= r=='info' ? 'js-active':'' %>" role="button" data-toggle="tab" data-target=".page3">
+        <span class="ui-icon ion-ios7-person-outline"></span>
+        <span class="ui-label">我的</span>
+    </a>
+    <!-- /尾部内容-->
+</div>
+
+
+<!-- 一个App可以多个page -->
+<div class="ui-page page1 <%= r=='home' ? 'js-active':'' %>">
+
+    <div class="ui-page-content">
+        <!-- 主体内容 -->
+        <div class="ui-tab js-active" id="page1-tab1" role="tabpanel">
+
+            <div class="page1-tab1-bot">
+                <p class="tab-info">今日推荐</p>
+                <ul class="item-wrapper">
+                    <% for(var i=0;i<recommendList.length;i++){ %>
+                    <li class="item" data-code= <%= recommendList[i].Code %> >
+                        <div class="item-inner">
+                            <img src= <%= recommendList[i].LittlePic %> alt="">
+                            <span class="market-sale">市场价：<%= recommendList[i].MarketPrice %>元</span>
+                            <span class="wx-sale">微信价：<%= recommendList[i].WechatPrice %>元</span>
+                        </div>
+                    </li>                        
+                    <% } %>                                               
+                </ul>
+            </div>
+        </div>
+
+        <div class="ui-tab" id="page1-tab2" role="tabpanel">   
+           <!-- 白酒 -->
+        </div>
+
+        <div class="ui-tab" id="page1-tab2" role="tabpanel">   
+           <!-- 红酒 -->
+        </div>
+
+        <div class="ui-tab" id="page1-tab2" role="tabpanel">   
+           <!-- 啤酒 -->
+        </div>
+        <!-- /主体内容-->
+    </div>
+</div>
+
+<div class="ui-page page2 <%= r=='shopcart' ? 'js-active':'' %>">
+    <div class="ui-page-content">
+
+        <div class="ui-tab js-active" id="page2-tab1" role="tabpanel">
+            <div class="page2-tab2-top" id="order-list-container" style="display:none">
+                <p class="tab-info confirm">待确认</p>
+
+                <ul class="jiu-li">
+                    <li class="jiu-single" style="display:table" data-toggle="dialog" data-target="#changeCartActionsheet" data-type="actionsheet" data-effect="from-bottom" data-cache="false">
+                        <img src="" alt="">
+                        <div class="jiu-info">
+                            <p class="jiu-detail"></p>
+                            <p class="jiu-price">单价: ￥<span class="order-list-price"></span>&nbsp数量：<span class="order-list-num"></span></p>
+                        </div>
+                        <span class="list-right-forward vertical-middle ui-icon ion-ios7-arrow-forward" style="display:table-cell;vertical-align:middle"></span>
+                    </li>
+                </ul>
+            </div>
+            <div class="page2-tab2-bot" id="order-confirm-container" style="display:none">
+                <div class="cart-ticket">
+                    <p class="f-left">本次试用现金券￥<span id="cart-ticket-use">20</span></p>
+                    <span class="f-right">剩余￥<span id="cart-ticket-left">80</span></span>
+                </div>
+                <p class="all-r">费用合计：￥<span id="cart_total_cost">300</span></p>
+                <button class="ui-button ui-info confirm-btn" data-toggle="tab" data-target=".page4" aria-controls="tab2" role="tab" id="cart_confirm">确认订单</button>
+            </div>
+            <div class="page2-tab2-bot order-load-info">
+                <p>正在努力加载购物车…</p>
+            </div>
+        </div>
+
+    </div> 
+</div>
+
+<div class="ui-page page3 <%= r=='info' ? 'js-active':'' %>">
+    <div class="ui-page-content">
+        <div class="ui-tab js-active" id="page3-tab1" role="tabpanel">
+            <div class="page3-tab1-top">
+                <!-- 买过 -->
+                <p class="tab-info">您买过这些酒</p>
+                <ul class="jiu-li">
+                    <li class="jiu-single">
+                        <img src="images/jiu.jpg" alt="">
+                        <div class="jiu-info">
+                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
+                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
+                            <p class="jiu-price">单价: ￥<span>128</span></p>
+                        </div>
+                        <label class="to-right" for="">></label>
+                    </li>
+                    <li class="jiu-single">
+                        <img src="images/jiu.jpg" alt="">
+                        <div class="jiu-info">
+                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
+                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
+                            <p class="jiu-price">单价: ￥<span>128</span></p>
+                        </div>
+                        <label class="to-right" for="">></label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="ui-tab" id="page3-tab2" role="tabpanel">
+            <div class="page3-tab2-top">
+                 <!-- 券 -->
+                <p class="quan-title quan-title-f">现金券</p>
+                <div class="quan-wrapper quan-xian">
+                    <div class="quan">
+                        <span class="quan-num" id="countup" data-from="0" data-to="342">342</span>
+                        <span class="quan-yuan">元</span>
+                        <button class="ui-button ui-info">申请提现</button>
+                        <a class="quan-link" href="#">推荐给更多好友申请更多现金券>></a>
+                    </div>
+                </div>
+            </div>
+            <div class="page3-tab2-bot">
+                <p class="quan-title">代金券</p>
+                <div class="quan-wrapper quan-dai">
+                    <div class="quan">
+                        <span class="quan-num" id="countup" data-from="0" data-to="342">342</span>
+                        <span class="quan-yuan">元</span>
+                        <a class="quan-link" href="#">查看如何获取更多代金券>></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-tab" id="page3-tab3" role="tabpanel">
+            <!-- 地址 -->
+        </div>
+
+        <div class="ui-tab" id="page3-tab4" role="tabpanel">
+            <!-- 我 -->
+        </div>
+    </div>
+</div>
+
+<div class="ui-page page4">
+    <div class="ui-page-content">
+        <div class="ui-tab js-active" id="page4-tab1" role="tabpanel">
+            <!-- 地址 -->
+            <p class="tab-info">配送地址</p>
+            <ul class="j-address">
+                <!-- 选择的地址 -->
+                <li class="j-single j-address-item" style="display:none">
+                    <div class="j-info">
+                        <p class="j-detail"><span class="j-province"></span><span class="j-shi"></span><span class="j-qu"></span><span class="j-lu"></span></p>
+                        <p class="j-detail"><span class='j-name'></span><span class="j-tel"></span></p>
+                    </div>
+                    <label for="" class="makesure"></label>
+                </li>
+                <li class="j-single j-add">
+                    <div class="j-info">
+                        <p>添加地址</p>
+                    </div>
+                    <label class="to-right" for="">></label>
+                </li>
+            </ul> 
+            <!-- <button class="ui-button ui-info confirm-btn btn-top">微信支付</button> -->
+            <button class="ui-button ui-success confirm-btn btn-bot" id="complete_cash_pay">货到付款</button>
+        </div>
+
+    </div>
+</div>
+
+
+<!-- 对话类内容: 属于App级别，应在App节点下 -->
+
+<div id="myNotify" data-backdrop=false data-expires=2000 role="dialog" class="ui-dialog" aria-labelledby="myNotifyLable" aria-hidden="true">
+    <div class="js-dialog-content ui-notify">
+        <p id="myNotifyLable">城市定位失败</p>
+    </div>
+</div>
+
+<div id="myLoading" data-backdrop=false role="dialog" class="ui-dialog" aria-labelledby="myNotifyLable" aria-hidden="true">
+    <div class="js-dialog-content ui-notify">
+        <a data-dismiss="dialog" class="ui-pop-cancel">取消</a>
+    </div>
+</div>
+
+<div id="myAlert" role="alertdialog"  class="ui-dialog" aria-labelledby="myAlertLable" aria-hidden="true">
+    <div class="js-dialog-content ui-alert">
+        <div class="ui-alert-header"><h3 class="ui-alert-title" id="myAlertLable">Title</h3></div>
+        <div class="ui-alert-body" role="note"><p>This is a message.</p></div>
+        <div class="ui-alert-footer">
+            <!-- 尽量避免使用 button 元素，在小米上是会有点击高亮边框 -->
+            <a data-dismiss="dialog" role="button" class="ui-alert-button">确定</a>
+            <a data-dismiss="dialog" role="button" class="ui-alert-button">取消</a>
+        </div>
+    </div>
+</div>
+
+<div id="changeCartActionsheet" role="dialog" class="ui-dialog" aria-labelledby="changeCartActionsheetLable" aria-hidden="true">
+    <div class="js-dialog-content ui-actionsheet">
+        <ul>
+            <li role="button" id="as_cart_change_num" data-dismiss="dialog">修改数量</li>
+            <li role="button" id="as_cart_move_collect" data-dismiss="dialog">移至收藏</li>
+            <li role="button" id="as_cart_delete" data-dismiss="dialog">删除商品</li>
+            <li role="button" id="as_cart_view_detail" data-dismiss="dialog">查看详情</li>
+        </ul>
+        <a role="button" data-dismiss="dialog" class="ui-actionsheet-cancel">取消</a>
+    </div>
+</div>
+
+<!-- <div class="popout-container" id="changeCartNumActionsheet" style="display:none">
+    <div class="popout-content">
+        <input type="number" value='1'>
+        <a role="button" class="ui-button">确定</a>
+    </div>
+</div> -->
+
+<!-- /对话类内容 -->
+
+<script data-main="js/index" src="js/require.js"></script>
+
+<% include layoutBottom %>

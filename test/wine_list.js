@@ -1,0 +1,109 @@
+var list = [
+{
+	Code:"fy20140716001",
+	Name:"口子窖",
+	Describe:"41度口子窖六年真藏实窖450ml",
+	MarketPrice:168,
+	WechatPrice:128,
+	LittlePic:"fy20140716001_s.jpg",
+	Details:{},
+	BigPic:["fy20140716001_l_01.jpg","fy20140716001_l_02.jpg"],
+	Tag:{
+		Type:"白酒",
+		isRecommend:true
+	}
+},
+{
+	Code:"fy20140716002",
+	Name:"口子窖",
+	Describe:"41度口子窖六年真藏实窖450ml",
+	MarketPrice:168,
+	WechatPrice:128,
+	LittlePic:"fy20140716001_s.jpg",
+	Details:{},
+	BigPic:["fy20140716001_l_01.jpg","fy20140716001_l_02.jpg"],
+	Tag:{
+		Type:"白酒",
+		isRecommend:true
+	}
+},
+{
+	Code:"fy20140716003",
+	Name:"口子窖",
+	Describe:"41度口子窖六年C真藏实窖450ml",
+	MarketPrice:168,
+	WechatPrice:128,
+	LittlePic:"fy20140716001_s.jpg",
+	Details:{},
+	BigPic:["fy20140716001_l_01.jpg","fy20140716001_l_02.jpg"],
+	Tag:{
+		Type:"白酒",
+		isRecommend:true
+	}
+},
+{
+	Code:"fy20140716004",
+	Name:"口子窖",
+	Describe:"41度口子窖六年真藏实窖450ml",
+	MarketPrice:168,
+	WechatPrice:128,
+	LittlePic:"fy20140716001_s.jpg",
+	Details:{},
+	BigPic:["fy20140716001_l_01.jpg","fy20140716001_l_02.jpg"],
+	Tag:{
+		Type:"白酒",
+		isRecommend:true
+	}
+},
+{
+	Code:"fy20140716005",
+	Name:"口子窖",
+	Describe:"41度口子窖六年真藏实窖450ml",
+	MarketPrice:168,
+	WechatPrice:128,
+	LittlePic:"fy20140716001_s.jpg",
+	Details:{},
+	BigPic:["fy20140716001_l_01.jpg","fy20140716001_l_02.jpg"],
+	Tag:{
+		Type:"白酒",
+		isRecommend:true
+	}
+},
+{
+	Code:"fy20140716006",
+	Name:"口子窖",
+	Describe:"41度口子窖六年真藏实窖450ml",
+	MarketPrice:168,
+	WechatPrice:128,
+	LittlePic:"fy20140716001_s.jpg",
+	Details:{},
+	BigPic:["fy20140716001_l_01.jpg","fy20140716001_l_02.jpg"],
+	Tag:{
+		Type:"白酒",
+		isRecommend:true
+	}
+},
+{
+	Code:"fy20140716007",
+	Name:"口子窖",
+	Describe:"41度口子窖六年真藏实窖450ml",
+	MarketPrice:168,
+	WechatPrice:128,
+	LittlePic:"fy20140716001_s.jpg",
+	Details:{},
+	BigPic:["fy20140716001_l_01.jpg","fy20140716001_l_02.jpg"],
+	Tag:{
+		Type:"白酒",
+		isRecommend:true
+	}
+}
+];
+
+var small_pic_dir = "/images/small/";
+var big_pic_dir = "/images/large/";
+
+module.exports = {
+	s_dir:small_pic_dir,
+	l_dir:big_pic_dir,
+	list:list
+}

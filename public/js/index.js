@@ -1,0 +1,354 @@
+require([
+	'./pro'
+], function() {
+	// 作临时全局变量使用
+	$.tempStorage = {};
+	//CountUp
+	$('#countup').countable('start');
+
+	// Spinner
+	$('[data-spinner]').each(function() {
+		var $this = $(this);
+		$this.spinner('show')
+	});
+
+	$('#show-body-spinner').on('tap', function() {
+		//var $this = $(this);
+		//var delay = $this.data('delay') || 6000;
+
+		$('body').spinner('show');
+		//setTimeout(function(){
+		//    $('body').spinner('hide');
+		//}, delay);
+	});
+
+	$('#hide-body-spinner').on('tap', function() {
+		$('body').spinner('hide');
+	});
+
+	function initSearch() {
+		var $search = $('#my-search');
+		var $input = $('#my-search-input');
+		$input.on('focus', function() {
+			$search.addClass('js-focus')
+		}).on('input', function() {
+			if ($input[0].value) {
+				$search.addClass('js-input')
+			} else {
+				$search.removeClass('js-input')
+			}
+		});
+
+		$('#my-search-reset').on('tap', function() {
+			$input[0].value = '';
+			$search.removeClass('js-input');
+			$input[0].focus();
+		});
+
+		$('#my-search-cancel').on('touchstart', function(evt) {
+			$input[0].value = '';
+			$search.removeClass('js-input');
+			$search.removeClass('js-focus');
+
+			document.activeElement.blur();
+			$input[0].blur();
+
+			evt.stopPropagation();
+			evt.preventDefault();
+		});
+	}
+
+	initSearch();
+
+	// Tab
+	$('[data-toggle="tab"]').on('shown:tab', function(e) {
+
+		var target = e.target // activated tab
+		var relatedTarget = e.relatedTarget // previous tab
+
+		var tab = target.innerText.trim().toLowerCase();
+
+		if (target.inited) return;
+
+		if (tab == 'counter') {
+
+			$('[data-countable]').each(function() {
+				var $this = $(this);
+				$this.countable('start')
+			});
+
+		} else if (tab == 'spinner') {
+
+
+		} else if (tab == 'carousel') {
+
+			$('[data-ride="carousel"]').each(function() {
+				var $this = $(this);
+				$this.carousel($this.data())
+			});
+		} else if (tab == 'deleter') {
+
+			$('.my-deletable').deletable()
+
+		} else if (tab == 'lazyload') {
+			$('[data-lazy]').lazyload({
+				container: $.os.ios > 5 ? $('#page5-container') : window
+			});
+		}
+
+		target.inited = true;
+
+	});
+
+	//图片自动轮播
+	$(document).ready(function(e){
+        var target = e.target // activated tab
+        $('[data-ride="carousel"]').each(function() {
+            var $this = $(this);
+            $this.carousel($this.data())
+        });
+    }) ;
+	//=======================css fix=======================
+	function autoResize(){
+		var w = $(document).width();
+		var r = 100.0/((w/100)>>0) + '%';
+		$(".item").css({width:r});
+	}
+	autoResize();
+	$(window).resize(autoResize);
+    /**
+     * ====================================================
+     */
+  	$(".item-wrapper .item").on("tap",function(){
+  		var code = $(this).data('code');
+  		location.href = "/details?code="+code;
+  	}) ; 
+  	// $(".item-wrapper .item").trigger("tap");
+  	$(".my-top-bar").on("tap",function(){
+
+  		var $this = $(this);
+  		var target = $this.data("target").split("-")[1];
+		// alert(target);
+		if(target=='page1'){
+			location.href = "/?r=home"
+		}
+		if(target=='page2'){
+			location.href = "/?r=shopcart"
+		}		
+  	});
+  	if(localStorage.cart && localStorage.cart!='{}'){
+		$("#topbar-cart-reddot").show();
+		$("#bottombar-cart-reddot").show();
+  	}
+  	$.uploadErrorLog = function(str,d){
+  		$.post("/errlog?from="+d,{r:str});
+  	};
+    $.getProductDetail = function(arr,cb){
+        // 远程获取购物车中的商品信息
+        $.get("/getProduct",{r:arr},function(data,status){
+            if(status != "success"){
+                // 请求失败  
+                return;
+            }
+            $.uploadErrorLog(data);
+            var products = data.list;
+            if(arr.length==products.length){
+                cb(null,data);
+            }else{
+            	var err = "商品数量出错";
+            	cb(err);
+            	$.uploadErrorLog(err);
+            }
+        });        
+    } ;
+
+
+
+    function getCartDetail(cb){
+        var cart = localStorage.cart || '{}';
+        cart = JSON.parse(cart);
+        var cartArr = [];
+        for(var i in cart){
+            cartArr.push(i);
+        }
+        if(cartArr.length==0){
+        	return $(".order-load-info p").text("购物车中没有商品");
+        }
+        $.getProductDetail(cartArr,function(err,data){
+            if(err){
+                alert(err);
+            }else{
+                var list = data.list; 
+                var dir = data.s_dir;
+                var $ul = $("#order-list-container ul");
+                var $li = $ul.children("li.jiu-single");
+                list.forEach(function(d){
+                	var addli = $li.clone();
+                	addli.data('code',d.id);
+                	addli.find(".jiu-detail").text(d.describe);
+                	addli.find(".order-list-price").text(d.wechatPrice);
+                	addli.find(".order-list-num").text(cart[d.id]['num']);
+                	addli.find("img").attr('src',dir+d.littlePic);
+                	$ul.append(addli);
+                	$("#order-list-container").show();                	
+                });
+                $li.remove();
+                $(".order-load-info").hide();
+                $("#order-confirm-container").show();
+                updateTicket(cart);
+                cb();
+            }
+        });  
+    }
+    getCartDetail(function(){
+        
+    	$(".jiu-li .jiu-single").on('tap',function(){
+    	    // $("#changeCartActionsheet").();
+    	    $.tempStorage.cartListTap = $(this);
+    	});      	
+    });  
+ 
+    $("#as_cart_change_num").on('tap',function(){
+        // 修改数量
+        // $target = $("#changeCartNumActionsheet");
+        // $target.show() ;
+        // $target.show() ;       
+    });
+    $("#as_cart_move_collect").on('tap',function(){
+        // 移至收藏
+    });
+    $("#as_cart_delete").on('tap',function(){
+        // 删除购物车中商品
+        var cart = JSON.parse(localStorage.cart);
+        $.uploadErrorLog(cart);
+        delete cart[$.tempStorage.cartListTap.data('code')];
+        localStorage.cart = JSON.stringify(cart);
+        $.post("/test",{a:1},function(data,status){
+            alert(JSON.stringify(data));
+        });
+        $.tempStorage.cartListTap.remove();
+    });
+    $("#as_cart_view_detail").on('tap',function(){
+    	var code = $.tempStorage.cartListTap.data('code');
+    	var num = JSON.parse(localStorage.cart)[code].num;
+        location.href("/details?code="+code+"&num="+num);
+    });
+
+    function getTicket(cb){
+    	$.get("/cash_voucher",function(data,status){
+    		if(status!='success'){
+    			$.uploadErrorLog('fail to request /getTicket');
+    			return cb("fail");
+    		}
+    		cb(null,data);
+    	});
+    }
+    function updateTicket(cart){
+	    getTicket(function(err,data){
+	    	if(data){
+	    		var $left = $("#cart-ticket-left");
+	    		var $use = $("#cart-ticket-use");
+	    		var $pay = $("#cart_total_cost");
+	    		var total = data.cash;
+	    		var cost = 0;
+	    		for(var i in cart){
+	    			cost += cart[i].num * cart[i].price ;
+	    		}
+                $.uploadErrorLog({cost:cost},'cost');
+	    		if(total>=cost){
+	    			$use.text(cost);
+	    			$left.text(total-cost);
+	    			$pay.text(0);
+	    		}else{
+	    			$use.text(total);
+	    			$left.text(0);
+	    			$pay.text(cost-total);
+	    		}
+	    	}
+	    });    	
+    }
+    //====================加载地址=====================
+    function getAddr(cb){
+        $.get("/address",function(data,status){
+            if(status != 'success'){
+                // 加载地址失败
+                cb("fail to get address");
+                return;
+            }
+            cb(null,data);
+        });
+    }
+    function updateAddrUI(){
+        var $li = $(".j-address li.j-address-item");
+
+        getAddr(function(err,data){
+            alert(JSON.stringify(data));
+            $.uploadErrorLog(data,"address");
+            if(!data)
+                return;
+            var r = [];
+            localStorage.address = JSON.stringify(data);
+            localStorage.defauleAddrIndex = 0;
+            for(var i=0;i<data.length;i++){
+                var item = data[i];
+                var addli = $li.clone();
+                addli.data('index',i);
+                addli.find('.j-province').text(item.province || "");
+                addli.find('.j-shi').text(item.city || "");
+                addli.find('.j-qu').text(item.area || "");
+                addli.find('.j-lu').text(item.detail || "");
+                addli.find('.j-name').text(item.name || "");
+                addli.find('.j-tel').text(item.tel || "");
+                if(i==0){
+                    addli.addClass("j-select");
+                }
+                addli.show();
+                r.push(addli);
+            }
+            var addr = r.pop();
+            while(addr){
+                $(".j-address").prepend(addr);
+                addr = r.pop();
+            }
+            $li.remove();
+        });
+    }
+    $(document).on('tap','.page4 .j-single',function(){
+        $(this).parent().find('.j-single').removeClass('j-select');
+        $(this).toggleClass('j-select');
+        localStorage.defauleAddrIndex = $(this).data('index');
+    })    
+
+    //=======================确认订单=======================
+    $(document).on('tap',"#cart_confirm",function(){
+        var purchase = {};
+        purchase.shopOnce = [];
+        var cart = JSON.parse(localStorage.cart);
+        for(var i in cart){
+            purchase.shopOnce.push({
+                id : i,
+                number : cart[i]['num']
+            });
+        }
+        purchase.cashUse = parseInt($("#cart-ticket-use").text());
+        purchase.voucherUse = 0;
+        purchase.totalPrice = parseInt($("#cart_total_cost").text());
+        localStorage.purchase = JSON.stringify(purchase);
+        updateAddrUI();
+    });
+
+    //=======================货到付款=======================
+    $("#complete_cash_pay").on('tap',function(){
+        var purchase = JSON.parse(localStorage.purchase);
+        var addresses = JSON.parse(localStorage.address);
+        var index = parseInt(localStorage.defauleAddrIndex);
+        purchase.address = addresses[index];
+        purchase.confirmTel = "";
+        localStorage.purchase = JSON.stringify(purchase);
+        $.post("/purchase",purchase,function(data,status){
+            if(status!='success'){
+                $.uploadErrorLog("post /purchase error");
+            }
+        });
+    });
+})

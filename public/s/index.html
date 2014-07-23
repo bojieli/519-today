@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>安徽519</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="css/pro.css?embed" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/ionicons/css/ionicons.css" />
+    <style>
+        *{font-family: "SimHei";color: rgb( 49, 49, 49 );}
+        
+        [data-lazy] {
+            display: block;
+            margin: 10px auto;
+            height: 120px;
+            width: 240px;
+            border: 1px solid #eee; 
+        }
+
+        a:active{
+            opacity: 50%;
+        }
+    </style>
+</head>
+<body class="ui-app">
+ 
+<!-- <div class="ui-top-bar js-no-bounce"> -->
+<div class="ui-top-bar">    
+    <div class="ui-tab page1  js-active">
+        <ul class="ui-groupbutton" role="tablist">
+            <li class="ui-button js-active" data-toggle="tab" data-target="#page1-tab1" aria-controls="tab1" role="tab">推荐</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab2" role="tab">白酒</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab3" role="tab">红酒</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab4" role="tab">啤酒</li>
+        </ul>
+    </div>
+    <div class="ui-tab page2">
+        <span class="top-bar-title">购物车</span>
+    </div>
+    <div class="ui-tab page3">
+        <ul class="ui-groupbutton" role="tablist">
+            <li class="ui-button js-active" data-toggle="tab" data-target="#page3-tab1" aria-controls="tab1" role="tab">买过</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page3-tab2" aria-controls="tab2" role="tab">券</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page3-tab3" aria-controls="tab3" role="tab">地址</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page3-tab4" aria-controls="tab4" role="tab">我</li>
+        </ul>
+    </div>
+</div>
+
+<div class="ui-bottom-bar js-no-bounce" role="toolbar"> <!-- tabindex="0" 在android上会触发一个高亮边框 -->
+    <!-- 尾部内容 -->
+    <a class="ui-bottom-bar-button  js-active goto-page1" role="button" data-toggle="tab" data-target=".page1">
+        <span class="ui-icon ion-home"></span>
+        <span class="ui-label">首页</span>
+    </a>
+    <a class="ui-bottom-bar-button go-to-page2" role="button" data-toggle="tab" data-target=".page2">
+        <span class="ui-icon ion-ios7-cart-outline"></span>
+        <span class="ui-label">购物车</span>
+    </a>
+    <a class="ui-bottom-bar-button" role="button" data-toggle="tab" data-target=".page3">
+        <span class="ui-icon ion-ios7-person-outline"></span>
+        <span class="ui-label">我的</span>
+    </a>
+    <!-- /尾部内容-->
+</div>
+
+
+<!-- 一个App可以多个page -->
+<div class="ui-page page1 js-active">
+
+    <div class="ui-page-content">
+        <!-- 主体内容 -->
+        <div class="ui-tab js-active" id="page1-tab1" role="tabpanel">
+            <!-- 推荐 -->
+            <div class="page1-tab1-top">
+                <p class="tab-info">您曾经买过</p>
+                <ul class="item-wrapper">
+                    <li class="item first-line">
+                        <div class="item-inner">
+                            <img src="images/jiu.jpg" alt="">
+                            <span class="market-sale">市场价：168元</span>
+                            <span class="wx-sale">微信价：128元</span>
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="item-inner">
+                            <img src="images/jiu.jpg" alt="">
+                            <span class="market-sale">市场价：168元</span>
+                            <span class="wx-sale">微信价：128元</span>
+                        </div>
+                    </li>
+                    <li class="item">
+                        <div class="item-inner">
+                            <img src="images/jiu.jpg" alt="">
+                            <span class="market-sale">市场价：168元</span>
+                            <span class="wx-sale">微信价：128元</span>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            <div class="page1-tab1-bot">
+                <p class="tab-info">今日推荐</p>
+                    <ul class="item-wrapper">
+                        <li class="item">
+                            <div class="item-inner">
+                                <img src="images/jiu.jpg" alt="">
+                                <span class="market-sale">市场价：168元</span>
+                                <span class="wx-sale">微信价：128元</span>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="item-inner">
+                                <img src="images/jiu.jpg" alt="">
+                                <span class="market-sale">市场价：168元</span>
+                                <span class="wx-sale">微信价：128元</span>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="item-inner">
+                                <img src="images/jiu.jpg" alt="">
+                                <span class="market-sale">市场价：168元</span>
+                                <span class="wx-sale">微信价：128元</span>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="item-inner">
+                                <img src="images/jiu.jpg" alt="">
+                                <span class="market-sale">市场价：168元</span>
+                                <span class="wx-sale">微信价：128元</span>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="item-inner">
+                                <img src="images/jiu.jpg" alt="">
+                                <span class="market-sale">市场价：168元</span>
+                                <span class="wx-sale">微信价：128元</span>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="item-inner">
+                                <img src="images/jiu.jpg" alt="">
+                                <span class="market-sale">市场价：168元</span>
+                                <span class="wx-sale">微信价：128元</span>
+                            </div>
+                        </li>
+                        <li class="item">
+                            <div class="item-inner">
+                                <img src="images/jiu.jpg" alt="">
+                                <span class="market-sale">市场价：168元</span>
+                                <span class="wx-sale">微信价：128元</span>
+                            </div>
+                        </li>                        
+                    </ul>
+            </div>
+        </div>
+
+        <div class="ui-tab" id="page1-tab2" role="tabpanel">   
+           <!-- 白酒 -->
+        </div>
+
+        <div class="ui-tab" id="page1-tab2" role="tabpanel">   
+           <!-- 红酒 -->
+        </div>
+
+        <div class="ui-tab" id="page1-tab2" role="tabpanel">   
+           <!-- 啤酒 -->
+        </div>
+        <!-- /主体内容-->
+    </div>
+</div>
+
+<div class="ui-page page2">
+    <div class="ui-page-content">
+
+        <div class="ui-tab js-active" id="page2-tab2" role="tabpanel">
+            <div class="page2-tab2-top">
+                <p class="tab-info confirm">待确认</p>
+
+                <ul class="jiu-li">
+                    <li class="jiu-single">
+                        <img src="images/jiu.jpg" alt="">
+                        <div class="jiu-info">
+                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
+                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
+                            <p class="jiu-price">单价: ￥<span>128</span></p>
+                        </div>
+                        <label class="to-right" for="">></label>
+                    </li>
+                    <li class="jiu-single">
+                        <img src="images/jiu.jpg" alt="">
+                        <div class="jiu-info">
+                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
+                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
+                            <p class="jiu-price">单价: ￥<span>128</span></p>
+                        </div>
+                        <label class="to-right" for="">></label>
+                    </li>
+                </ul>
+             </div>
+             <div class="page2-tab2-bot">
+                <p class="all-r">费用合计：￥300</p>
+                <button class="ui-button ui-info confirm-btn">确认订单</button>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<div class="ui-page page3">
+    <div class="ui-page-content">
+        <div class="ui-tab js-active" id="page3-tab1" role="tabpanel">
+            <div class="page3-tab1-top">
+                <!-- 买过 -->
+                <p class="tab-info">您买过这些酒</p>
+                <ul class="jiu-li">
+                    <li class="jiu-single">
+                        <img src="images/jiu.jpg" alt="">
+                        <div class="jiu-info">
+                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
+                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
+                            <p class="jiu-price">单价: ￥<span>128</span></p>
+                        </div>
+                        <label class="to-right" for="">></label>
+                    </li>
+                    <li class="jiu-single">
+                        <img src="images/jiu.jpg" alt="">
+                        <div class="jiu-info">
+                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
+                            <p class="jiu-detail">41度口子窖六年真藏实窖450ml</p>
+                            <p class="jiu-price">单价: ￥<span>128</span></p>
+                        </div>
+                        <label class="to-right" for="">></label>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="ui-tab" id="page3-tab2" role="tabpanel">
+            <div class="page3-tab2-top">
+                 <!-- 券 -->
+                <p class="quan-title quan-title-f">现金券</p>
+                <div class="quan-wrapper quan-xian">
+                    <div class="quan">
+                        <span class="quan-num" id="countup" data-from="0" data-to="342">342</span>
+                        <span class="quan-yuan">元</span>
+                        <button class="ui-button ui-info">申请提现</button>
+                        <a class="quan-link" href="#">推荐给更多好友申请更多现金券>></a>
+                    </div>
+                </div>
+            </div>
+            <div class="page3-tab2-bot">
+                <p class="quan-title">代金券</p>
+                <div class="quan-wrapper quan-dai">
+                    <div class="quan">
+                        <span class="quan-num" id="countup" data-from="0" data-to="342">342</span>
+                        <span class="quan-yuan">元</span>
+                        <a class="quan-link" href="#">查看如何获取更多代金券>></a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="ui-tab" id="page3-tab3" role="tabpanel">
+            <!-- 地址 -->
+        </div>
+
+        <div class="ui-tab" id="page3-tab4" role="tabpanel">
+            <!-- 我 -->
+        </div>
+    </div>
+</div>
+
+<div class="ui-page page4">
+
+    <div class="ui-page-content">
+
+        <div class="ui-tab js-active" id="page4-tab1" role="tabpanel">
+
+            <h3 class="ui-caption">Blue</h3>
+            <div class="ui-panel">
+                <ul class="ui-groupbutton">
+                    <li class="ui-button js-active" data-target="#" data-toggle="tab">列表 1<span class="ui-red-counter">123</span></li>
+                    <li class="ui-button" data-target="#" data-toggle="tab">列表 2</li>
+                    <li class="ui-button" data-target="#" data-toggle="tab">列表 3<span class="ui-red-counter">2</span></li>
+                </ul>
+            </div>
+
+            <h3 class="ui-caption">Gray</h3>
+            <div class="ui-panel">
+                <ul class="ui-groupbutton ui-gray">
+                    <li class="ui-button js-active" data-target="#" data-toggle="tab">列表 1</li>
+                    <li class="ui-button" data-target="#" data-toggle="tab">列表 2</li>
+                    <li class="ui-button" data-target="#" data-toggle="tab">列表 3<span class="ui-blue-counter">1</span></li>
+                </ul>
+            </div>
+
+        </div>
+
+        <div class="ui-tab" id="page4-tab2" role="tabpanel">
+
+            <h3 class="ui-caption">Notify</h3>
+            <p class="ui-panel">
+                <button class="ui-button ui-block" data-toggle="dialog" data-target="#myNotify" data-type="notify" data-effect="from-top" data-cache="false">
+                    Launch notify from top
+                </button>
+            </p>
+        </div>
+
+        <div class="ui-tab" id="page4-tab3" role="tabpanel">
+
+            <h3 class="ui-caption">Alert</h3>
+            <p class="ui-panel">
+                <button class="ui-button ui-block" data-toggle="dialog" data-target="#myAlert" data-type="alert" data-effect="from-below" data-cache="false">
+                    Launch alert from below
+                </button>
+
+                <button class="ui-button ui-block" data-toggle="dialog" data-target="#myAlert" data-type="alert" data-effect="from-above" data-cache="false">
+                    Launch alert from above
+                </button>
+
+                <button class="ui-button ui-block" data-toggle="dialog" data-target="#myAlert" data-type="alert" data-effect="from-left" data-cache="false">
+                    Launch alert from left
+                </button>
+
+                <button class="ui-button ui-block" data-toggle="dialog" data-target="#myAlert" data-type="alert" data-effect="from-right" data-cache="false">
+                    Launch alert from right
+                </button>
+
+                <button class="ui-button ui-block" data-toggle="dialog" data-target="#myAlert" data-type="alert" data-effect="from-top" data-cache="false">
+                    Launch alert from top
+                </button>
+
+                <button class="ui-button ui-block" data-toggle="dialog" data-target="#myAlert" data-type="alert" data-effect="from-bottom" data-cache="false">
+                    Launch alert from bottom
+                </button>
+            </p>
+
+        </div>
+
+        <div class="ui-tab" id="page4-tab4" role="tabpanel">
+            <h3 class="ui-caption">Action Sheet</h3>
+            <p class="ui-panel">
+                <button class="ui-button ui-block" data-toggle="dialog" data-target="#myActionsheet" data-type="actionsheet" data-effect="from-bottom" data-cache="false">
+                    Launch actionsheet from bottom
+                </button>
+            </p>
+        </div>
+
+    </div>
+</div>
+
+<div id="page5-container" class="ui-page page5">
+
+    <div class="ui-page-content">
+
+        <div class="ui-tab js-active" id="page5-tab1" role="tabpanel">
+
+            <h3 class="ui-caption">Normal</h3>
+
+            <div id="my-search" class="ui-search">
+                <form class="ui-search-form">
+                    <input id="my-search-input" type="search" autocomplete="off" autocorrect="off" placeholder="搜索" class="ui-search-input">
+                    <span id="my-search-reset" class="ui-search-reset">x</span>
+                    <span id="my-search-cancel" class="ui-search-cancel">取消</span>
+                </form>
+            </div>
+
+        </div>
+
+        <div class="ui-tab" id="page5-tab2" role="tabpanel">
+
+            <h3 class="ui-caption">Nature</h3>
+            <img data-lazy="http://lorempixel.com/400/200/nature/1/">
+            <img data-lazy="http://lorempixel.com/400/200/nature/2/">
+            <img data-lazy="http://lorempixel.com/400/200/nature/3/">
+            <img data-lazy="http://lorempixel.com/400/200/nature/4/">
+            <img data-lazy="http://lorempixel.com/400/200/nature/5/">
+            <img data-lazy="http://lorempixel.com/400/200/nature/6/">
+            <img data-lazy="http://lorempixel.com/400/200/nature/7/">
+            <img data-lazy="http://lorempixel.com/400/200/nature/8/">
+            <img data-lazy="http://lorempixel.com/400/200/nature/9/">
+
+            <h3 class="ui-caption">Technics</h3>
+            <img data-lazy="http://lorempixel.com/400/200/technics/1/">
+            <img data-lazy="http://lorempixel.com/400/200/technics/2/">
+            <img data-lazy="http://lorempixel.com/400/200/technics/3/">
+            <img data-lazy="http://lorempixel.com/400/200/technics/4/">
+            <img data-lazy="http://lorempixel.com/400/200/technics/5/">
+            <img data-lazy="http://lorempixel.com/400/200/technics/6/">
+            <img data-lazy="http://lorempixel.com/400/200/technics/7/">
+            <img data-lazy="http://lorempixel.com/400/200/technics/8/">
+            <img data-lazy="http://lorempixel.com/400/200/technics/9/">
+        </div>
+
+    </div>
+</div>
+
+<!-- 对话类内容: 属于App级别，应在App节点下 -->
+
+<div id="myNotify" data-backdrop=false data-expires=2000 role="dialog" class="ui-dialog" aria-labelledby="myNotifyLable" aria-hidden="true">
+    <div class="js-dialog-content ui-notify">
+        <p id="myNotifyLable">城市定位失败</p>
+    </div>
+</div>
+
+<div id="myLoading" data-backdrop=false role="dialog" class="ui-dialog" aria-labelledby="myNotifyLable" aria-hidden="true">
+    <div class="js-dialog-content ui-notify">
+        <a data-dismiss="dialog" class="ui-pop-cancel">取消</a>
+    </div>
+</div>
+
+<div id="myAlert" role="alertdialog"  class="ui-dialog" aria-labelledby="myAlertLable" aria-hidden="true">
+    <div class="js-dialog-content ui-alert">
+        <div class="ui-alert-header"><h3 class="ui-alert-title" id="myAlertLable">Title</h3></div>
+        <div class="ui-alert-body" role="note"><p>This is a message.</p></div>
+        <div class="ui-alert-footer">
+            <!-- 尽量避免使用 button 元素，在小米上是会有点击高亮边框 -->
+            <a data-dismiss="dialog" role="button" class="ui-alert-button">确定</a>
+            <a data-dismiss="dialog" role="button" class="ui-alert-button">取消</a>
+        </div>
+    </div>
+</div>
+
+<div id="myActionsheet" role="dialog" class="ui-dialog" aria-labelledby="myActionsheetLable" aria-hidden="true">
+    <div class="js-dialog-content ui-actionsheet">
+        <ul>
+            <li role="button" data-dismiss="dialog">删除</li>
+            <li role="button" data-dismiss="dialog">发送</li>
+        </ul>
+        <a role="button" data-dismiss="dialog" class="ui-actionsheet-cancel">取消</a>
+    </div>
+</div>
+
+<!-- /对话类内容 -->
+
+<script data-main="js/index" src="js/require.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <title>安徽519</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta name="format-detection" content="telephone=no">
+    <link rel="stylesheet" type="text/css" href="css/pro.css?embed" />
+    <link rel="stylesheet" type="text/css" href="css/index.css" />
+    <link rel="stylesheet" type="text/css" href="vendor/ionicons/css/ionicons.css" />
+    <style>
+        *{font-family: "SimHei";color: rgb( 49, 49, 49 );}
+        
+        [data-lazy] {
+            display: block;
+            margin: 10px auto;
+            height: 120px;
+            width: 240px;
+            border: 1px solid #eee; 
+        }
+
+        a:active{
+            opacity: 50%;
+        }
+    </style>
+</head>
+<body class="ui-app">
+ 
+<!-- <div class="ui-top-bar js-no-bounce"> -->
+<div class="ui-top-bar">    
+    <div class="ui-tab page4 js-active">
+            <a class="f-left my-top-bar" data-toggle="tab" data-target=".goto-page1" role="button">
+                <span class="ui-icon ion-ios7-arrow-back"></span>
+                <span class="ui-label">返回</span>
+            </a>
+            <a class="f-right my-top-bar" data-toggle="tab" data-target=".goto-page2" role="button">购物车</a>
+        </ul>        
+    </div>
+</div>
+
+<div class="ui-bottom-bar js-no-bounce bottom-bar-details" role="toolbar" id="bottom-bar-detail"  > <!-- tabindex="0" 在android上会触发一个高亮边框 -->
+    <!-- 尾部内容 商品详情页面底部 -->
+    <div class="join">
+        <span class="join-m">加入购物车</span>
+        <span class="j-change">-</span>
+        <span class="j-num">1</span>
+        <span class="j-change">+</span>
+        <span class="join-m">立即购买</span>
+    </div>    
+    <!-- /尾部内容-->
+</div>
+
+<div class="ui-page jiu-page-detail js-active">
+    <div class="ui-page-content">
+        <div class="ui-carousel js-slide" data-ride="carousel">
+            <ol class="ui-carousel-indicators">
+                <li class="js-active"></li>
+                <li></li>
+                <li></li>
+                <li></li>
+            </ol>
+            <div class="ui-carousel-inner">
+                <div class="ui-carousel-item js-active">
+                    <img width="100%" src="http://lorempixel.com/640/300/sports/1/">
+                </div>
+                <div class="ui-carousel-item">
+                    <img width="100%" src="http://lorempixel.com/640/300/sports/2/">
+                </div>
+                <div class="ui-carousel-item">
+                    <img width="100%" src="http://lorempixel.com/640/300/sports/3/">
+                </div>
+                <div class="ui-carousel-item">
+                    <img width="100%" src="http://lorempixel.com/640/300/sports/4/">
+                </div>
+            </div>
+        </div>
+        <p class="banner-text">41度口子窖六年真藏实窖450ml</p>
+        <div class="peisong">
+            <div class="peisong-li">
+                <span class="peisong-l">微信会员价：</span>
+                <div class="peisong-r">
+                    <p><span class="peisong-price">￥128</span><span class="jiesheng">节省￥40</span></p>
+                    <p class="market-p">市场价：￥168</p>
+                </div>
+            </div>
+            <div class="peisong-li">
+                <span class="peisong-l">配送方式：</span>
+                <div class="peisong-r">
+                    <p><span class="peisong-h">阜阳市区内免费2小时内送到</span></p>
+                    <p class="peisong-h">其他地区快递免费</p>
+                </div>
+            </div>
+        </div> 
+        <p class="item-detail">商品详情</p>
+        <div class="item-msg">
+            <p><span>品牌：</span><span>口子窖</span></p>
+            <p><span>产地：</span><span>安徽</span></p>
+            <p><span>品牌：</span><span>口子窖</span></p>
+            <p><span>产地：</span><span>安徽</span></p>
+            <p><span>品牌：</span><span>口子窖</span></p>
+            <p><span>产地：</span><span>安徽</span></p>
+            <p><span>品牌：</span><span>口子窖</span></p>
+            <p><span>产地：</span><span>安徽</span></p>                                    
+        </div>
+    </div>
+</div>
+
+<!-- 对话类内容: 属于App级别，应在App节点下 -->
+
+<div id="myNotify" data-backdrop=false data-expires=2000 role="dialog" class="ui-dialog" aria-labelledby="myNotifyLable" aria-hidden="true">
+    <div class="js-dialog-content ui-notify">
+        <p id="myNotifyLable">城市定位失败</p>
+    </div>
+</div>
+
+<div id="myLoading" data-backdrop=false role="dialog" class="ui-dialog" aria-labelledby="myNotifyLable" aria-hidden="true">
+    <div class="js-dialog-content ui-notify">
+        <a data-dismiss="dialog" class="ui-pop-cancel">取消</a>
+    </div>
+</div>
+
+<div id="myAlert" role="alertdialog"  class="ui-dialog" aria-labelledby="myAlertLable" aria-hidden="true">
+    <div class="js-dialog-content ui-alert">
+        <div class="ui-alert-header"><h3 class="ui-alert-title" id="myAlertLable">Title</h3></div>
+        <div class="ui-alert-body" role="note"><p>This is a message.</p></div>
+        <div class="ui-alert-footer">
+            <!-- 尽量避免使用 button 元素，在小米上是会有点击高亮边框 -->
+            <a data-dismiss="dialog" role="button" class="ui-alert-button">确定</a>
+            <a data-dismiss="dialog" role="button" class="ui-alert-button">取消</a>
+        </div>
+    </div>
+</div>
+
+<div id="myActionsheet" role="dialog" class="ui-dialog" aria-labelledby="myActionsheetLable" aria-hidden="true">
+    <div class="js-dialog-content ui-actionsheet">
+        <ul>
+            <li role="button" data-dismiss="dialog">删除</li>
+            <li role="button" data-dismiss="dialog">发送</li>
+        </ul>
+        <a role="button" data-dismiss="dialog" class="ui-actionsheet-cancel">取消</a>
+    </div>
+</div>
+
+<!-- /对话类内容 -->
+
+<script data-main="js/index" src="js/require.js"></script>
+
+</body>
+</html>
