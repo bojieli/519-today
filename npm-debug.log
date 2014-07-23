@@ -17,9 +17,9 @@
 10 error You can get their info via:
 10 error     npm owner ls 519today
 10 error There is likely additional logging output above.
-11 error System Linux 2.6.32-openvz-042stab085.20-amd64
+11 error System Linux 2.6.32-5-amd64
 12 error command "/usr/local/bin/node" "/usr/local/bin/npm" "start"
-13 error cwd /root/519today
+13 error cwd /home/zw/519/519-today
 14 error node -v v0.10.29
 15 error npm -v 1.4.14
 16 error code ELIFECYCLE
