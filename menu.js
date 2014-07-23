@@ -14,7 +14,7 @@ var createMenuData = {
 	{	
 		"type":"view",
 		"name":"买酒",
-		"url":"http://node.freeshell.ustc.edu.cn/"
+		"url":"http://519.today/"
 	},{
 		"type":"view", 
 		"name":"推广",
