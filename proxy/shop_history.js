@@ -1,6 +1,6 @@
 var config = require('../config');
 var models = require('../models');
-var ShopHistory = models.History;
+var ShopHistory = models.ShopHistory;
 var Order = models.Order;
 var Wine = models.Wine;
 
@@ -60,10 +60,12 @@ exports.getHistory = function(openID,cb){
 * @param{String} orderID :
 */
 exports.updateHistory = function(openID,orderID,cb){
-  ShopHistory.update({openID : openID},{$push : {orderList : orderID}},afterUpdate);
+  ShopHistory.update({openID : openID},{$push : {orderList : orderID}},{upsert : true},afterUpdate);
 
   function afterUpdate(err,shop_history){
     if(err){
+      console.log('======================++++++++++++++++++++++');
+      console.log(err);
       cb(config.errorCode_update);
     } else{
       cb(err);

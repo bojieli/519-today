@@ -28,10 +28,9 @@
  });
 
 mongoose.model('Wine',WineSchema);*/
-
-var Wine = require('../models').Wine;
 /*
-module.exports.test = function(){
+var Wine = require('../models').Wine;
+
   wine = new Wine({
         id : "fy20140716002",
         name : "口子窖",
@@ -95,7 +94,9 @@ module.exports.test = function(){
         purchaseNum : 0
   });
   wine2.save();
-}*/
+  console.log('Ok!');*/
+
+
 var User = require('../proxy').User;
 var openID = 'owaixtwzZUF3Qma5s8xH0N__mwK0';
 
@@ -103,9 +104,9 @@ var openID = 'owaixtwzZUF3Qma5s8xH0N__mwK0';
     province : '安徽',
     city : '合肥',
     area : '蜀山区',
-    detail : '金寨路96号',
-    name : '格物',  //收件人
-    tel : '13966670000'
+    detail : '金寨路88号',
+    name : 'hehe',  //收件人
+    tel : '13966670022'
   }
 User.addAddress(openID,address,function(err){return err});
 

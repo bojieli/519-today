@@ -14,7 +14,6 @@ exports.getProduct = function(req,res){
 			wines[wines_length] = wine;
 			wines_length ++ ;
 			if(wines_length===query_length){
-				console.log(wines);
 				var r = {
 					list : wines,
 					s_dir : config.small_dir,

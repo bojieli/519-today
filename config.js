@@ -6,6 +6,7 @@ var config = {
 	redirect_url : encodeURIComponent('http://519.today/login'),
 	appid : 'wxd8c15c2734dacb07',
 	secret : '188081716b20d3d655ed14328dcf7e90',
+	host : 'http://519.today',
 
 	/*
 	*some important errorCode

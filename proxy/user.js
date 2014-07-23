@@ -32,6 +32,9 @@ exports.getUserByOpenID = function(openID,cb){
 */
 exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
   User.findOne({openID : openID},afterFind);
+  console.log('======================afterVertify========================');
+  console.log(openID);
+  console.log(preOpenID);
 
   function afterFind(err,user){
     if(err) return cb(err);
@@ -64,6 +67,7 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
         currentAddress :{},
         address : []
       }
+      console.log(newUser);
 
       User.create(newUser,afterCreate);
     }
@@ -75,6 +79,8 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
 
   function afterCreate(err,user){
     if(err){
+      console.log('==============create error ========================')
+      console.log(err);
       return cb(config.errorCode_create);
     }else if(user){
       global.sceneID_web_count++;
@@ -136,12 +142,14 @@ exports.getAddressByOpenID = function(openID,cb){
 */
 exports.updatePreCash = function (order, cb){
   User.findOne({openID : order.openID}, userFind1);
+  console.log('updatePreCash');
   function userFind1 (err, user){
     if(err) cb(err);
     if(user.preOpenID){
+      console.log('cash 1\n' + order.totalPrice * config.ratio_1 );
       User.update({openID : user.preOpenID},
-                  {$inc : {cash : (order.totalPrice - order.cashUse)*config.ratio_1}},
-                  cb(err));
+                  {$inc : {cash : order.totalPrice * config.ratio_1}},
+                  cb);
       User.findOne({openID : user.preOpenID}, userFind2);
     }
     
@@ -149,9 +157,10 @@ exports.updatePreCash = function (order, cb){
   function userFind2 (err,user){
     if(err) cb(err);
     if(user.preOpenID){
+      console.log('cash 2\n' + order.totalPrice * config.ratio_2 );
       User.update({openID : user.preOpenID},
-                  {$inc : {cash : (order.totalPrice - order.cashUse)*config.ratio_2}},
-                  cb(err));
+                  {$inc : {cash : order.totalPrice * config.ratio_2}},
+                  cb);
       User.findOne({openID : user.preOpenID}, userFind3);
     }
   }
@@ -159,8 +168,8 @@ exports.updatePreCash = function (order, cb){
     if(err) cb(err);
     if(user.preOpenID){
       User.update({openID : user.preOpenID},
-                  {$inc : {cash : (order.totalPrice - order.cashUse)*config.ratio_3}},
-                  cb(err));
+                  {$inc : {cash : order.totalPrice * config.ratio_3}},
+                  cb);
     }
   }
 }

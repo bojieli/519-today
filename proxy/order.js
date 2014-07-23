@@ -13,8 +13,6 @@ var Order = models.Order;
 exports.createOrder = function(req,cb){
   var orderID = getOrderID();
   var info = req.body;
-  console.log("======================info=================");
-  console.log(info);
   var order = {};
   if(info.dialComfirm){//使用电话确认
     order = {
@@ -23,7 +21,6 @@ exports.createOrder = function(req,cb){
       confirmTel : info.confirmTel,
       shopOnce : info.shopOnce,
       address : {},
-      date : Date.now,
       cashUse : info.cashUse,
       voucherUse : info.voucherUse,
       statue : false,
@@ -36,7 +33,6 @@ exports.createOrder = function(req,cb){
       confirmTel : info.address.tel,//确认电话默认地址中的联系方式
       shopOnce : info.shopOnce,
       address : info.address,
-      date : Date.now,
       cashUse : info.cashUse,
       voucherUse : info.voucherUse,
       statue : false,
