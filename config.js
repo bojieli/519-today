@@ -1,9 +1,5 @@
 var config = {
-<<<<<<< HEAD
-	port :8088,
-=======
 	port :6088,
->>>>>>> 37af1eacc98a952d164fbd91ce6d68aec1ced3d2
 	session_secret: '519_Today',
 	db : 'mongodb://localhost/519_Today_dev',
 	db_name : '519_Today_dev',
