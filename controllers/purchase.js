@@ -28,10 +28,15 @@ exports.updateOrder = function (req, res) {
       if(err){ 
       //  console.log(err);
         res.send(err);
+        return;
       }
     });
     //更新用户的购物历史
-    ShopHistory.updateHistory(order.openID,order.orderID,function(err){if(err) res.send(err);});
+    ShopHistory.updateHistory(order.openID,order.orderID,function(err){
+      if(err) res.send(err);
+      return;
+       res.send({message : 'OK', error : 0});
+    });
     //更新用户上线的现金券
     //现金券应该在收到钱，确认收款后才能收款
     //User.updatePreCash(order,function(err){ if(err) res.send(err);});
