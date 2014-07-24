@@ -58,6 +58,7 @@ exports.findByID = function(id,cb){
 
   function wineFind(err,wine){
     if(err){
+      //cb(err);
       cb(config.errorCode_find,null);
     }else{
       cb(err,wine);
@@ -78,9 +79,12 @@ exports.findByIDs = function(ids, cb){
 exports.findRecommend = function(cb){
 	Wine.find({"tag.isRecommend" : true} , winesFind);
 
+
   function winesFind(err,wines){
     if(err){
-      cb(config.errorCode_find,null);
+      cb(err);
+      console.log('winesFind(err,wines)');
+      //cb(config.errorCode_find,null);
     }else{
       cb(err,wines);
     }

@@ -9,8 +9,9 @@
  */
 var User = require('../proxy').User;
 
-exports.getCashVoucherByOpenID = function (req, res) {
+exports.getCashVoucherByOpenID = function (req, res, next) {
  	User.getCashVoucherByOpenID(req.session.openID,function(err,user){
+ 		if(err) return next(err);
  		res.send(user);
  	});
 };

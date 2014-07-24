@@ -9,8 +9,8 @@
  */
 var Collect = require('../proxy').Collect;
 
-exports.modifyCollect = function (req, res) {
+exports.modifyCollect = function (req, res, next) {
   Collect.update(req.session.openID, req.body.id,req.body.method,function(err){
-    if(err) res.send(err);
+    if(err) return next(err);
   });
 }
