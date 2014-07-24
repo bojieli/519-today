@@ -5,8 +5,8 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
-    <title>TypeScript HTML App</title>
-    <style>   
+    <title>我的推荐</title>
+    <style>
         img {
 	        max-width :80%;
 	        display:block;
@@ -14,24 +14,33 @@
         }
 
         button {
-	        display:block;
-	        text-align :center;
-	        font-size : 16px;
-	        color: darkslategrey;
-	        width : 50%;
-            border-radius : 2px;
-	        background-color : #CCFFCC;
-            margin-bottom:5px
+                display: inline-block;
+                padding: 6px 12px;
+                margin-bottom: 3px;
+                font-size: 14px;
+                font-weight: normal;
+                line-height: 1.42857143;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: middle;
+                cursor: pointer;
+                background-image: none;
+                border: 1px solid transparent;
+                border-radius: 4px;
+                color: darkslategrey;
+                width : 80%;
+                border-radius : 2px;
+                background-color : #CCFFCC;
         }
     </style>
 </head>
 <body style =" font-family: 'Segoe UI', sans-serif;">
-    <h1 style ="text-align:center">我的推荐</h1>
+    <h1 style ="text-align:center;color: #99CC99">扫一扫</h1>
     <div id="content">
         <center>
             <img src ="./image/test.JPG"/>
-            <button onclick ="window.location.href('http://baidu.com')"><b>查看返券规则</b></button>
-            <button onclick ="window.location.href('http://ustc.edu.cn')"><b>分享到朋友圈</b></button>
+            <button onclick ="window.location.href = 'http://baidu.com'"><b>查看返券规则</b></button>
+            <button onclick ="window.location.href = 'http://ustc.edu.cn'"><b>分享到朋友圈</b></button>
         </center>
     </div>
 </body>
