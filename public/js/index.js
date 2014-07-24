@@ -223,9 +223,6 @@ require([
         $.uploadErrorLog(cart);
         delete cart[$.tempStorage.cartListTap.data('code')];
         localStorage.cart = JSON.stringify(cart);
-        $.post("/test",{a:1},function(data,status){
-            alert(JSON.stringify(data));
-        });
         $.tempStorage.cartListTap.remove();
     });
     $("#as_cart_view_detail").on('tap',function(){
@@ -282,7 +279,6 @@ require([
         var $li = $(".cart-address-list li.j-address-item");
         var $myli = $(".my-address-list li.j-address-item");
         getAddr(function(err,data){
-            alert(JSON.stringify(data));
             $.uploadErrorLog(data,"address");
             if(!data)
                 return;
@@ -347,6 +343,7 @@ require([
     });
 
     $("#addressActionsheet ul li").on('tap',function(){
+        alert("tap");
         var handle = {
             'setDefault' : function($this){
                 $.get("/default_address",{index:$this.data(index)},function(data,status){
@@ -368,7 +365,7 @@ require([
         };
         handle[$(this).data('action')]($.tempStorage.tapAddressItem);
     });
-
+    updateAddrUI();
     //=======================确认订单=======================
     $(document).on('tap',"#cart_confirm",function(){
         var purchase = {};
@@ -384,7 +381,6 @@ require([
         purchase.voucherUse = 0;
         purchase.totalPrice = parseInt($("#cart_total_cost").text());
         localStorage.purchase = JSON.stringify(purchase);
-        updateAddrUI();
     });
 
     //=======================货到付款=======================
