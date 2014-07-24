@@ -128,7 +128,7 @@
 	line-height: 30px;
 }
 .list-right-forward{
-	/*float: right;*/
+	float: right;
 	/*vertical-align: middle;*/
 	font-size: 32px;
 	line-height: 92px;
