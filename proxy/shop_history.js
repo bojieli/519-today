@@ -1,4 +1,5 @@
 var config = require('../config');
+var errUtil = require('./wrap_error');
 var models = require('../models');
 var ShopHistory = models.ShopHistory;
 var Order = models.Order;
@@ -14,7 +15,12 @@ exports.getHistory = function(openID,cb){
   ShopHistory.findOne({openID : openID},historyFind);
 
   function historyFind(err,shop_history){
-    if(err || !shop_history) cb(config.errorCode_find,null);
+    if(err) {
+      errUtil.wrapError(err,config.errorCode_find,"getHistory().historyFind()","/proxy/shop_history",{
+        openID:openID
+      });
+      return(err,null);
+    }
 
     if(shop_history){
       Order.find({orderID : {$in : shop_history.orderList}},orderFind);
@@ -23,7 +29,12 @@ exports.getHistory = function(openID,cb){
   }
 
   function orderFind(err,orders){
-    if(err || !orders) cb(config.errorCode_find,null);
+    if(err){
+      errUtil.wrapError(err,config.errorCode_find,"getHistory().orderFind()","/proxy/shop_history",{
+        openID:openID
+      });
+      return(err,null);
+    }
 
     if(orders){
       var idList = [];
@@ -43,8 +54,9 @@ exports.getHistory = function(openID,cb){
   }
 
   function wineFind(err,wines){
-    if(err){
-      cb(config.errorCode_find,null);
+   if(err){
+      errUtil.wrapError(err,config.errorCode_find,"getHistory().wineFind()","/proxy/shop_history",{openID:openID});
+      return(err,null);
     }else{
       cb(err,wines);
     }
@@ -63,10 +75,12 @@ exports.updateHistory = function(openID,orderID,cb){
   ShopHistory.update({openID : openID},{$push : {orderList : orderID}},{upsert : true},afterUpdate);
 
   function afterUpdate(err,shop_history){
-    if(err){
-      console.log('======================++++++++++++++++++++++');
-      console.log(err);
-      cb(config.errorCode_update);
+   if(err){
+      errUtil.wrapError(err,config.errorCode_update,"updateHistory()","/proxy/shop_history",{
+        openID:openID,
+        orderID:orderID
+      });
+      return(err);
     } else{
       cb(err);
     }

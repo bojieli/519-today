@@ -1,4 +1,5 @@
 var config = require('../config')
+var errUtil = require('./wrap_error');
 var models = require('../models');
 var Collect = models.Collect;
 
@@ -13,7 +14,15 @@ var Collect = models.Collect;
 exports.update = function(openID,id,method,cb){
   Collect.findOne({openID : openID},afterFind);
   function afterFind(err,collect){
-    if(err) return cb(config.errorCode_find);
+    if(err) {
+      errUtil.wrapError(err,config.errorCode_find,"update()","/proxy/collect",{
+        openID:openID,
+        id:id,
+        method:method
+      });
+      return cb(err);
+    }
+
     if(method === 'collect'){
      Collect.update({openID : openID},{$addToSet : {collectList : id}},afterUpdate);
     }else if(method === "cancelCollect"){
@@ -23,7 +32,12 @@ exports.update = function(openID,id,method,cb){
 
   function afterUpdate(err){
     if(err){
-      cb(config.errorCode_update);
+      errUtil.wrapError(err,config.errorCode_update,"update()","/proxy/collect",{
+        openID:openID,
+        id:id,
+        method:method
+      });
+      return cb(err);
     }else{
       cb(err);
     }

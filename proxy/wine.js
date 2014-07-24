@@ -39,7 +39,9 @@ exports.addVisit = function(id,cb){
 
   function afterUpdate(err){
     if(err){
-      cb(config.errorCode_update);
+      errUtil.wrapError(err,config.errorCode_update,"addVisit()","/proxy/wine",
+         {id:id});
+      return cb(err);
     }else{
       cb(null);
     }
@@ -58,7 +60,9 @@ exports.findByID = function(id,cb){
 
   function wineFind(err,wine){
     if(err){
-      cb(config.errorCode_find,null);
+     errUtil.wrapError(err,config.errorCode_find,"findByID()","/proxy/wine",
+         {id:id});
+      return cb(err);
     }else{
       cb(err,wine);
     }
@@ -80,7 +84,9 @@ exports.findRecommend = function(cb){
 
   function winesFind(err,wines){
     if(err){
-      cb(config.errorCode_find,null);
+     errUtil.wrapError(err,config.errorCode_find,"findRecommend()","/proxy/wine",
+         {});
+      return cb(err,null);
     }else{
       cb(err,wines);
     }
