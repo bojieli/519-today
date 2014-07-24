@@ -343,10 +343,10 @@ require([
     });
 
     $("#addressActionsheet ul li").on('tap',function(){
-        alert("tap");
         var handle = {
             'setDefault' : function($this){
                 $.get("/default_address",{index:$this.data(index)},function(data,status){
+                    alert(data);
                     if(status !== 'success'){
                         $.uploadErrorLog({r:"fail to set default address"},"delete_address");
                         return alert("网络故障，稍后重试");
@@ -357,8 +357,9 @@ require([
                 });
             },
             'delete':function($this){
-                $.post("/delete_address",{index : $this.data('index')},function(data,status){
 
+                $.post("/delete_address",{index : $this.data('index')},function(data,status){
+                    alert(data);
                     $this.remove();
                 });
             }
