@@ -346,7 +346,7 @@ require([
         var handle = {
             'setDefault' : function($this){
                 alert("setDefault");
-                $.get("/default_address",{index:$this.data(index)},function(data,status){
+                $.get("/default_address",{index : $this.data('index')},function(data,status){
                     alert(data);
                     if(status !== 'success'){
                         $.uploadErrorLog({r:"fail to set default address"},"delete_address");
