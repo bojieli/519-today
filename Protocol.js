@@ -5,9 +5,19 @@ app.get('/address',address.getAddressByOpenID);
 
 app.post('/add_address',address.addAddress); 
 //没有返回，前端发送数据格式为单个address
+//返回格式为:
+{message : String, error : Number}
+{message : 'OK', error : 0}//成功
+{message : 'Format Error', error : 1}//格式错误
+{message : 'DataBase Error', error : 2}//数据库出错
+
 
 app.post('/delete_address',address.deleteAddress);
 //删除address，前端发送数据格式为index = INDEX
+{message : String, error : Number}
+{message : 'OK', error : 0}//成功
+{message : 'Index Error', error : 1}//索引错误
+{message : 'DataBase Error', error : 2}//数据库出错
 
 app.get('/default_address',address.defaultAddress);
 //设置默认address，前端发送数据格式为?index = INDEX
@@ -79,3 +89,10 @@ app.post('/purchase',purchase.updateOrder);
   cashUse : Number,
   voucherUse : Number,
   totalPrice : Number
+
+
+  //可能出现的错误：
+{message : String, error : Number}
+{message : 'OK', error : 0}//成功
+{message : 'Tel Error', error : 1}//地址和确认电话都为空
+{message : 'cashUse Error', error : 2}//cashUse 大于现金券总数
