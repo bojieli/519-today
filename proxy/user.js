@@ -32,8 +32,11 @@ exports.getUserByOpenID = function(openID,cb){
 */
 exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
   User.findOne({openID : openID},afterFind);
+<<<<<<< HEAD
   console.log(openID);
   console.log(preOpenID);
+=======
+>>>>>>> bc6a7e57916f0e0e465ccfe560c6ea027b8ec16c
 
   function afterFind(err,user){
     if(err) return cb(err);

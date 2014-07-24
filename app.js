@@ -11,10 +11,31 @@ var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var weixin = require('./weixin/weixin');
 var app = express();
+//error handle
+
+var fs = require('fs');
+
+
 
 //更新globalSceneID
 require('./proxy/global_sceneid_count')();
 require('./weixin/proxy').updateGlobalSceneID();
+
+
+// accessLogfile
+//var accessLogfile = fs.createWriteStream('access.log', {flags : 'a'});
+var errorLogfile = fs.createWriteStream('./log/error.log',{flags : 'a'});
+var exceptionLogfile = fs.createWriteStream('./log/exception_error.log',{flags : 'a'});
+//app.use(express.logger({stream : accessLogfile}));
+process.on('uncaughtException', function(err) {
+  err.Stack = err.stack;
+  exceptionLogfile.write(JSON.stringify(err) + ',\n');
+  console.log(err + '\n');
+});
+
+
+
+
 
 
 // view engine setup
@@ -47,10 +68,11 @@ routes(app);
 app.listen(config.port, function (err) {
   console.log("519Today listening on port %d", config.port);
   console.log("God bless love....");
+  //throw new Error('dgjalsjgldjslgasljgldsjgldasj');
   //test.test();
 });
 
-/*
+
 /// catch 404 and forward to error handler
 app.use(function(req, res, next) {
     var err = new Error('Not Found');
@@ -62,25 +84,27 @@ app.use(function(req, res, next) {
 
 // development error handler
 // will print stacktrace
+
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
-        res.status(err.status || 500);
-        res.render('error', {
-            message: err.message,
-            error: err
-        });
+
+      err.Stack = err.stack;
+      errorLogfile.write(JSON.stringify(err));
+      console.log(err);
+      
     });
 }
 
 // production error handler
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
+
+   /* res.status(err.status || 500);
     res.render('error', {
         message: err.message,
         error: {}
-    });
+    });*/
 });
-*/
+
 
 module.exports = app;

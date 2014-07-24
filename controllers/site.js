@@ -10,7 +10,7 @@
  var Wine = require('../proxy').Wine;
  var config = require('../config');
 
- exports.visitHome = function(req,res){
+ exports.visitHome = function(req,res,next){
 	var recommendList = [];
 	var recordList = [];
 	var r = 'home';		
@@ -18,6 +18,7 @@
 		r = req.query.r;		
 	}
 	Wine.findRecommend( function (err,wineList){
+		if(err) return next(err);
 		for(var i=0;i<wineList.length;i++){
 			recommendList.push({
 				LittlePic : config.small_dir + wineList[i].littlePic,

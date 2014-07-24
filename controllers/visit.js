@@ -13,7 +13,7 @@ var Wine = require('../proxy').Wine;
 exports.addVisit = function (req, res) {
 
   	Wine.addVisit(req.body['id'],function(err){
-  		return err;
+  		if(err) return next(err);
   	});
 
 };

@@ -1,7 +1,7 @@
 var Wine = require('../proxy').Wine;
 var config = require('../config');
 
-exports.getProduct = function(req,res){
+exports.getProduct = function(req, res, next){
 	var wines = [];
 	var wines_length = 0;
 	var query_length = req.query.r.length;
@@ -9,7 +9,7 @@ exports.getProduct = function(req,res){
 	for(var i = 0; i < query_length; i++){
 		Wine.findByID(req.query.r[i],afterfind);
 		function afterfind(err,wine){
-			
+			if(err) return next(err);
 			delete wine._id;
 			wines[wines_length] = wine;
 			wines_length ++ ;

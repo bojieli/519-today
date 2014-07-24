@@ -5,7 +5,7 @@
 错误格式
 {
 	err_code : Number,
-	err : String,
+	err_message : String,
 	date : Date
 	//如果是在特定地方出错，还应该输出特定地方的标志性变量
 }
