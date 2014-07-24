@@ -4,9 +4,9 @@
     <div class="ui-tab page1  <%= r=='home' ? 'js-active':'' %>">
         <ul class="ui-groupbutton" role="tablist">
             <li class="ui-button js-active" data-toggle="tab" data-target="#page1-tab1" aria-controls="tab1" role="tab">推荐</li>
-            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab2" role="tab">白酒</li>
-            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab3" role="tab">红酒</li>
-            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab4" role="tab">啤酒</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab2" role="tab">全部</li>
+<!--             <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab3" role="tab">红酒</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab4" role="tab">啤酒</li> -->
         </ul>
     </div>
     <div class="ui-tab page2 <%= r=='shopcart' ? 'js-active':'' %>">
@@ -57,13 +57,13 @@
                 <p class="tab-info">今日推荐</p>
                 <ul class="item-wrapper">
                     <% for(var i=0;i<recommendList.length;i++){ %>
-                    <li class="item" data-code= <%= recommendList[i].Code %> >
+                    <a class="item" href="/details?code=<%= recommendList[i].Code %>" data-code= <%= recommendList[i].Code %> >
                         <div class="item-inner">
                             <img src= <%= recommendList[i].LittlePic %> alt="">
                             <span class="market-sale">市场价：<%= recommendList[i].MarketPrice %>元</span>
                             <span class="wx-sale">微信价：<%= recommendList[i].WechatPrice %>元</span>
                         </div>
-                    </li>                        
+                    </a>                        
                     <% } %>                                               
                 </ul>
             </div>
@@ -71,6 +71,20 @@
 
         <div class="ui-tab" id="page1-tab2" role="tabpanel">   
            <!-- 白酒 -->
+            <div class="page1-tab1-bot">
+                <p class="tab-info">全部白酒</p>
+                <ul class="item-wrapper">
+                    <% for(var i=0;i<recommendList.length;i++){ %>
+                    <a class="item" href="/details?code=<%= recommendList[i].Code %>" data-code= <%= recommendList[i].Code %> >
+                        <div class="item-inner">
+                            <img src= <%= recommendList[i].LittlePic %> alt="">
+                            <span class="market-sale">市场价：<%= recommendList[i].MarketPrice %>元</span>
+                            <span class="wx-sale">微信价：<%= recommendList[i].WechatPrice %>元</span>
+                        </div>
+                    </a>                        
+                    <% } %>                                               
+                </ul>
+            </div>           
         </div>
 
         <div class="ui-tab" id="page1-tab2" role="tabpanel">   
@@ -108,7 +122,7 @@
                     <span class="f-right">剩余现金券￥<span id="cart-ticket-left">0</span></span>
                 </div>
                 <p class="all-r">费用合计：￥<span id="cart_total_cost">0</span></p>
-                <button class="ui-button ui-info confirm-btn" data-toggle="mytab" data-target=".page4" aria-controls="tab2" role="tab" id="cart_confirm">确认订单</button>
+                <button class="ui-button ui-info confirm-btn" data-toggle="mytab" data-target=".page4" aria-controls="tab2" id="cart_confirm">确认订单</button>
             </div>
             <div class="page2-tab2-bot order-load-info">
                 <p>正在努力加载购物车…</p>
@@ -159,9 +173,9 @@
                 </li>                
                 <li class="j-single j-add display-table">
                     <div class="j-info">
-                        <p>添加地址</p>
+                        <p>添加地址>></p>
                     </div>
-                    <span class="list-right-forward vertical-middle ui-icon ion-ios7-arrow-forward" style="display:table-cell;vertical-align:middle"></span>
+<!--                     <span class="list-right-forward vertical-middle ui-icon ion-ios7-arrow-forward" style="display:table-cell;vertical-align:middle"></span> -->
                 </li>
             </ul>
         </div>            
@@ -185,9 +199,9 @@
                 </li>
                 <li class="j-single j-add">
                     <div class="j-info">
-                        <p>添加地址</p>
+                        <p>添加地址>></p>
                     </div>
-                    <label class="to-right" for="">></label>
+                    <!-- <label class="to-right" for="">></label> -->
                 </li>
             </ul> 
             <!-- <button class="ui-button ui-info confirm-btn btn-top">微信支付</button> -->

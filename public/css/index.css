@@ -16,6 +16,7 @@
 	border-top: 1px solid #a0a0a0;
 }
 .item{
+	display: inline-block;
 	float: left;
 	/*border-top: 1px solid #a0a0a0;*/
 	width: 33.3%;
@@ -128,7 +129,7 @@
 	line-height: 30px;
 }
 .list-right-forward{
-	float: right;
+	/*float: right;*/
 	/*vertical-align: middle;*/
 	font-size: 32px;
 	line-height: 92px;
@@ -404,4 +405,8 @@ html, body {height: 100%;}
 }
 .display-table {
 	display: table;
+}
+
+.cart-ticket{
+	padding: 5px;
 }

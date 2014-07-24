@@ -110,23 +110,9 @@ require([
     }) ;
 
     $(document).on('tap','[data-toggle="mytab"]',function(){
-        alert($(this).html());
+        // e.preventDefault();
         $(this).tab('show');
     });
-
-    // $(document).on('tap','.ui-tab.page4 my-top-bar',function(){
-    //     $('.ui-tab.page4').removeClass("js-active");
-    //     $('.ui-page.page4').removeClass("js-active");
-    //     $('.ui-tab.page2').addClass("js-active");
-    //     $('.ui-page.page2').addClass("js-active");
-    // });
-
-    // $(document).on('tap','#cart_confirm',function(){
-    //     $('.ui-tab.page2').removeClass("js-active");
-    //     $('.ui-page.page2').removeClass("js-active");
-    //     $('.ui-tab.page4').addClass("js-active");
-    //     $('.ui-page.page4').addClass("js-active");
-    // });    
 
 	//=======================css fix=======================
 	function autoResize(){
@@ -139,10 +125,10 @@ require([
     /**
      * =======================UI-跳转========================
      */
-  	$(".item-wrapper .item").on("tap",function(){
-  		var code = $(this).data('code');
-  		location.href = "/details?code="+code;
-  	}) ; 
+  	// $(".item-wrapper .item").on("tap",function(){
+  	// 	var code = $(this).data('code');
+  	// 	location.href = "/details?code="+code;
+  	// }) ; 
   	// $(".item-wrapper .item").trigger("tap");
   	$(".my-top-bar").on("tap",function(){
 
@@ -228,7 +214,8 @@ require([
     	$(".jiu-li .jiu-single").on('tap',function(){
     	    // $("#changeCartActionsheet").();
     	    $.tempStorage.cartListTap = $(this);
-    	});      	
+    	}); 
+     	
     });  
  
     $("#as_cart_change_num").on('tap',function(){
