@@ -2,13 +2,12 @@ var Wine = require('../proxy').Wine;
 var config = require('../config');
 
 
-module.exports = function(req,res){
+module.exports = function(req, res, next){
 	// console.log(req.session);
 	var code = req.query && req.query.code;
 	console.log(code);
 	Wine.findByID(code,function(err,wine){
-		console.log('findByID');
-		console.log(wine);
+		if(err) return next(err);
 		var pics = [];
 		wine.bigPic.forEach(function(item){
 			pics.push(config.large_dir+item);

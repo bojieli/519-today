@@ -13,7 +13,7 @@ require([
             $("#detail_num").text(n-1);
         }            
     });  
-    $("#detail_add_cart").on("tap",function(){
+    function addToCart(){
         var _cart = localStorage.cart || '{}' ;
         var cart = JSON.parse(_cart);
         $("#topbar-cart-reddot").show();
@@ -21,8 +21,11 @@ require([
             num : parseInt($("#detail_num").text()) ,
             price : price
         };
-        localStorage.cart = JSON.stringify(cart);
-        
-    }); 
-    
+        localStorage.cart = JSON.stringify(cart);        
+    }
+    $("#detail_add_cart").on("tap",addToCart); 
+    $("#detail_shop_now").on("tap",function(){
+        addToCart();
+        location.href = "/?r=shopcart";        
+    });
 });

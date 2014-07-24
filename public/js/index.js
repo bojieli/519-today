@@ -110,22 +110,9 @@ require([
     }) ;
 
     $(document).on('tap','[data-toggle="mytab"]',function(){
+        // e.preventDefault();
         $(this).tab('show');
     });
-
-    // $(document).on('tap','.ui-tab.page4 my-top-bar',function(){
-    //     $('.ui-tab.page4').removeClass("js-active");
-    //     $('.ui-page.page4').removeClass("js-active");
-    //     $('.ui-tab.page2').addClass("js-active");
-    //     $('.ui-page.page2').addClass("js-active");
-    // });
-
-    // $(document).on('tap','#cart_confirm',function(){
-    //     $('.ui-tab.page2').removeClass("js-active");
-    //     $('.ui-page.page2').removeClass("js-active");
-    //     $('.ui-tab.page4').addClass("js-active");
-    //     $('.ui-page.page4').addClass("js-active");
-    // });    
 
 	//=======================css fix=======================
 	function autoResize(){
@@ -138,10 +125,10 @@ require([
     /**
      * =======================UI-跳转========================
      */
-  	$(".item-wrapper .item").on("tap",function(){
-  		var code = $(this).data('code');
-  		location.href = "/details?code="+code;
-  	}) ; 
+  	// $(".item-wrapper .item").on("tap",function(){
+  	// 	var code = $(this).data('code');
+  	// 	location.href = "/details?code="+code;
+  	// }) ; 
   	// $(".item-wrapper .item").trigger("tap");
   	$(".my-top-bar").on("tap",function(){
 
@@ -227,7 +214,8 @@ require([
     	$(".jiu-li .jiu-single").on('tap',function(){
     	    // $("#changeCartActionsheet").();
     	    $.tempStorage.cartListTap = $(this);
-    	});      	
+    	}); 
+
     });  
  
     $("#as_cart_change_num").on('tap',function(){
@@ -250,7 +238,7 @@ require([
     $("#as_cart_view_detail").on('tap',function(){
     	var code = $.tempStorage.cartListTap.data('code');
     	var num = JSON.parse(localStorage.cart)[code].num;
-        location.href("/details?code="+code+"&num="+num);
+        location.href = "/details?code="+code+"&num="+num ;
     });
     //======================获取券===========================
     function getTicket(cb){
@@ -398,9 +386,9 @@ require([
                 number : cart[i]['num']
             });
         }
-        purchase.cashUse = parseInt($("#cart-ticket-use").text());
+        purchase.cashUse = parseFloat($("#cart-ticket-use").text());
         purchase.voucherUse = 0;
-        purchase.totalPrice = parseInt($("#cart_total_cost").text());
+        purchase.totalPrice = parseFloat($("#cart_total_cost").text());
         localStorage.purchase = JSON.stringify(purchase);
     });
 

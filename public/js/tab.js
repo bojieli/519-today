@@ -10,7 +10,9 @@ define(['./event', './data', './touch'], function(){
 
     Tab.prototype.show = function () {
         var $this    = this.element;
-        if ($this.hasClass(activeClass)) return;
+        if ($this.hasClass(activeClass) && $this.data('toggle')=='tab') {
+            return;
+        }
 
         var $parent  = $this.parent();
         var selector = $this.data('target');
@@ -35,7 +37,7 @@ define(['./event', './data', './touch'], function(){
     };
 
     Tab.prototype.activate = function ($element, $container, callback) {
-        alert($element.html());
+        // alert($element.html());
         // Why use helper class? js-active class is also used in inner container.
         var helperClass = 'zepto-tab-' + Date.now();
         $container.addClass(helperClass);
@@ -49,13 +51,16 @@ define(['./event', './data', './touch'], function(){
     $.Tab = Tab;
 
     $.fn.tab = function ( option ) {
+
         return this.each(function () {
             var $this = $(this);
+
             var data  = $this.data('tab');
 
             if (!data) $this.data('tab', (data = new Tab(this)));
-            if (typeof option == 'string') data[option]()
-        })
+            if (typeof option == 'string') data[option]();
+
+        });
     };
 
     $(document).on('tap.tab.data-api', '[data-toggle="tab"]', function (e) {

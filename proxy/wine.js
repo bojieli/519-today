@@ -82,6 +82,7 @@ exports.findByIDs = function(ids, cb){
 exports.findRecommend = function(cb){
 	Wine.find({"tag.isRecommend" : true} , winesFind);
 
+
   function winesFind(err,wines){
     if(err){
      errUtil.wrapError(err,config.errorCode_find,"findRecommend()","/proxy/wine",
