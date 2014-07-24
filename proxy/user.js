@@ -259,7 +259,7 @@ exports.addAddress = function(openID,address,cb){
 }
 
 exports.deleteAddress = function(openID,index,cb){
-   User.findOne({openID : openID},"address",afterFind(err,user));
+   User.findOne({openID : openID},"address",afterFind);
 
   function afterFind(err,user){
     if(err) return cb(config.errCode_find);
@@ -286,7 +286,7 @@ exports.deleteAddress = function(openID,index,cb){
 
 exports.setDefault = function(openID,index,cb){
 
- User.findOne({openID : openID},"address",afterFind(err,user));
+ User.findOne({openID : openID},"address",afterFind);
 
   function afterFind(err,user){
     if(err) return cb(config.errCode_find);

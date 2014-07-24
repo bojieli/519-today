@@ -21,6 +21,8 @@ app.post('/delete_address',address.deleteAddress);
 
 app.get('/default_address',address.defaultAddress);
 //设置默认address，前端发送数据格式为?index = INDEX
+{message : String, error : Number}
+{message : 'OK', error : 0}//成功
 
 // 2、address的格式
   address : [{
