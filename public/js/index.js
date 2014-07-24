@@ -64,6 +64,7 @@ require([
 	$('[data-toggle="tab"]').on('shown:tab', function(e) {
 
 		var target = e.target // activated tab
+        alert(target);
 		var relatedTarget = e.relatedTarget // previous tab
 
 		var tab = target.innerText.trim().toLowerCase();
