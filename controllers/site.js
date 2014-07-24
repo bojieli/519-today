@@ -18,7 +18,6 @@
 		r = req.query.r;		
 	}
 	Wine.findRecommend( function (err,wineList){
-		console.log(wineList);
 		for(var i=0;i<wineList.length;i++){
 			recommendList.push({
 				LittlePic : config.small_dir + wineList[i].littlePic,

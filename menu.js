@@ -14,11 +14,11 @@ var createMenuData = {
 	{	
 		"type":"view",
 		"name":"买酒",
-		"url":"http://node.freeshell.ustc.edu.cn/"
+		"url":"http://519.today/"
 	},{
 		"type":"view", 
 		"name":"推广",
-		"url":"http://node.freeshell.ustc.edu.cn/promote"
+		"url":"http://519.today/promote"
 	},{
 		"type":"click" ,
 		"name":"更多",
@@ -37,10 +37,16 @@ var createMenuData = {
 			"name":"客服电话",
 			"type":'click',
 			"key":'v0_help'
-		},{
+		},
+		{
 			"name":"关于我们",
 			"type":"view",
 			"url":"http://xinyuan.fm/help"
+		},
+		{
+			"type":"view", 
+			"name":"登出",
+			"url":"http://519.today/logout"
 		}
 		]
 	}]

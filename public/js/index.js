@@ -223,9 +223,6 @@ require([
         $.uploadErrorLog(cart);
         delete cart[$.tempStorage.cartListTap.data('code')];
         localStorage.cart = JSON.stringify(cart);
-        $.post("/test",{a:1},function(data,status){
-            alert(JSON.stringify(data));
-        });
         $.tempStorage.cartListTap.remove();
     });
     $("#as_cart_view_detail").on('tap',function(){
@@ -278,11 +275,10 @@ require([
             cb(null,data);
         });
     }
-    function updateAddrUI(){
-        var $li = $(".j-address li.j-address-item");
-
+    function updateAddrUI(cb){
+        var $li = $(".cart-address-list li.j-address-item");
+        var $myli = $(".my-address-list li.j-address-item");
         getAddr(function(err,data){
-            alert(JSON.stringify(data));
             $.uploadErrorLog(data,"address");
             if(!data)
                 return;
@@ -307,20 +303,71 @@ require([
             }
             var addr = r.pop();
             while(addr){
-                $(".j-address").prepend(addr);
+                $(".cart-address-list").prepend(addr);
                 addr = r.pop();
             }
             $li.remove();
+            for(var i=0;i<data.length;i++){
+                var item = data[i];
+                var addli = $myli.clone();
+                addli.data('index',i);
+                addli.find('.j-province').text(item.province || "");
+                addli.find('.j-shi').text(item.city || "");
+                addli.find('.j-qu').text(item.area || "");
+                addli.find('.j-lu').text(item.detail || "");
+                addli.find('.j-name').text(item.name || "");
+                addli.find('.j-tel').text(item.tel || "");
+                if(i==0){
+                    addli.addClass("j-default");
+                }
+                addli.show();
+                r.push(addli);
+            }
+            addr = r.pop();
+            while(addr){
+                $(".my-address-list").prepend(addr);
+                addr = r.pop();
+            }
+            $myli.remove();
+            cb();            
         });
     }
     $(document).on('tap','.page4 .j-single',function(){
         $(this).parent().find('.j-single').removeClass('j-select');
         $(this).toggleClass('j-select');
         localStorage.defauleAddrIndex = $(this).data('index');
-    })    
+    });
 
+    $(document).on('tap','.my-address-list li.j-address-item',function(){
+        $.tempStorage.tapAddressItem = $(this) ;
+    });
+
+    $("#addressActionsheet ul li").on('tap',function(){
+        var handle = {
+            'setDefault' : function($this){
+                $.get("/default_address",{index : $this.data('index')},function(data,status){
+                    if(status !== 'success'){
+                        $.uploadErrorLog({r:"fail to set default address"},"delete_address");
+                        return alert("网络故障，稍后重试");
+                    }   
+                    localStorage.defauleAddrIndex = $this.data('index');
+                    $(".j-address-item.j-default").removeClass("j-default");
+                    $this.addClass("j-default");                                     
+                });
+            },
+            'delete':function($this){
+
+                $.post("/delete_address",{index : $this.data('index')},function(data,status){
+                    $this.remove();
+                });
+            }
+        };
+        handle[$(this).data('action')]($.tempStorage.tapAddressItem);
+    });
+    updateAddrUI();
     //=======================确认订单=======================
     $(document).on('tap',"#cart_confirm",function(){
+        alert('tap');
         var purchase = {};
         purchase.shopOnce = [];
         var cart = JSON.parse(localStorage.cart);
@@ -334,7 +381,6 @@ require([
         purchase.voucherUse = 0;
         purchase.totalPrice = parseInt($("#cart_total_cost").text());
         localStorage.purchase = JSON.stringify(purchase);
-        updateAddrUI();
     });
 
     //=======================货到付款=======================
@@ -350,5 +396,16 @@ require([
                 $.uploadErrorLog("post /purchase error");
             }
         });
+    });
+
+    //=======================显示券=========================
+    $.get('/cash_voucher',function(data,status){
+        if(status !== 'success'){
+            $.uploadErrorLog({r:"fail to get cash"},"cash_voucher");
+            return alert("网络故障，稍后重试");
+        } 
+        var cash = data.cash;
+        $("#my_cash_num").text(cash);
+        $("#my_cash_num").data('to',cash);        
     });
 })
