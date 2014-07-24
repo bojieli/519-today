@@ -108,6 +108,11 @@ require([
             $this.carousel($this.data())
         });
     }) ;
+
+    $(document).on('tap','[data-toggle="mytab"]',function(){
+        $(this).tab('show');
+    });
+
 	//=======================css fix=======================
 	function autoResize(){
 		var w = $(document).width();
@@ -410,4 +415,7 @@ require([
         $("#my_cash_num").text(cash);
         $("#my_cash_num").data('to',cash);        
     });
+
+    //============debug================
+
 })
