@@ -109,9 +109,19 @@ require([
         });
     }) ;
 
-    $(document).on('tap','[data-toggle="mytab"]',function(){
-        $(this).tab('show');
+    $(document).on('tap','.ui-tab.page4 my-top-bar',function(){
+        $('.ui-tab.page4').removeClass("js-active");
+        $('.ui-page.page4').removeClass("js-active");
+        $('.ui-tab.page2').addClass("js-active");
+        $('.ui-page.page2').addClass("js-active");
     });
+
+    $(document).on('tap','#cart_confirm',function(){
+        $('.ui-tab.page2').removeClass("js-active");
+        $('.ui-page.page2').removeClass("js-active");
+        $('.ui-tab.page4').addClass("js-active");
+        $('.ui-page.page4').addClass("js-active");
+    });    
 
 	//=======================css fix=======================
 	function autoResize(){
