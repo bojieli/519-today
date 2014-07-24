@@ -117,7 +117,7 @@ require([
 	autoResize();
 	$(window).resize(autoResize);
     /**
-     * ====================================================
+     * =======================UI-跳转========================
      */
   	$(".item-wrapper .item").on("tap",function(){
   		var code = $(this).data('code');
@@ -140,9 +140,12 @@ require([
 		$("#topbar-cart-reddot").show();
 		$("#bottombar-cart-reddot").show();
   	}
+    //=======================错误日志========================
   	$.uploadErrorLog = function(str,d){
   		$.post("/errlog?from="+d,{r:str});
   	};
+
+    //=======================获取商品详情====================
     $.getProductDetail = function(arr,cb){
         // 远程获取购物车中的商品信息
         $.get("/getProduct",{r:arr},function(data,status){
@@ -163,7 +166,7 @@ require([
     } ;
 
 
-
+    //========================购物车======================
     function getCartDetail(cb){
         var cart = localStorage.cart || '{}';
         cart = JSON.parse(cart);
@@ -230,7 +233,7 @@ require([
     	var num = JSON.parse(localStorage.cart)[code].num;
         location.href("/details?code="+code+"&num="+num);
     });
-
+    //======================获取券===========================
     function getTicket(cb){
     	$.get("/cash_voucher",function(data,status){
     		if(status!='success'){
