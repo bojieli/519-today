@@ -32,7 +32,6 @@ exports.getUserByOpenID = function(openID,cb){
 */
 exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
   User.findOne({openID : openID},afterFind);
-  console.log('======================afterVertify========================');
   console.log(openID);
   console.log(preOpenID);
 
@@ -67,7 +66,7 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
         currentAddress :{},
         address : []
       }
-      console.log(newUser);
+      // console.log(newUser);
 
       User.create(newUser,afterCreate);
     }
@@ -142,7 +141,7 @@ exports.getAddressByOpenID = function(openID,cb){
 */
 exports.updatePreCash = function (order, cb){
   User.findOne({openID : order.openID}, userFind1);
-  console.log('updatePreCash');
+  // console.log('updatePreCash');
   function userFind1 (err, user){
     if(err) cb(err);
     if(user.preOpenID){
@@ -175,15 +174,13 @@ exports.updatePreCash = function (order, cb){
 }
 
 exports.updateCashVoucher = function(order,cb){
-  if(order.cashUse <= 0 && order.voucherUse <= 0)  return cb(null);
-  
-
+  if(order.cashUse <= 0 && order.voucherUse <= 0)  return cb(null);  
   User.findOne({openID : order.openID},userFind);
 
   function userFind(err,user){
     if(err || !user) return cb(config.errCode_find);
-
     if(user){
+      
         if(order.cashUse > 0){
           if(order.cashUse > user.cash){
             return cb(config.errCode_cash);

@@ -17,16 +17,19 @@ exports.updateOrder = function (req, res) {
   Order.createOrder(req,afterOrder);
 
   function afterOrder(err,order){
+    console.log("afterOrder");
     if(err){
-      //console.log(err);
+      console.log("+++++++++++++++++++++++++");
+      console.log(err);
       res.send(err);
       return;
     }
     //更新用户的现金券
-    //console.log(order);
+    console.log(order);
     User.updateCashVoucher(order,function(err){ 
+      console.log("updateCashVoucher");
       if(err){ 
-      //  console.log(err);
+        console.log(err);
         res.send(err);
         return;
       }
