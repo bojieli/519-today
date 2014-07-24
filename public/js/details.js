@@ -17,7 +17,6 @@ require([
         var _cart = localStorage.cart || '{}' ;
         var cart = JSON.parse(_cart);
         $("#topbar-cart-reddot").show();
-        alert(code);
         cart[code] = {
             num : parseInt($("#detail_num").text()) ,
             price : price
