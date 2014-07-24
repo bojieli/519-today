@@ -110,6 +110,7 @@ require([
     }) ;
 
     $(document).on('tap','[data-toggle="mytab"]',function(){
+        alert($(this).html());
         $(this).tab('show');
     });
 
