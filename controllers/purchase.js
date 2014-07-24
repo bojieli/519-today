@@ -18,31 +18,12 @@ exports.updateOrder = function (req, res, next) {
 
   function afterOrder(err,order){
     console.log("afterOrder");
-    if(err){
-<<<<<<< HEAD
-      console.log("+++++++++++++++++++++++++");
-      console.log(err);
-      res.send(err);
-      return;
-    }
+
     //更新用户的现金券
-    console.log(order);
-=======
-      if(err) return next(err);
-    }
+    if(err) return next(err);
     //更新用户的现金券
->>>>>>> bc6a7e57916f0e0e465ccfe560c6ea027b8ec16c
     User.updateCashVoucher(order,function(err){ 
-      console.log("updateCashVoucher");
-      if(err){ 
-<<<<<<< HEAD
-        console.log(err);
-        res.send(err);
-        return;
-=======
         if(err) return next(err);
->>>>>>> bc6a7e57916f0e0e465ccfe560c6ea027b8ec16c
-      }
     });
     //更新用户的购物历史
     ShopHistory.updateHistory(order.openID,order.orderID,function(err){
