@@ -35,6 +35,7 @@ define(['./event', './data', './touch'], function(){
     };
 
     Tab.prototype.activate = function ($element, $container, callback) {
+        alert($element.html());
         // Why use helper class? js-active class is also used in inner container.
         var helperClass = 'zepto-tab-' + Date.now();
         $container.addClass(helperClass);
