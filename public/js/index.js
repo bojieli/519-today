@@ -345,6 +345,7 @@ require([
     $("#addressActionsheet ul li").on('tap',function(){
         var handle = {
             'setDefault' : function($this){
+                alert("setDefault");
                 $.get("/default_address",{index:$this.data(index)},function(data,status){
                     alert(data);
                     if(status !== 'success'){
