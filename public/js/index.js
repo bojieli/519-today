@@ -345,9 +345,7 @@ require([
     $("#addressActionsheet ul li").on('tap',function(){
         var handle = {
             'setDefault' : function($this){
-                alert("setDefault");
                 $.get("/default_address",{index : $this.data('index')},function(data,status){
-                    alert(data);
                     if(status !== 'success'){
                         $.uploadErrorLog({r:"fail to set default address"},"delete_address");
                         return alert("网络故障，稍后重试");
@@ -360,7 +358,6 @@ require([
             'delete':function($this){
 
                 $.post("/delete_address",{index : $this.data('index')},function(data,status){
-                    alert(data);
                     $this.remove();
                 });
             }
@@ -370,6 +367,7 @@ require([
     updateAddrUI();
     //=======================确认订单=======================
     $(document).on('tap',"#cart_confirm",function(){
+        alert('tap');
         var purchase = {};
         purchase.shopOnce = [];
         var cart = JSON.parse(localStorage.cart);
