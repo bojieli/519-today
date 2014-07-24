@@ -64,7 +64,6 @@ require([
 	$('[data-toggle="tab"]').on('shown:tab', function(e) {
 
 		var target = e.target // activated tab
-        alert(target);
 		var relatedTarget = e.relatedTarget // previous tab
 
 		var tab = target.innerText.trim().toLowerCase();
@@ -371,7 +370,6 @@ require([
     updateAddrUI();
     //=======================确认订单=======================
     $(document).on('tap',"#cart_confirm",function(){
-        alert('tap');
         var purchase = {};
         purchase.shopOnce = [];
         var cart = JSON.parse(localStorage.cart);
