@@ -35,11 +35,8 @@ exports.getUserByOpenID = function(openID,cb){
 * - err
 */
 exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
-<<<<<<< HEAD
-  User.findOne({openID : openID},afterFind);;
-=======
+
   User.findOne({openID : openID},afterFind);
->>>>>>> 2df9b26564717aee992618c87c163e62c4265e24
 
   function afterFind(err,user){
     if(err) {
@@ -76,10 +73,6 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
         currentAddress :{},
         address : []
       }
-<<<<<<< HEAD
-=======
-      // console.log(newUser);
->>>>>>> 2df9b26564717aee992618c87c163e62c4265e24
 
       User.create(newUser,afterCreate);
     }
@@ -162,11 +155,7 @@ exports.getAddressByOpenID = function(openID,cb){
 */
 exports.updatePreCash = function (order, cb){
   User.findOne({openID : order.openID}, userFind1);
-<<<<<<< HEAD
 
-=======
-  // console.log('updatePreCash');
->>>>>>> 2df9b26564717aee992618c87c163e62c4265e24
   function userFind1 (err, user){
     if(err) {
       errUtil.wrapError(err,config.errorCode_find,"updatePreCash().userFind1()","/proxy/user",
@@ -223,7 +212,6 @@ exports.updatePreCash = function (order, cb){
 }
 
 exports.updateCashVoucher = function(order,cb){
-<<<<<<< HEAD
   if(order.cashUse <= 0 && order.voucherUse <= 0)  return cb(null);
 
 
@@ -236,15 +224,8 @@ exports.updateCashVoucher = function(order,cb){
       return cb(err);
     }
 
-=======
-  if(order.cashUse <= 0 && order.voucherUse <= 0)  return cb(null);  
-  User.findOne({openID : order.openID},userFind);
-
-  function userFind(err,user){
-    if(err || !user) return cb(config.errCode_find);
->>>>>>> 2df9b26564717aee992618c87c163e62c4265e24
     if(user){
-      
+
         if(order.cashUse > 0){
           if(order.cashUse > user.cash){
             var err ={};
