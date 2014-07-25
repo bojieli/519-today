@@ -129,8 +129,14 @@ module.exports = function (app) {
       api.createTmpQRCode(sceneID,1800,function(err,result){
         var url = api.showQRCodeURL(result.ticket);
         //console.log(url);
-        res.write('<img src="'+url+'" width="50%">')
-        res.end();
+        //"window.location.href = 'http://baidu.com'"
+        //sceneIDurl = "window.location.href = 'http://519.today/share/?sceneID=" + sceneID + "'";
+        //sceneIDurl = "window.location.href = '/share/?sceneID=" + sceneID + "'"
+       // sceneIDurl = "window.location.href = 'http://519.today/share/'";
+       // console.log(sceneIDurl);
+        res.render('promote',{qrCodeurl : url});//, sceneIDurl : sceneIDurl});
+       // res.write('<img src="'+url+'" width="50%">')
+       // res.end();
 
       })
     
