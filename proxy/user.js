@@ -381,5 +381,21 @@ exports.setDefault = function(openID,index,cb){
     }
   }
 }
+/** 根据用户openID返回用户的订单信息
+* Callback:
+* -err
+* -orderInfos : [{
+                orderID :
+                wines:[{describe : String,
+                wechatPrice : Number,
+                littlePic : String,
+                num:Number}]
+                }]
+
+*/
+
+exports.getOrder = function(openID,cb){
+
+}
 
 

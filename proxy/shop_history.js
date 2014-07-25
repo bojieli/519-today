@@ -86,3 +86,109 @@ exports.updateHistory = function(openID,orderID,cb){
     }
   }
 }
+
+/** 根据用户openID返回用户的订单信息
+* Callback:
+* -err
+* -orderInfos : [{
+                orderID :
+                status : 0表示未确认，1表示已确认
+                wines:[{describe : String,
+                wechatPrice : Number,
+                littlePic : String,
+                num:Number}]
+                }]
+
+*/
+
+ orderID : String,
+  openID : String,
+  confirmTel : String,
+  shopOnce : [{
+    id : String,
+    number : Number
+  }],
+  address : {
+    province : String,
+    city : String,
+    area : String,
+    detail : String,
+    name : String,  //收件人
+    tel : String
+  },
+  date : { type : Date, default : Date.now },
+  cashUse : Number,
+  voucherUse : Number,
+  status : Boolean, //(0:unconfirmed,1:confirmed)
+  totalPrice : Number
+
+
+exports.getUserOrder = function(openID,cb){
+  ShopHistory.findOne({openID : openID},afterFind);
+  var orderInfos = [];
+  function histotyFind(err,shop_history){
+   if(err){
+      errUtil.wrapError(err,config.errorCode_find,"getUserOrder().histotyFind()","/proxy/shop_history",{
+        openID:openID,
+      });
+      return(err);
+    }
+
+    var orderList = shop_history.orderList;
+    Order.find({orderID : {$in : orderList}},orderFind);
+  }
+
+  function orderFind(err,orders){
+    if(err){
+       errUtil.wrapError(err,config.errorCode_find,"getUserOrder().orderFind()","/proxy/shop_history",{
+        openID:openID,
+      });
+      return(err);
+    }
+
+    var confirmedNum = 0;
+    var returnOrders = [];
+    for(var i = 0; i <= orders.length;i++){
+      var currOrder = orders[i];
+      if(currOrder.status === 0 ||confirmedNum <= 5){
+        if(confirmedNum <= 5){
+          confirmedNum ++;
+        }
+
+        var returnOrder = {};
+        returnOrder.orderID = currOrder.orderID;
+        returnOrder.status = currOrder.status;
+        returnOrder.wines = [];
+        var shopOnce = currOrder.shopOnce;
+
+        var idList = [];
+        var numList = [];
+        for(var j = 0;j < shopOnce.length;j++){
+          idList.push(shopOnce[j].id);
+          numList.push(shopOnce[j].number);
+        }
+
+        Wine.find({id : {$in : idList}},"describe wechatPrice littlePic",function(err,wines){
+          if(err || wines.length != idList.length){
+            errUtil.wrapError(err,config.errorCode_find,"getUserOrder().wineFind()","/proxy/shop_history",{
+              openID:openID
+            });
+            return(err);
+          }
+
+          for(var j = 0; j < idList.length;j++){
+            var wineInfo = {};
+            wineInfo.num = numList[j];
+            wineInfo.describe = wines[j].describe;
+            wineInfo.wechatPrice = wines[j].wechatPrice;
+            wineInfo.littlePic = config.small_dir + wines[j].littlePic;
+            returnOrder.wines.push(wineInfo);
+          }
+
+        });
+        returnOrders.push(returnOrder);
+      }
+    }
+    cb(err,returnOrders);
+  }
+}
