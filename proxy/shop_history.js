@@ -101,27 +101,6 @@ exports.updateHistory = function(openID,orderID,cb){
 
 */
 
- orderID : String,
-  openID : String,
-  confirmTel : String,
-  shopOnce : [{
-    id : String,
-    number : Number
-  }],
-  address : {
-    province : String,
-    city : String,
-    area : String,
-    detail : String,
-    name : String,  //收件人
-    tel : String
-  },
-  date : { type : Date, default : Date.now },
-  cashUse : Number,
-  voucherUse : Number,
-  status : Boolean, //(0:unconfirmed,1:confirmed)
-  totalPrice : Number
-
 
 exports.getUserOrder = function(openID,cb){
   ShopHistory.findOne({openID : openID},afterFind);
