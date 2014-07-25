@@ -443,6 +443,7 @@ require([
                 $addli.find(".order-list-price").text(wine.wechatPrice);
                 $addli.find(".order-list-num").text(wine.num);
                 $addli.find("img").attr('src',wine.littlePic);
+                $ul.append($addli);
             });
             $li.remove();
             $add.show();            
@@ -451,17 +452,20 @@ require([
             }else{
                 list_complete.push($add);
             }
-            var a = list_complete.pop();
-            while(a){
-                $parent.prepend(a);
-                a = list_complete.pop();
-            }
-            a = list_process.pop();
-            while(a){
-                $parent.prepend(a);
-                a = list_process.pop();
-            }
+
         });
+        var a = list_complete.pop();
+        while(a){
+            $parent.prepend(a);
+            a = list_complete.pop();
+        }
+        a = list_process.pop();
+        while(a){
+            $parent.prepend(a);
+            a = list_process.pop();
+        }        
+        $process.remove();
+        $complete.remove();
     }
 
     $.post('/getuserorder',function(data,status){
