@@ -190,18 +190,19 @@ require([
                 var list = data.list; 
                 var dir = data.s_dir;
                 var $ul = $("#order-list-container ul");
-                var $li = $ul.children("li.jiu-single");
+                var $li = $ul.children("li.template");
                 list.forEach(function(d){
                 	var addli = $li.clone();
+                    addli.addClass("jiu-single");
+                    addli.removeClass("template");
                 	addli.data('code',d.id);
                 	addli.find(".jiu-detail").text(d.describe);
                 	addli.find(".order-list-price").text(d.wechatPrice);
                 	addli.find(".order-list-num").text(cart[d.id]['num']);
                 	addli.find("img").attr('src',dir+d.littlePic);
                 	$ul.append(addli);
-                	$("#order-list-container").show();                	
+                	addli.show();                	
                 });
-                $li.remove();
                 $(".order-load-info").hide();
                 $("#order-confirm-container").show();
                 updateTicket(cart);
@@ -407,10 +408,25 @@ require([
         $.post("/purchase",purchase,function(data,status){
             if(status!='success'){
                 $.uploadErrorLog("post /purchase error");
+                return;
             }
+            // 清空购物车
+            
+            localStorage.purchase = "";
+            // 更新购物车
+            // 更新我的订单
+            updateMyOrder();
+            // 跳转页面
+            $('.ui-bottom-bar-button[data-target=".page3"]').trigger('tap');
+            $('.ui-button[data-target="#page3-tab1"]').trigger('tap');
         });
     });
-
+    function clearCart(){
+        localStorage.cart = '{}';
+        $(".order-load-info p").text("购物车中没有商品");
+        $(".order-load-info").show();
+        $("#order-confirm-container").show();        
+    }
     //=======================显示券=========================
     $.get('/cash_voucher',function(data,status){
         if(status !== 'success'){
@@ -437,6 +453,7 @@ require([
             $add.find(".order-id").text(item.orderID);
             var $li = $add.find("li.jiu-single");
             var $ul = $add.find("ul.jiu-li");
+            alert(JSON.stringify(item.wines));
             item.wines.forEach(function(wine){
                 var $addli = $li.clone();
                 $addli.find(".jiu-detail").text(wine.describe);
@@ -468,12 +485,16 @@ require([
         $complete.remove();
     }
 
-    $.post('/getuserorder',function(data,status){
-        if(status!='success'){
-            alert("fail to getuserorder");
-            return;
-        }
-        ininMyOrderUI(data);
-    });
+    function updateMyOrder(){
+        $.post('/getuserorder',function(data,status){
+            if(status!='success'){
+                alert("fail to getuserorder");
+                return;
+            }
+            ininMyOrderUI(data);
+        });        
+    }
+    updateMyOrder();
+
 
 })
