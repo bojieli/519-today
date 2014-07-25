@@ -80,7 +80,7 @@ exports.updateHistory = function(openID,orderID,cb){
         openID:openID,
         orderID:orderID
       });
-      return(err);
+      return cb(err);
     } else{
       cb(err);
     }
@@ -103,16 +103,20 @@ exports.updateHistory = function(openID,orderID,cb){
 
 
 exports.getUserOrder = function(openID,cb){
-  ShopHistory.findOne({openID : openID},afterFind);
+  ShopHistory.findOne({openID : openID},histotyFind);
   var orderInfos = [];
   function histotyFind(err,shop_history){
    if(err){
       errUtil.wrapError(err,config.errorCode_find,"getUserOrder().histotyFind()","/proxy/shop_history",{
         openID:openID,
       });
-      return(err);
+      return cb(err,[]);
     }
-
+    if(!shop_history){
+      return cb(null,[]);
+    }
+    console.log("===========shop_history=========");
+    console.log(shop_history);
     var orderList = shop_history.orderList;
     Order.find({orderID : {$in : orderList}},orderFind);
   }
@@ -122,12 +126,16 @@ exports.getUserOrder = function(openID,cb){
        errUtil.wrapError(err,config.errorCode_find,"getUserOrder().orderFind()","/proxy/shop_history",{
         openID:openID,
       });
-      return(err);
+      return cb(err);
     }
+    if(!orders){
+      return cb(null,[]);
+    }
+    var findCompleteNum = 0;
 
     var confirmedNum = 0;
     var returnOrders = [];
-    for(var i = 0; i <= orders.length;i++){
+    for(var i = 0; i < orders.length;i++){
       var currOrder = orders[i];
       if(currOrder.status === 0 ||confirmedNum <= 5){
         if(confirmedNum <= 5){
@@ -152,7 +160,7 @@ exports.getUserOrder = function(openID,cb){
             errUtil.wrapError(err,config.errorCode_find,"getUserOrder().wineFind()","/proxy/shop_history",{
               openID:openID
             });
-            return(err);
+            return cb(err,null);
           }
 
           for(var j = 0; j < idList.length;j++){
@@ -161,13 +169,20 @@ exports.getUserOrder = function(openID,cb){
             wineInfo.describe = wines[j].describe;
             wineInfo.wechatPrice = wines[j].wechatPrice;
             wineInfo.littlePic = config.small_dir + wines[j].littlePic;
+            console.log("============wineInfo=====")
+            console.log(wineInfo);
             returnOrder.wines.push(wineInfo);
+          }
+          findCompleteNum ++;
+          returnOrders.push(returnOrder);
+          if(findCompleteNum == orders.length){
+            cb(err,returnOrders);
           }
 
         });
-        returnOrders.push(returnOrder);
+
       }
     }
-    cb(err,returnOrders);
+
   }
 }

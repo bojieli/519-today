@@ -12,6 +12,7 @@ var config = require('./config');
 var request = require('request');
 var User = require('./proxy').User;
 var details = require('./controllers/details');
+var userOrder = require('./controllers/user_order');
 var errlog = require('./controllers/errlog');
 
 
@@ -82,6 +83,9 @@ module.exports = function (app) {
 
 //下单购买
 	app.post('/purchase',purchase.updateOrder);
+
+//获取用户订单
+  app.post('/getuserorder',userOrder.getUserOrder);
 
 //根据id获取酒
 	app.get('/getProduct',product.getProduct);
