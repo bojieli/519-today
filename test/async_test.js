@@ -17,8 +17,7 @@ async.waterfall([
 		console.log(historyOrders);
 		Order.find({orderID : {$in : historyOrders.orderList}},cb);
 	},
-	function findOrdersbyPreOrders(preOrders, cb){
-	
+	function findOrdersbyPreOrders(preOrders, cb){	
 		var orders = [];
 		var confirmedNum = 0;
       	for (var i = 0; i < preOrders.length; i++) {
@@ -34,12 +33,9 @@ async.waterfall([
       	};
       	cb(null, orders);
 	},
-	function findReturnOrdersbyOrders (orders, cb){
-		
+	function findReturnOrdersbyOrders (orders, cb){		
 		var returnOrders = [];
-		var winesCounts = 0;
-		
-	
+		var winesCounts = 0;	
 		for (var i = 0; i < orders.length; i++) {
 			returnOrderHandle(i);
 		}
@@ -52,12 +48,8 @@ async.waterfall([
 	        for (var j = 0; j < orders[i].shopOnce.length; j++) {
 				idList.push(orders[i].shopOnce[j].id);
 			}
-			console.log('==================idList=====================');
-			console.log(idList);
-
 			Wine.find({id : {$in : idList}},"describe wechatPrice littlePic",function(err,wines){
 				if(err) return cb(err);
-				console.log('==================wines=====================');
 				console.log(wines);
 				winesCounts++;
 				for (var j = 0; j < wines.length; j++) {
@@ -73,7 +65,6 @@ async.waterfall([
 	}
 	],
 	function (err,returnOrders){
-		console.log('==================returnOrders=====================');
 		console.log(returnOrders);
 	}
 );
