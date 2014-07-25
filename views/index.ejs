@@ -14,8 +14,8 @@
     </div>
     <div class="ui-tab page3 <%= r=='info' ? 'js-active':'' %>">
         <ul class="ui-groupbutton" role="tablist">
-   <!--          <li class="ui-button js-active" data-toggle="tab" data-target="#page3-tab1" aria-controls="tab1" role="tab">买过</li> -->
-            <li class="ui-button js-active" data-toggle="tab" data-target="#page3-tab2" aria-controls="tab2" role="tab">券</li>
+            <li class="ui-button js-active" data-toggle="tab" data-target="#page3-tab1" aria-controls="tab1" role="tab">订单</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page3-tab2" aria-controls="tab2" role="tab">券</li>
             <li class="ui-button" data-toggle="tab" data-target="#page3-tab3" aria-controls="tab3" role="tab">地址</li>
 <!--             <li class="ui-button" data-toggle="tab" data-target="#page3-tab4" aria-controls="tab4" role="tab">我</li> -->
         </ul>
@@ -134,8 +134,41 @@
 
 <div class="ui-page page3 <%= r=='info' ? 'js-active':'' %>">
     <div class="ui-page-content">
+        <!-- 订单 -->
+        <div class="ui-tab js-active" id="page3-tab1" role="tabpanel">
+            <div class="my-order-item order-processing" style="display:none">
+                <p class="tab-info confirm">订单编号：<span class="order-id">f201400332299</span>
+                    <span class="f-right">状态：<span class="order-state">配送中</span></span>
+                </p>
+                <ul class="jiu-li">
+                    <li class="jiu-single" style="display:table" >
+                        <img src="" alt="">
+                        <div class="jiu-info">
+                            <p class="jiu-detail">41度口子窖</p>
+                            <p class="jiu-price">单价: ￥<span class="order-list-price">128</span>&nbsp数量：<span class="order-list-num">10</span></p>
+                        </div>
+                    </li>                                        
+                </ul>
+            </div>
 
-        <div class="ui-tab js-active" id="page3-tab2" role="tabpanel">
+            <div class="my-order-item order-complete" style="dispaly:none">
+                <p class="tab-info confirm">订单编号：<span class="order-id">f201400332299</span>
+                    <span class="f-right">状态：<span class="order-state">已完成</span></span>
+                </p>
+                <ul class="jiu-li">
+                    <li class="jiu-single" style="display:table" >
+                        <img src="" alt="">
+                        <div class="jiu-info">
+                            <p class="jiu-detail">41度口子窖</p>
+                            <p class="jiu-price">单价: ￥<span class="order-list-price">128</span>&nbsp数量：<span class="order-list-num">10</span></p>
+                        </div>
+                    </li>
+                </ul>
+            </div>            
+        </div>
+
+        <div class="ui-tab" id="page3-tab2" role="tabpanel">
+
             <div class="page3-tab2-top">
                  <!-- 券 -->
                 <p class="quan-title quan-title-f">现金券</p>

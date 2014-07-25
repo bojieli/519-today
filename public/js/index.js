@@ -234,6 +234,10 @@ require([
         delete cart[$.tempStorage.cartListTap.data('code')];
         localStorage.cart = JSON.stringify(cart);
         $.tempStorage.cartListTap.remove();
+        $("#order-confirm-container").hide();
+        $("#order-list-container").hide();
+        $(".order-load-info p").text("购物车中没有商品");
+        $(".order-load-info").show();
     });
     $("#as_cart_view_detail").on('tap',function(){
     	var code = $.tempStorage.cartListTap.data('code');
@@ -418,6 +422,46 @@ require([
         $("#my_cash_num").data('to',cash);        
     });
 
-    //============debug================
+    //=======================我的订单=======================
+    function ininMyOrderUI(arr){
+        var $process = $(".my-order-item.order-processing") ;
+        var $complete = $(".my-order-item.order-complete") ;
+        var $parent = $process.parent();
+        var list_process = [];
+        var list_complete = [];
+        arr.forEach(function(item){
+            var $add = $complete.clone();
+            if(item.status == 0){
+                var $add = $process.clone();
+            }
+            $add.find(".order-id").text(item.orderID);
+            var $li = $add.find("li.jiu-single");
+            var $ul = $add.find("ul.jiu-li");
+            item.wines.forEach(function(wine){
+                var $addli = $li.clone();
+                $addli.find(".jiu-detail").text(wine.describe);
+                $addli.find(".order-list-price").text(wine.wechatPrice);
+                $addli.find(".order-list-num").text(wine.num);
+                $addli.find("img").attr('src',wine.littlePic);
+            });
+            $li.remove();
+            $add.show();            
+            if(item.status == 0){
+                list_process.push($add);
+            }else{
+                list_complete.push($add);
+            }
+            var a = list_complete.pop();
+            while(a){
+                $parent.prepend(a);
+                a = list_complete.pop();
+            }
+            a = list_process.pop();
+            while(a){
+                $parent.prepend(a);
+                a = list_process.pop();
+            }
+        });
+    }
 
 })
