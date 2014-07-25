@@ -3,7 +3,7 @@
 app.get('/address',address.getAddressByOpenID);
 //返回address数组，前端openID在session中
 
-app.post('/add_address',address.addAddress); 
+app.post('/add_address',address.addAddress);
 //没有返回，前端发送数据格式为单个address
 //返回格式为:
 {message : String, error : Number}
@@ -91,6 +91,17 @@ app.post('/purchase',purchase.updateOrder);
   cashUse : Number,
   voucherUse : Number,
   totalPrice : Number
+
+app.post('/getuserorder',)
+返回格式为：[{
+                orderID :,
+                status : 0表示未确认，1表示已确认,
+                wines:[{describe : String,
+                        wechatPrice : Number,
+                        littlePic : String,
+                        num:Number}]
+                }]
+
 
 
   //可能出现的错误：

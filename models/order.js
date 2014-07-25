@@ -33,7 +33,7 @@ var OrderSchema = new Schema({
   date : { type : Date, default : Date.now },
   cashUse : Number,
   voucherUse : Number,
-  statue : Boolean, //(0:unconfirmed,1:confirmed)
+  status : Boolean, //(0:unconfirmed,1:confirmed)
   totalPrice : Number
 },{ autoindex : false });
 
