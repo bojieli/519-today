@@ -104,8 +104,9 @@ exports.updateHistory = function(openID,orderID,cb){
 
 exports.getUserOrder = function(openID,cb){
   ShopHistory.findOne({openID : openID},histotyFind);
+
   var orderInfos = [];
-  var findCompleteNum = 0;//用来标记异步执行是否全部完成
+  var findCompleteNum = 0;//用来标记异步执行是否全部完成,实在是蛋碎之举才把定义放到这了。。
 
   function histotyFind(err,shop_history){
    if(err){
@@ -186,11 +187,7 @@ exports.getUserOrder = function(openID,cb){
           }
           findCompleteNum++;
           returnOrders.push(returnOrder);
-          console.log("========findCompleteNum" + findCompleteNum + "orderlength" + orderlength);
           if(findCompleteNum == orderlength){
-            console.log("=========return orders=========");
-            console.log(returnOrders[0].wines.length);
-            console.log(returnOrders[1].wines.length);
             return cb(err,returnOrders);
           }
       });

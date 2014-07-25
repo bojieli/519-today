@@ -22,8 +22,8 @@ exports.createOrder = function(req,cb){
       confirmTel : info.confirmTel,
       shopOnce : info.shopOnce,
       address : {},
-      cashUse : info.cashUse,
-      voucherUse : info.voucherUse,
+      cashUse : info.cashUse || 0,
+      voucherUse : info.voucherUse || 0,
       status : 0,
       totalPrice : info.totalPrice
     };
@@ -34,8 +34,8 @@ exports.createOrder = function(req,cb){
       confirmTel : info.address.tel,//确认电话默认地址中的联系方式
       shopOnce : info.shopOnce,
       address : info.address,
-      cashUse : info.cashUse,
-      voucherUse : info.voucherUse,
+      cashUse : info.cashUse || 0,
+      voucherUse : info.voucherUse || 0,
       status : 0,
       totalPrice : info.totalPrice
     };
@@ -45,12 +45,13 @@ exports.createOrder = function(req,cb){
   function afterCreate(err,order){
     if(err){
       errUtil.wrapError(err,congfig.errorCode_create,"createOrder()","/proxy/order",{req:req});
-      return cb(err);
+      return cb(er,null);
     }else{
       cb(err,order);
     }
   }
 }
+
 
 function getRandom(length){
   return Math.floor(Math.random() * Math.pow(10,length));

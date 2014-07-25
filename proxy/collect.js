@@ -22,11 +22,21 @@ exports.update = function(openID,id,method,cb){
       });
       return cb(err);
     }
-
-    if(method === 'collect'){
-     Collect.update({openID : openID},{$addToSet : {collectList : id}},afterUpdate);
-    }else if(method === "cancelCollect"){
-     Collect.update({openID : openID},{$pull : { collectList :id}},afterUpdate);
+    if(collect){
+      if(method === 'collect'){
+        Collect.update({openID : openID},{$addToSet : {collectList : id}},afterUpdate);
+      }else if(method === "cancelCollect"){
+        Collect.update({openID : openID},{$pull : { collectList : id}},afterUpdate);
+      }
+    }else{
+      var newCollect = new Collect({
+        openID : openID,
+        collectList : []
+      });
+      if(method === 'collect'){
+        newCollect.collectList.push(id);
+      }
+      newCollect.save();
     }
   }
 
