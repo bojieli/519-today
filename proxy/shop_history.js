@@ -80,7 +80,7 @@ exports.updateHistory = function(openID,orderID,cb){
         openID:openID,
         orderID:orderID
       });
-      return(err);
+      return cb(err);
     } else{
       cb(err);
     }
@@ -110,7 +110,7 @@ exports.getUserOrder = function(openID,cb){
       errUtil.wrapError(err,config.errorCode_find,"getUserOrder().histotyFind()","/proxy/shop_history",{
         openID:openID,
       });
-      return(err);
+      return cb(err,[]);
     }
     if(!shop_history){
       return cb(null,[]);
@@ -126,10 +126,13 @@ exports.getUserOrder = function(openID,cb){
        errUtil.wrapError(err,config.errorCode_find,"getUserOrder().orderFind()","/proxy/shop_history",{
         openID:openID,
       });
-      return(err);
+      return cb(err);
     }
-      console.log("=========orders=========");
-      console.log(orders);
+    if(!orders){
+      return cb(null,[]);
+    }
+    var findCompleteNum = 0;
+
     var confirmedNum = 0;
     var returnOrders = [];
     for(var i = 0; i < orders.length;i++){
@@ -157,7 +160,7 @@ exports.getUserOrder = function(openID,cb){
             errUtil.wrapError(err,config.errorCode_find,"getUserOrder().wineFind()","/proxy/shop_history",{
               openID:openID
             });
-            return(err);
+            return cb(err,null);
           }
 
           for(var j = 0; j < idList.length;j++){
@@ -166,13 +169,20 @@ exports.getUserOrder = function(openID,cb){
             wineInfo.describe = wines[j].describe;
             wineInfo.wechatPrice = wines[j].wechatPrice;
             wineInfo.littlePic = config.small_dir + wines[j].littlePic;
+            console.log("============wineInfo=====")
+            console.log(wineInfo);
             returnOrder.wines.push(wineInfo);
+          }
+          findCompleteNum ++;
+          returnOrders.push(returnOrder);
+          if(findCompleteNum == orders.length){
+            cb(err,returnOrders);
           }
 
         });
-        returnOrders.push(returnOrder);
+
       }
     }
-    cb(err,returnOrders);
+
   }
 }
