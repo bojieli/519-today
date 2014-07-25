@@ -105,6 +105,8 @@ exports.updateHistory = function(openID,orderID,cb){
 exports.getUserOrder = function(openID,cb){
   ShopHistory.findOne({openID : openID},histotyFind);
   var orderInfos = [];
+  var findCompleteNum = 0;//用来标记异步执行是否全部完成
+
   function histotyFind(err,shop_history){
    if(err){
       errUtil.wrapError(err,config.errorCode_find,"getUserOrder().histotyFind()","/proxy/shop_history",{
@@ -131,17 +133,28 @@ exports.getUserOrder = function(openID,cb){
     if(!orders){
       return cb(null,[]);
     }
-    var findCompleteNum = 0;
+
 
     var confirmedNum = 0;
     var returnOrders = [];
-    for(var i = 0; i < orders.length;i++){
+
+    for(var i = 0; i <orders.length;i++){
       var currOrder = orders[i];
       if(currOrder.status === 0 ||confirmedNum <= 5){
-        if(confirmedNum <= 5){
+        if(currOrder.status === 1 && confirmedNum <= 5){
           confirmedNum ++;
         }
+        console.log("before" + orders.length);
+        forAction(returnOrders,currOrder,orders.length);
+      }else{
+        findCompleteNum++;
+      }
+    }
 
+
+  }
+
+   function forAction(returnOrders,currOrder,orderlength){
         var returnOrder = {};
         returnOrder.orderID = currOrder.orderID;
         returnOrder.status = currOrder.status;
@@ -169,20 +182,19 @@ exports.getUserOrder = function(openID,cb){
             wineInfo.describe = wines[j].describe;
             wineInfo.wechatPrice = wines[j].wechatPrice;
             wineInfo.littlePic = config.small_dir + wines[j].littlePic;
-            console.log("============wineInfo=====")
-            console.log(wineInfo);
             returnOrder.wines.push(wineInfo);
           }
-          findCompleteNum ++;
+          findCompleteNum++;
           returnOrders.push(returnOrder);
-          if(findCompleteNum == orders.length){
-            cb(err,returnOrders);
+          console.log("========findCompleteNum" + findCompleteNum + "orderlength" + orderlength);
+          if(findCompleteNum == orderlength){
+            console.log("=========return orders=========");
+            console.log(returnOrders[0].wines.length);
+            console.log(returnOrders[1].wines.length);
+            return cb(err,returnOrders);
           }
-
-        });
-
-      }
+      });
     }
 
-  }
+
 }
