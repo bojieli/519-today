@@ -1,5 +1,6 @@
 
 var config = require('../config');
+var errUtil = require('./wrap_error');
 var models = require('../models');
 var User = models.User;
 
@@ -15,8 +16,11 @@ exports.getUserByOpenID = function(openID,cb){
   User.findOne({ openID : openID },userFind);
 
   function userFind(err,user){
-    if(err){
-      cb(config.errCode_find,null);
+    if(err) {
+      errUtil.wrapError(err,config.errorCode_find,"getUserByOpenID()","/proxy/user",{
+        openID:openID
+      });
+      return cb(err,null);
     }else{
       cb(err,user);
     }
@@ -31,10 +35,15 @@ exports.getUserByOpenID = function(openID,cb){
 * - err
 */
 exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
+
   User.findOne({openID : openID},afterFind);
 
   function afterFind(err,user){
-    if(err) return cb(err);
+    if(err) {
+        errUtil.wrapError(err,config.errorCode_find,"afterVertify()","/proxy/user",{
+          openID: openID,preOpenID : preOpenID,basicInfo : basicInfo});
+        return cb(err,null);
+    }
 
     if(user){
       if(preOpenID && basicInfo){
@@ -64,21 +73,24 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
         currentAddress :{},
         address : []
       }
-      console.log(newUser);
 
       User.create(newUser,afterCreate);
     }
   }
 
   function afterUpdate(err){
-    if(err) return cb(config.errorCode_update);
+    if(err) {
+      errUtil.wrapError(err,config.errorCode_update,"afterVertify()","/proxy/user",
+        {openID: openID,preOpenID : preOpenID,basicInfo : basicInfo});
+      return cb(err,null);
+    }
   }
 
   function afterCreate(err,user){
-    if(err){
-      console.log('==============create error ========================')
-      console.log(err);
-      return cb(config.errorCode_create);
+  if(err) {
+      errUtil.wrapError(err,config.errorCode_create,"afterVertify()","/proxy/user",
+        {openID: openID,preOpenID : preOpenID,basicInfo : basicInfo});
+      return cb(err,null);
     }else if(user){
       global.sceneID_web_count++;
     }
@@ -101,8 +113,10 @@ exports.getCashVoucherByOpenID = function(openID,cb){
   User.findOne({openID : openID},'cash voucher', userFind);
 
   function userFind(err,user){
-    if(err){
-      cb(config.errCode_find,null);
+    if(err) {
+      errUtil.wrapError(err,config.errorCode_find,"getCashVoucherByOpenID()","/proxy/user",
+        {openID: openID});
+      return cb(err,null);
     }else{
       cb(err,user);
     }
@@ -123,8 +137,10 @@ exports.getAddressByOpenID = function(openID,cb){
   User.findOne({openID : openID}, 'address', cb);
 
    function userFind(err,user){
-    if(err){
-      cb(config.errCode_find,null);
+    if(err) {
+      errUtil.wrapError(err,config.errorCode_find,"getAddressByOpenID()","/proxy/user",
+        {openID: openID});
+      return cb(err,null);
     }else{
       cb(err,user);
     }
@@ -139,51 +155,83 @@ exports.getAddressByOpenID = function(openID,cb){
 */
 exports.updatePreCash = function (order, cb){
   User.findOne({openID : order.openID}, userFind1);
-  console.log('updatePreCash');
+
   function userFind1 (err, user){
-    if(err) cb(err);
+    if(err) {
+      errUtil.wrapError(err,config.errorCode_find,"updatePreCash().userFind1()","/proxy/user",
+        {order: order});
+      return cb(err);
+    }
+
     if(user.preOpenID){
       console.log('cash 1\n' + order.totalPrice * config.ratio_1 );
       User.update({openID : user.preOpenID},
                   {$inc : {cash : order.totalPrice * config.ratio_1}},
-                  cb);
+                  afterUpdate);
       User.findOne({openID : user.preOpenID}, userFind2);
     }
-    
   }
+
   function userFind2 (err,user){
-    if(err) cb(err);
+    if(err) {
+      errUtil.wrapError(err,config.errorCode_find,"updatePreCash().userFind2()","/proxy/user",
+         {order: order});
+      return cb(err);
+    }
     if(user.preOpenID){
       console.log('cash 2\n' + order.totalPrice * config.ratio_2 );
       User.update({openID : user.preOpenID},
                   {$inc : {cash : order.totalPrice * config.ratio_2}},
-                  cb);
+                  afterUpdate);
       User.findOne({openID : user.preOpenID}, userFind3);
     }
   }
   function userFind3 (err,user){
-    if(err) cb(err);
+    if(err) {
+      errUtil.wrapError(err,config.errorCode_find,"updatePreCash().userFind3()","/proxy/user",
+         {order: order});
+      return cb(err);
+    }
     if(user.preOpenID){
       User.update({openID : user.preOpenID},
                   {$inc : {cash : order.totalPrice * config.ratio_3}},
-                  cb);
+                  afterUpdate);
     }
   }
+
+  function afterUpdate(err){
+    if(err) {
+      errUtil.wrapError(err,config.errorCode_update,"updatePreCash().afterUpdate()","/proxy/user",
+        {order: order});
+      return cb(err);
+    }else{
+      cb(err);
+    }
+  }
+
 }
 
 exports.updateCashVoucher = function(order,cb){
   if(order.cashUse <= 0 && order.voucherUse <= 0)  return cb(null);
-  
+
 
   User.findOne({openID : order.openID},userFind);
 
   function userFind(err,user){
-    if(err || !user) return cb(config.errCode_find);
+    if(err) {
+      errUtil.wrapError(err,config.errorCode_find,"updateCashVoucher()","/proxy/user",
+         {order: order});
+      return cb(err);
+    }
 
     if(user){
+
         if(order.cashUse > 0){
           if(order.cashUse > user.cash){
-            return cb(config.errCode_cash);
+            var err ={};
+            errUtil.wrapError(err,config.errorCode_cash,"updateCashVoucher()","/proxy/user",
+               {order: order});
+            return cb(err);
           }else{
             User.update({openID : order.openID},
                         {$inc : {cash : -order.cashUse}},
@@ -223,7 +271,9 @@ exports.updateCashVoucher = function(order,cb){
 
   function afterUpdate(err){
     if(err){
-      cb(config.errorCode_update);
+      errUtil.wrapError(err,config.errorCode_update,"updateCashVoucher()","/proxy/user",
+               {order: order});
+      return cb(err);
     }else{
       cb(err);
     }
@@ -236,7 +286,11 @@ exports.addAddress = function(openID,address,cb){
   User.findOne({openID : openID},"address",afterFind);
 
   function afterFind(err,user){
-    if(err) return cb(config.errCode_find);
+    if(err){
+      errUtil.wrapError(err,config.errorCode_find,"addAddress()","/proxy/user",
+         {openID : openID,address : address});
+      return cb(err);
+    }
 
     if(user){
       var userAddress = user.address;
@@ -247,8 +301,10 @@ exports.addAddress = function(openID,address,cb){
   }
 
   function afterUpdate(err){
-    if(err) {
-      cb(config.errorCode_update);
+   if(err){
+      errUtil.wrapError(err,config.errorCode_update,"addAddress()","/proxy/user",
+         {openID : openID,address : address});
+      return cb(err);
     }else{
       cb(err);
     }
@@ -259,12 +315,18 @@ exports.deleteAddress = function(openID,index,cb){
    User.findOne({openID : openID},"address",afterFind);
 
   function afterFind(err,user){
-    if(err) return cb(config.errCode_find);
-
+    if(err){
+      errUtil.wrapError(err,config.errorCode_find,"deleteAddress()","/proxy/user",
+         {openID : openID,index:index});
+      return cb(err);
+    }
     if(user){
       var userAddress = user.address;
       if(index < 0 ||index >= userAddress.length){
-        return cb(config.errorCode_index);
+          var err ={};
+          errUtil.wrapError(err,config.errorCode_index,"deleteAddress()","/proxy/user",
+             {order: order});
+          return cb(err);
       }
 
       userAddress.splice(index,1);
@@ -273,8 +335,10 @@ exports.deleteAddress = function(openID,index,cb){
   }
 
   function afterUpdate(err){
-    if(err) {
-      cb(config.errorCode_update);
+   if(err){
+      errUtil.wrapError(err,config.errorCode_update,"deleteAddress()","/proxy/user",
+         {openID : openID,index:index});
+      return cb(err);
     }else{
       cb(err);
     }
@@ -286,12 +350,18 @@ exports.setDefault = function(openID,index,cb){
  User.findOne({openID : openID},"address",afterFind);
 
   function afterFind(err,user){
-    if(err) return cb(config.errCode_find);
-
+    if(err){
+      errUtil.wrapError(err,config.errorCode_find,"setDefault()","/proxy/user",
+         {openID : openID,index:index});
+      return cb(err);
+    }
     if(user){
       var userAddress = user.address;
       if(index < 0 ||index >= userAddress.length){
-        return cb(config.errorCode_index);
+        var err ={};
+        errUtil.wrapError(err,config.errorCode_index,"setDefault()","/proxy/user",
+           {order: order});
+        return cb(err);
       }
       var defaultAddress = userAddress[index];
       userAddress.splice(index,1);
@@ -302,8 +372,10 @@ exports.setDefault = function(openID,index,cb){
   }
 
   function afterUpdate(err){
-    if(err) {
-      cb(config.errorCode_update);
+   if(err){
+      errUtil.wrapError(err,config.errorCode_update,"setDefault()","/proxy/user",
+         {openID : openID,index:index});
+      return cb(err);
     }else{
       cb(err);
     }

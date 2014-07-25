@@ -15,8 +15,8 @@ var config = {
 	errCode_voucher : 10001,
 	errCode_find : 10002,
 	errorCode_update : 10003,
-  	errorCode_create : 10004,
-  	errorCode_index : 10005,
+	errorCode_create : 10004,
+	errorCode_index : 10005,
 	address_maxNum : 10,
 
 	//sceneID_base

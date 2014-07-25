@@ -17,14 +17,13 @@ exports.updateOrder = function (req, res, next) {
   Order.createOrder(req,afterOrder);
 
   function afterOrder(err,order){
-    if(err){
-      if(err) return next(err);
-    }
+    console.log("afterOrder");
+
+    //更新用户的现金券
+    if(err) return next(err);
     //更新用户的现金券
     User.updateCashVoucher(order,function(err){ 
-      if(err){ 
         if(err) return next(err);
-      }
     });
     //更新用户的购物历史
     ShopHistory.updateHistory(order.openID,order.orderID,function(err){

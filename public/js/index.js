@@ -215,7 +215,7 @@ require([
     	    // $("#changeCartActionsheet").();
     	    $.tempStorage.cartListTap = $(this);
     	}); 
-     	
+
     });  
  
     $("#as_cart_change_num").on('tap',function(){
@@ -238,7 +238,7 @@ require([
     $("#as_cart_view_detail").on('tap',function(){
     	var code = $.tempStorage.cartListTap.data('code');
     	var num = JSON.parse(localStorage.cart)[code].num;
-        location.href("/details?code="+code+"&num="+num);
+        location.href = "/details?code="+code+"&num="+num ;
     });
     //======================获取券===========================
     function getTicket(cb){
@@ -386,9 +386,9 @@ require([
                 number : cart[i]['num']
             });
         }
-        purchase.cashUse = parseInt($("#cart-ticket-use").text());
+        purchase.cashUse = parseFloat($("#cart-ticket-use").text());
         purchase.voucherUse = 0;
-        purchase.totalPrice = parseInt($("#cart_total_cost").text());
+        purchase.totalPrice = parseFloat($("#cart_total_cost").text());
         localStorage.purchase = JSON.stringify(purchase);
     });
 
