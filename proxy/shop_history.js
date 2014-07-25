@@ -103,7 +103,7 @@ exports.updateHistory = function(openID,orderID,cb){
 
 
 exports.getUserOrder = function(openID,cb){
-  ShopHistory.findOne({openID : openID},afterFind);
+  ShopHistory.findOne({openID : openID},histotyFind);
   var orderInfos = [];
   function histotyFind(err,shop_history){
    if(err){
@@ -112,7 +112,11 @@ exports.getUserOrder = function(openID,cb){
       });
       return(err);
     }
-
+    if(!shop_history){
+      return cb(null,[]);
+    }
+    console.log("===========shop_history=========");
+    console.log(shop_history);
     var orderList = shop_history.orderList;
     Order.find({orderID : {$in : orderList}},orderFind);
   }
@@ -124,10 +128,11 @@ exports.getUserOrder = function(openID,cb){
       });
       return(err);
     }
-
+      console.log("=========orders=========");
+      console.log(orders);
     var confirmedNum = 0;
     var returnOrders = [];
-    for(var i = 0; i <= orders.length;i++){
+    for(var i = 0; i < orders.length;i++){
       var currOrder = orders[i];
       if(currOrder.status === 0 ||confirmedNum <= 5){
         if(confirmedNum <= 5){

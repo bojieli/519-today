@@ -464,4 +464,12 @@ require([
         });
     }
 
+    $.post('/getuserorder',function(data,status){
+        if(status!='success'){
+            alert("fail to getuserorder");
+            return;
+        }
+        ininMyOrderUI(data);
+    });
+
 })

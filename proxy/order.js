@@ -24,7 +24,7 @@ exports.createOrder = function(req,cb){
       address : {},
       cashUse : info.cashUse,
       voucherUse : info.voucherUse,
-      statue : false,
+      status : 0,
       totalPrice : info.totalPrice
     };
   }else{
@@ -36,7 +36,7 @@ exports.createOrder = function(req,cb){
       address : info.address,
       cashUse : info.cashUse,
       voucherUse : info.voucherUse,
-      statue : false,
+      status : 0,
       totalPrice : info.totalPrice
     };
   }
