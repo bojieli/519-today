@@ -8,6 +8,7 @@
  *
  */
 var User = require('../proxy').User;
+var User_wechat = require('../weixin/proxy');
 exports.visitShare = function (req, res) {
  	//res.redirect('/');
  	/*
@@ -20,7 +21,13 @@ exports.visitShare = function (req, res) {
  	{
  		res.send('ScendID:\t' + req.query.scendID);
  	}*/
- 	res.send(req.query.sceneID);
+ 	//res.send(req.query.sceneID);
+ 	/*
+ 	User_wechat.getOpenIDbySceneID(openID, function(err, openID){
+ 		if(req.session.openID === )
+ 	})*/
+	res.render('share');
+ 	
  	/*
 
 

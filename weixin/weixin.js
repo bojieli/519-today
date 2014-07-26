@@ -94,7 +94,7 @@ module.exports = function (app) {
         }
 
     }
-    res.reply('欢迎关注安徽1919！访问主页:http://node.freeshell.ustc.edu.cn\n 退出:http://node.freeshell.ustc.edu.cn/logout');
+    res.reply('欢迎关注安徽1919！');
 
   }else if(message.Event === 'unsubscribe'){
     console.log('unsubscribe!');

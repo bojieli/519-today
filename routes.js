@@ -14,6 +14,7 @@ var User = require('./proxy').User;
 var details = require('./controllers/details');
 var userOrder = require('./controllers/user_order');
 var errlog = require('./controllers/errlog');
+var ruleintroduction = require('./controllers/ruleintroduction');
 
 
 
@@ -94,5 +95,7 @@ module.exports = function (app) {
 	app.get('/getProduct',product.getProduct);
 	app.get('/details',details);
 	app.post('/errlog',errlog);
+
+	app.get('/ruleintroduction',ruleintroduction.index);
 
 }
