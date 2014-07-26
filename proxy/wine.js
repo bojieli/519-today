@@ -62,7 +62,7 @@ exports.findByID = function(id,cb){
     if(err){
      errUtil.wrapError(err,config.errorCode_find,"findByID()","/proxy/wine",
          {id:id});
-      return cb(err);
+      return cb(err,{});
     }else{
       cb(err,wine);
     }
@@ -87,7 +87,7 @@ exports.findRecommend = function(cb){
     if(err){
      errUtil.wrapError(err,config.errorCode_find,"findRecommend()","/proxy/wine",
          {});
-      return cb(err,null);
+      return cb(err,{});
     }else{
       cb(err,wines);
     }

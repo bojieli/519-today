@@ -42,7 +42,7 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
     if(err) {
         errUtil.wrapError(err,config.errorCode_find,"afterVertify()","/proxy/user",{
           openID: openID,preOpenID : preOpenID,basicInfo : basicInfo});
-        return cb(err,null);
+        return cb(err);
     }
 
     if(user){
@@ -82,7 +82,7 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
     if(err) {
       errUtil.wrapError(err,config.errorCode_update,"afterVertify()","/proxy/user",
         {openID: openID,preOpenID : preOpenID,basicInfo : basicInfo});
-      return cb(err,null);
+      return cb(err);
     }
   }
 
@@ -90,7 +90,7 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
   if(err) {
       errUtil.wrapError(err,config.errorCode_create,"afterVertify()","/proxy/user",
         {openID: openID,preOpenID : preOpenID,basicInfo : basicInfo});
-      return cb(err,null);
+      return cb(err);
     }else if(user){
       global.sceneID_web_count++;
     }
@@ -116,7 +116,7 @@ exports.getCashVoucherByOpenID = function(openID,cb){
     if(err) {
       errUtil.wrapError(err,config.errorCode_find,"getCashVoucherByOpenID()","/proxy/user",
         {openID: openID});
-      return cb(err,null);
+      return cb(err,{});
     }else{
       cb(err,user);
     }
@@ -140,7 +140,7 @@ exports.getAddressByOpenID = function(openID,cb){
     if(err) {
       errUtil.wrapError(err,config.errorCode_find,"getAddressByOpenID()","/proxy/user",
         {openID: openID});
-      return cb(err,null);
+      return cb(err,{});
     }else{
       cb(err,user);
     }
@@ -164,7 +164,6 @@ exports.updatePreCash = function (order, cb){
     }
 
     if(user.preOpenID){
-      console.log('cash 1\n' + order.totalPrice * config.ratio_1 );
       User.update({openID : user.preOpenID},
                   {$inc : {cash : order.totalPrice * config.ratio_1}},
                   afterUpdate);
@@ -179,7 +178,6 @@ exports.updatePreCash = function (order, cb){
       return cb(err);
     }
     if(user.preOpenID){
-      console.log('cash 2\n' + order.totalPrice * config.ratio_2 );
       User.update({openID : user.preOpenID},
                   {$inc : {cash : order.totalPrice * config.ratio_2}},
                   afterUpdate);
@@ -380,22 +378,6 @@ exports.setDefault = function(openID,index,cb){
       cb(err);
     }
   }
-}
-/** 根据用户openID返回用户的订单信息
-* Callback:
-* -err
-* -orderInfos : [{
-                orderID :
-                wines:[{describe : String,
-                wechatPrice : Number,
-                littlePic : String,
-                num:Number}]
-                }]
-
-*/
-
-exports.getOrder = function(openID,cb){
-
 }
 
 

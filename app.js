@@ -33,11 +33,6 @@ process.on('uncaughtException', function(err) {
   console.log(err + '\n');
 });
 
-
-
-
-
-
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
@@ -91,7 +86,7 @@ if (app.get('env') === 'development') {
      // err.Stack = err.stack;
       errorLogfile.write(JSON.stringify(err));
       console.log(err);
-      
+
     });
 }
 

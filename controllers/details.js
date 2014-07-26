@@ -5,7 +5,6 @@ var config = require('../config');
 module.exports = function(req, res, next){
 	// console.log(req.session);
 	var code = req.query && req.query.code;
-	console.log(code);
 	Wine.findByID(code,function(err,wine){
 		if(err) return next(err);
 		var pics = [];
@@ -17,11 +16,11 @@ module.exports = function(req, res, next){
 			bigPics : pics,
 			describe : wine.describe,
 			marketPrice : wine.marketPrice,
-			wechatPrice : wine.wechatPrice,	
+			wechatPrice : wine.wechatPrice,
 			code : code	,
-			num : req.query.num || 1	
-		});	
+			num : req.query.num || 1
+		});
 	})
 
-	
-};	
+
+};
