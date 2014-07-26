@@ -131,10 +131,11 @@ module.exports = function (app) {
         //console.log(url);
         //"window.location.href = 'http://baidu.com'"
         //sceneIDurl = "window.location.href = 'http://519.today/share/?sceneID=" + sceneID + "'";
-        //sceneIDurl = "window.location.href = '/share/?sceneID=" + sceneID + "'"
+        sceneIDurl = "window.location.href = '/share/?sceneID=" + sceneID + "'"
+        sceneIDurl = "<button onclick ="+ '"' +sceneIDurl+  '"' +"><b>分享到朋友圈</b></button>"
        // sceneIDurl = "window.location.href = 'http://519.today/share/'";
-       // console.log(sceneIDurl);
-        res.render('promote',{qrCodeurl : url});//, sceneIDurl : sceneIDurl});
+        console.log(sceneIDurl);
+        res.render('promote',{qrCodeurl : url, sceneIDurl : sceneIDurl});
        // res.write('<img src="'+url+'" width="50%">')
        // res.end();
 

@@ -83,7 +83,7 @@ app.use(function(req, res, next) {
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
 
-      err.Stack = err.stack;
+     // err.Stack = err.stack;
       errorLogfile.write(JSON.stringify(err));
       console.log(err);
 
