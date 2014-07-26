@@ -94,7 +94,20 @@ module.exports = function (app) {
         }
 
     }
-    res.reply('欢迎关注安徽1919！');
+
+    var r = [{
+        title:"欢迎关注安徽1919！访问主页" ,
+        pic : process.env.HOST+"/images/home.jpg",
+        description : "打造安徽白酒速递第一品牌",
+        url : process.env.HOST
+      },
+      {
+        title:"查看返钱规则" ,
+        pic : process.env.HOST+"/images/fanqian.jpg",
+        description : "",
+        url : process.env.HOST+"/ruleintroduction"
+      }];
+    res.reply(r);
 
   }else if(message.Event === 'unsubscribe'){
     console.log('unsubscribe!');

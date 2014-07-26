@@ -84,11 +84,11 @@ require([
 
 			$('[data-ride="carousel"]').each(function() {
 				var $this = $(this);
-				$this.carousel($this.data())
+				$this.carousel($this.data());
 			});
 		} else if (tab == 'deleter') {
 
-			$('.my-deletable').deletable()
+			$('.my-deletable').deletable();
 
 		} else if (tab == 'lazyload') {
 			$('[data-lazy]').lazyload({
@@ -105,7 +105,7 @@ require([
         var target = e.target // activated tab
         $('[data-ride="carousel"]').each(function() {
             var $this = $(this);
-            $this.carousel($this.data())
+            $this.carousel($this.data());
         });
     }) ;
 
@@ -136,10 +136,10 @@ require([
   		var target = $this.data("target").split("-")[1];
 		// alert(target);
 		if(target=='page1'){
-			location.href = "/?r=home"
+			location.href = "/?r=home" ;
 		}
 		if(target=='page2'){
-			location.href = "/?r=shopcart"
+			location.href = "/?r=shopcart" ;
 		}		
   	});
   	if(localStorage.cart && localStorage.cart!='{}'){
@@ -203,7 +203,9 @@ require([
                 	$ul.append(addli);
                 	addli.show();                	
                 });
+                $li.hide();
                 $(".order-load-info").hide();
+                $("#order-list-container").show();
                 $("#order-confirm-container").show();
                 updateTicket(cart);
                 cb();
@@ -344,7 +346,7 @@ require([
                 addr = r.pop();
             }
             $myli.remove();
-            cb();            
+            cb && cb();            
         });
     }
     $(document).on('tap','.page4 .j-single',function(){
@@ -412,7 +414,7 @@ require([
             }
             // 清空购物车
             
-            localStorage.purchase = "";
+            clearCart();
             // 更新购物车
             // 更新我的订单
             updateMyOrder();
@@ -425,7 +427,9 @@ require([
         localStorage.cart = '{}';
         $(".order-load-info p").text("购物车中没有商品");
         $(".order-load-info").show();
-        $("#order-confirm-container").show();        
+        $("#order-list-container ul .jiu-single").remove();
+        $("#order-list-container").hide();
+        $("#order-confirm-container").hide();       
     }
     //=======================显示券=========================
     $.get('/cash_voucher',function(data,status){
@@ -440,8 +444,8 @@ require([
 
     //=======================我的订单=======================
     function ininMyOrderUI(arr){
-        var $process = $(".my-order-item.order-processing") ;
-        var $complete = $(".my-order-item.order-complete") ;
+        var $process = $(".order-processing.template") ;
+        var $complete = $(".order-complete.template") ;
         var $parent = $process.parent();
         var list_process = [];
         var list_complete = [];
@@ -450,6 +454,8 @@ require([
             if(item.status == 0){
                 var $add = $process.clone();
             }
+            $add.removeClass("template");
+            $add.addClass("my-order-item");
             $add.find(".order-id").text(item.orderID);
             var $li = $add.find("li.jiu-single");
             var $ul = $add.find("ul.jiu-li");
@@ -495,5 +501,7 @@ require([
     }
     updateMyOrder();
 
-
+    $(document).on('click',"#detail_add_cart",function(){
+        $(this).trigger("tap");
+    });
 })

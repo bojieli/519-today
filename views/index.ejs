@@ -1,6 +1,6 @@
 <% include layoutTop %>
 
-<div class="ui-top-bar">    
+<div class="ui-top-bar">
     <div class="ui-tab page1  <%= r=='home' ? 'js-active':'' %>">
         <ul class="ui-groupbutton" role="tablist">
             <li class="ui-button js-active" data-toggle="tab" data-target="#page1-tab1" aria-controls="tab1" role="tab">推荐</li>
@@ -24,8 +24,8 @@
             <a class="f-left my-top-bar" data-toggle="mytab" data-target=".page2" role="tab">
                 <span class="ui-icon ion-ios7-arrow-back"></span>
                 <span class="ui-label">购物车</span>
-            </a> 
-    </div>    
+            </a>
+    </div>
 </div>
 
 <div class="ui-bottom-bar js-no-bounce" role="toolbar"> <!-- tabindex="0" 在android上会触发一个高亮边框 -->
@@ -63,13 +63,13 @@
                             <span class="market-sale">市场价：<%= recommendList[i].MarketPrice %>元</span>
                             <span class="wx-sale">微信价：<%= recommendList[i].WechatPrice %>元</span>
                         </div>
-                    </a>                        
-                    <% } %>                                               
+                    </a>
+                    <% } %>
                 </ul>
             </div>
         </div>
 
-        <div class="ui-tab" id="page1-tab2" role="tabpanel">   
+        <div class="ui-tab" id="page1-tab2" role="tabpanel">
            <!-- 白酒 -->
             <div class="page1-tab1-bot">
                 <p class="tab-info">全部白酒</p>
@@ -81,17 +81,17 @@
                             <span class="market-sale">市场价：<%= recommendList[i].MarketPrice %>元</span>
                             <span class="wx-sale">微信价：<%= recommendList[i].WechatPrice %>元</span>
                         </div>
-                    </a>                        
-                    <% } %>                                               
+                    </a>
+                    <% } %>
                 </ul>
-            </div>           
+            </div>
         </div>
 
-        <div class="ui-tab" id="page1-tab2" role="tabpanel">   
+        <div class="ui-tab" id="page1-tab2" role="tabpanel">
            <!-- 红酒 -->
         </div>
 
-        <div class="ui-tab" id="page1-tab2" role="tabpanel">   
+        <div class="ui-tab" id="page1-tab2" role="tabpanel">
            <!-- 啤酒 -->
         </div>
         <!-- /主体内容-->
@@ -106,7 +106,7 @@
                 <p class="tab-info confirm">待确认</p>
 
                 <ul class="jiu-li">
-                    <li class="template" style="display:table" data-toggle="dialog" data-target="#changeCartActionsheet" data-type="actionsheet" data-effect="from-bottom" data-cache="false" style="display:none">
+                    <li class="template" style="display:table" data-toggle="dialog" data-target="#changeCartActionsheet" data-type="actionsheet" data-effect="from-bottom" data-cache="false">
                         <img src="" alt="">
                         <div class="jiu-info">
                             <p class="jiu-detail"></p>
@@ -129,14 +129,14 @@
             </div>
         </div>
 
-    </div> 
+    </div>
 </div>
 
 <div class="ui-page page3 <%= r=='info' ? 'js-active':'' %>">
     <div class="ui-page-content">
         <!-- 订单 -->
         <div class="ui-tab js-active" id="page3-tab1" role="tabpanel">
-            <div class="my-order-item order-processing" style="display:none">
+            <div class="order-processing template" style="display:none">
                 <p class="tab-info confirm">订单编号：<span class="order-id">f201400332299</span>
                     <span class="f-right"><span class="order-state">配送中</span></span>
                 </p>
@@ -147,11 +147,11 @@
                             <p class="jiu-detail">41度口子窖</p>
                             <p class="jiu-price">单价: ￥<span class="order-list-price">128</span>&nbsp数量：<span class="order-list-num">10</span></p>
                         </div>
-                    </li>                                        
+                    </li>
                 </ul>
             </div>
 
-            <div class="my-order-item order-complete" style="dispaly:none">
+            <div class="order-complete template" style="dispaly:none">
                 <p class="tab-info confirm">订单编号：<span class="order-id">f201400332299</span>
                     <span class="f-right"><span class="order-state">已完成</span></span>
                 </p>
@@ -164,7 +164,7 @@
                         </div>
                     </li>
                 </ul>
-            </div>            
+            </div>
         </div>
 
         <div class="ui-tab" id="page3-tab2" role="tabpanel">
@@ -202,8 +202,8 @@
                         <p class="j-detail"><span class="j-province"></span><span class="j-shi"></span><span class="j-qu"></span><span class="j-lu"></span></p>
                         <p class="j-detail"><span class='j-name'></span><span class="j-tel"></span></p>
                     </div>
-                    <span class="list-right-forward vertical-middle ui-icon ion-ios7-arrow-forward" style="display:table-cell;vertical-align:middle"></span>                    
-                </li>                
+                    <span class="list-right-forward vertical-middle ui-icon ion-ios7-arrow-forward" style="display:table-cell;vertical-align:middle"></span>
+                </li>
                 <li class="j-single j-add display-table">
                     <div class="j-info">
                         <p>添加地址>></p>
@@ -211,7 +211,7 @@
 <!--                     <span class="list-right-forward vertical-middle ui-icon ion-ios7-arrow-forward" style="display:table-cell;vertical-align:middle"></span> -->
                 </li>
             </ul>
-        </div>            
+        </div>
 
     </div>
 </div>
@@ -236,7 +236,7 @@
                     </div>
                     <!-- <label class="to-right" for="">></label> -->
                 </li>
-            </ul> 
+            </ul>
             <!-- <button class="ui-button ui-info confirm-btn btn-top">微信支付</button> -->
             <button class="ui-button ui-success confirm-btn btn-bot" id="complete_cash_pay">货到付款</button>
         </div>
