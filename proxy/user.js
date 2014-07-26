@@ -71,7 +71,7 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
         cash : 0,
         voucher :[],
         currentAddress :{},
-        address : []
+        //address : []
       }
 
       User.create(newUser,afterCreate);

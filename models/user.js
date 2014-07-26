@@ -35,14 +35,20 @@ var UserSchema = new Schema({
     city : String,
     district : String
   },
-  address : [{
+  address : {type:[{
     province : String,
     city : String,
     area : String,
     detail : String,
     name : String,  //收件人
     tel : String
-  }]
+  }],default : [{ province : "安徽省",
+                 city : "阜阳市",
+                 area :"颍州区",
+                 detail : "颍州区政府",
+                 name : "张三",
+                 tel ： "13888888888"
+                  }]}
 }, { autoIndex: false });
 
 mongoose.model('User',UserSchema);
