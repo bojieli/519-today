@@ -20,12 +20,16 @@ exports.visitShare = function (req, res) {
  	{
  		res.send('ScendID:\t' + req.query.scendID);
  	}*/
+ 	res.send(req.query.sceneID);
+ 	/*
+
+
  	if(!req.query.openID){
  		res.redirect('/share?openID=' + req.session.openID);
  	}
  	else{
  		res.send('openID:\t' + req.query.openID);
- 	}
+ 	}*/
  	//res.send('share');
 
 };
