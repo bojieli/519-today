@@ -33,6 +33,7 @@
         }
 
     </style>
+
 </head>
 <body style =" font-family: 'Segoe UI', sans-serif;">
     <h1 style ="text-align:center;color: #0079FF">扫一扫</h1>
@@ -40,7 +41,7 @@
         <center>
             <img src =<%=qrCodeurl%>>
             <button onclick ="window.location.href = '/share/?sceneID=1000000001'"><b>查看返券规则</b></button>
-            <button onclick ="window.location.href = '/share'"><b>分享到朋友圈</b></button>
+            <%-sceneIDurl%>
         </center>
     </div>
 </body>
