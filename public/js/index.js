@@ -453,7 +453,6 @@ require([
             $add.find(".order-id").text(item.orderID);
             var $li = $add.find("li.jiu-single");
             var $ul = $add.find("ul.jiu-li");
-            alert(JSON.stringify(item.wines));
             item.wines.forEach(function(wine){
                 var $addli = $li.clone();
                 $addli.find(".jiu-detail").text(wine.describe);
