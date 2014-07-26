@@ -36,10 +36,10 @@ module.exports.Oath2 = function (req,res){
   		var data = req.query;
   		var from_path = data.path;
   		if(data.code!='authdeny'){
-	  		var token_url = 'https://api.weixin.qq.com/sns/oauth2/access_token?' + 
-	  		'appid=' + config.appid + 
+	  		var token_url = 'https://api.weixin.qq.com/sns/oauth2/access_token?' +
+	  		'appid=' + config.appid +
 	  		'&secret=' + config.secret +
-	  		'&code='+ data.code + 
+	  		'&code='+ data.code +
 	  		'&grant_type=authorization_code';
 	  		console.log('request');
 			request({ uri : token_url, method : 'GET'},function(err,response,body){
@@ -54,22 +54,22 @@ module.exports.Oath2 = function (req,res){
 
 			  		req.session.openID = userinfo.openid;
 			  		//获得用户数据，存储用户数据
-			  		console.log(JSON.parse(body));	
-			  		
+			  		console.log(JSON.parse(body));
+
 			  		var basicInfo = {
 			  			nickname : userinfo.nickname,
-						sex : userinfo.sex,
-						province : userinfo.province,
-						city : userinfo.city,
-						country : userinfo.country,
-						headimgurl : userinfo.headimgurl,
-						privilege : userinfo.privilege 
+							sex : userinfo.sex,
+							province : userinfo.province,
+							city : userinfo.city,
+							country : userinfo.country,
+							headimgurl : userinfo.headimgurl,
+							privilege : userinfo.privilege
 			  		}
 			  		if(req.session.param.preOpenID)
 			  			User.afterVertify(userinfo.openid,req.session.param.preOpenID,basicInfo,function(err){});
 			  		else
 			  			User.afterVertify(userinfo.openid,null,basicInfo,function(err){});
-			  		
+
 			  		res.redirect(from_path);
 				});
 			});

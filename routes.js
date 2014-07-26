@@ -38,7 +38,6 @@ module.exports = function (app) {
 
 //如果没有登录就直接登录
 	app.all('*',function (req, res,next){
-		console.log(req.originalUrl);
 
 		if(req.session.openID||req.path === '/login'){
 			next();
@@ -62,8 +61,11 @@ module.exports = function (app) {
 	app.get("/logout",function(req,res){
 		if(req.session.openID){
 			req.session.openID = null;
+			res.send("logout success!");
 		}
-		res.send("logout success!");
+		else
+			res.send('no openID');
+		
 	});
 
 //visit

@@ -5,7 +5,7 @@ var ShopHistory = models.ShopHistory;
 var Order = models.Order;
 var Wine = models.Wine;
 
-/** 根据用户的openID获取购物历史
+/** 根据用户的openID获取购物历史(买过的酒的信息)
 * Callback:
 * - err
 * - wines
@@ -19,13 +19,13 @@ exports.getHistory = function(openID,cb){
       errUtil.wrapError(err,config.errorCode_find,"getHistory().historyFind()","/proxy/shop_history",{
         openID:openID
       });
-      return(err,null);
+      return cb(err,[]);
+    }
+    if(!shop_history){
+      return cb(err,[]);
     }
 
-    if(shop_history){
-      Order.find({orderID : {$in : shop_history.orderList}},orderFind);
-    }
-
+    Order.find({orderID : {$in : shop_history.orderList}},orderFind);
   }
 
   function orderFind(err,orders){
@@ -33,30 +33,33 @@ exports.getHistory = function(openID,cb){
       errUtil.wrapError(err,config.errorCode_find,"getHistory().orderFind()","/proxy/shop_history",{
         openID:openID
       });
-      return(err,null);
+      return cb(err,[]);
     }
 
-    if(orders){
-      var idList = [];
-      for(var i = 0, order_l = orders.length; i < order_l; i++){
-          var shopOnce = orders[i].shopOnce;
+    if(!orders){
+      return cb(err,[]);
+    }
 
-          for(var j = 0, shoponce_l = shopOnce.length;j < shoponce_l; j++){
-            var id = shopOnce[j].id;
-            if(idList.indexOf(id) === -1){
-              idList.push(id);
-            }
+    var idList = [];
+    for(var i = 0, order_l = orders.length; i < order_l; i++){
+        var shopOnce = orders[i].shopOnce;
+
+        for(var j = 0, shoponce_l = shopOnce.length;j < shoponce_l; j++){
+          var id = shopOnce[j].id;
+          if(idList.indexOf(id) === -1){
+            idList.push(id);
           }
-      }
-
-      Wine.find({id : {$in : idList}},wineFind);
+        }
     }
+
+    Wine.find({id : {$in : idList}},wineFind);
+
   }
 
   function wineFind(err,wines){
    if(err){
       errUtil.wrapError(err,config.errorCode_find,"getHistory().wineFind()","/proxy/shop_history",{openID:openID});
-      return(err,null);
+      return cb(err,[]);
     }else{
       cb(err,wines);
     }
@@ -104,8 +107,9 @@ exports.updateHistory = function(openID,orderID,cb){
 
 exports.getUserOrder = function(openID,cb){
   ShopHistory.findOne({openID : openID},histotyFind);
+
   var orderInfos = [];
-  var findCompleteNum = 0;//用来标记异步执行是否全部完成
+  var findCompleteNum = 0;//用来标记异步执行是否全部完成,实在是蛋碎之举才把定义放到这了。。
 
   function histotyFind(err,shop_history){
    if(err){
@@ -117,8 +121,6 @@ exports.getUserOrder = function(openID,cb){
     if(!shop_history){
       return cb(null,[]);
     }
-    console.log("===========shop_history=========");
-    console.log(shop_history);
     var orderList = shop_history.orderList;
     Order.find({orderID : {$in : orderList}},orderFind);
   }
@@ -144,7 +146,6 @@ exports.getUserOrder = function(openID,cb){
         if(currOrder.status === 1 && confirmedNum <= 5){
           confirmedNum ++;
         }
-        console.log("before" + orders.length);
         forAction(returnOrders,currOrder,orders.length);
       }else{
         findCompleteNum++;
@@ -186,11 +187,7 @@ exports.getUserOrder = function(openID,cb){
           }
           findCompleteNum++;
           returnOrders.push(returnOrder);
-          console.log("========findCompleteNum" + findCompleteNum + "orderlength" + orderlength);
           if(findCompleteNum == orderlength){
-            console.log("=========return orders=========");
-            console.log(returnOrders[0].wines.length);
-            console.log(returnOrders[1].wines.length);
             return cb(err,returnOrders);
           }
       });

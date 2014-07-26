@@ -12,9 +12,9 @@ module.exports = function () {
       }else{
       	if(users){
         	global.sceneID_web_count = users.length;
-    	}else{
-    		global.sceneID_web_count = 0;
-    	}
+      	}else{
+      		global.sceneID_web_count = 0;
+      	}
       }
   });
 }
