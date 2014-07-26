@@ -30,5 +30,5 @@ var config = {
 	small_dir : '/images/small/',
 	large_dir : '/images/large/'
 }
-
+process.env.HOST = "http://519.today";
 module.exports = config;
