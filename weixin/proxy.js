@@ -65,7 +65,7 @@ exports.addByRecommend = function(openID,preOpenID,cb){
         cash : 0,
         voucher :[],
         currentAddress :{},
-        address : []
+        //address : []
       }
 
       User.create(newUser,afterCreate);
