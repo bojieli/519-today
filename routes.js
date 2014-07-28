@@ -43,9 +43,9 @@ module.exports = function (app) {
 			next();
 		}else{
 			//next();
-			req.session.openID = 'owaixtwGljLuX4W4Ov6wOlQXle1U';
-			next();
-			//login(req,res);
+			//req.session.openID = 'owaixtwGljLuX4W4Ov6wOlQXle1U';
+			//next();
+			login(req,res);
 		}
 	});
 //微信授权页面返回页面

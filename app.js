@@ -22,15 +22,12 @@ require('./proxy/global_sceneid_count')();
 require('./weixin/proxy').updateGlobalSceneID();
 
 
-// accessLogfile
-//var accessLogfile = fs.createWriteStream('access.log', {flags : 'a'});
-var errorLogfile = fs.createWriteStream('./log/error.log',{flags : 'a'});
-var exceptionLogfile = fs.createWriteStream('./log/exception_error.log',{flags : 'a'});
-//app.use(express.logger({stream : accessLogfile}));
+var errorLogfile = fs.createWriteStream('../log/error.log',{flags : 'a'});
+var exceptionLogfile = fs.createWriteStream('../log/exception_error.log',{flags : 'a'});
 process.on('uncaughtException', function(err) {
   err.Stack = err.stack;
   exceptionLogfile.write(JSON.stringify(err) + ',\n');
-  console.log(err + '\n');
+  console.log(err);
 });
 
 // view engine setup

@@ -47,7 +47,7 @@ var UserSchema = new Schema({
                  area :"颍州区",
                  detail : "颍州区政府",
                  name : "张三",
-                 tel ： "13888888888"
+                 tel :  "13888888888"
                   }]}
 }, { autoIndex: false });
 
