@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>game test</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable = no">
+	<script type="text/javascript" src="crafty.js"></script>
+    <style type="text/css">
+        body,div,html{
+            margin: 0;
+            padding: 0;
+            border: 0;
+            /*overflow: hidden;*/
+        }
+        body{
+            overflow: hidden;
+        }
+        img{
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+
+</body>
+<script type="text/javascript">
+
+Crafty.init();
+var _w = Crafty.DOM.window.width  ;
+var _h = Crafty.DOM.window.height  ;
+Crafty.background('rgb(255,255,255)');
+
+Crafty.e("PressButton, 2D, DOM, HTML, Mouse")
+    .attr({x:_w/2-_w/5/2,y:_h-100,w:_w/5,h:_w/5})
+    .replace("<img src='img/button.png' style='width:"+_w/5+"px;height:"+_w/5+"px'>")
+    // .image('img/button.png')
+    .bind('MouseDown',function(){
+        // Crafty.background('rgb(255,255,255)');
+        Crafty('BaomanImg1').css('display','inline-block');
+        Crafty('Knife').trigger("changeRed");
+        this.preStart = setTimeout(function(){
+            Crafty('Knife').trigger("myStartMove");
+        },500+(Math.random()*2000>>0)); 
+    })
+    .bind('MouseUp',function(){
+        // Crafty.background('rgb(0,0,0)');
+        clearTimeout(this.preStart);
+        Crafty('BaomanImg1').css('display','none');
+        Crafty('Knife').trigger("changeBlack").trigger("myStopMove");
+    })
+    .bind('Click',function(){
+        console.log("Click");
+    });
+
+Crafty.e("BaomanImg1, 2D, DOM, HTML")
+    .attr({x:0,y:_h-100,w:_w/3})
+    .replace("<img src='img/BaomanImg1.png' style='width:"+_w/3+"px;height:"+_w/3+"px'>")
+    .css('display','none');
+
+Crafty.e("Knife, 2D, DOM, HTML, Tween")
+    .attr({x:_w/6,y:-350,w:_w/2,dure:500})
+    .replace("<img src='img/knife_black.png' style='width:"+_w*2/3+"px'>")
+    .bind('changeRed',function(){
+        this.replace("<img src='img/knife_red.png' style='width:"+_w*2/3+"px'>");
+    })
+    .bind('changeBlack',function(){
+        this.replace("<img src='img/knife_black.png' style='width:"+_w*2/3+"px'>");
+    })
+    .bind('myStartMove',function(){
+        // this.bind('EnterFrame',function(){
+        //     if(this.y<_h-300){
+        //         this.dy = 20;
+        //     }
+        //     else{
+        //         Crafty("blood").trigger('show');
+        //     }
+        //     this.y += this.dy; 
+        // })
+        this.tween({y:_h-350},this.dure);
+        this.end = true;
+    })
+    .bind('myStopMove',function(){
+        // this.unbind('EnterFrame');
+        var self = this ;
+        setTimeout(function(){
+            self.tween({y:-350},500);
+            Crafty("blood").trigger('hide');
+        },1000);
+        this.cancelTween('y');
+    })
+    .bind('TweenEnd',function(){
+        if(this.y==_h-350){
+            Crafty("blood").trigger('show');
+        }else{
+            if(this.dure>300)
+                this.dure -= 50;
+        }
+    });
+
+Crafty.e("blood, 2D, DOM, HTML")
+    .attr({x:0,y:_h-200})
+    .replace("<img src='img/blood.png' style='width:"+_w+"px'>")
+    .css('display','none')
+    .bind('show',function(){
+        this.css('display','block');
+    })
+    .bind('hide',function(){
+        this.css('display','none');
+    });
+    // .undraw();
+// //Ball
+// Crafty.e("2D, Canvas, Image, Collision")
+//     .image('fanqian.jpg')
+//     .attr({ x: 300, y: 150, w: 10, h: 10,
+//             dX: Crafty.math.randomInt(2, 5),
+//             dY: Crafty.math.randomInt(2, 5) })
+//     .bind('EnterFrame', function () {
+//         //hit floor or roof
+//         if (this.y <= 0 || this.y >= _h-10)
+//             this.dY *= -1;
+
+//         if (this.x > _w) {
+//             this.x = _h;
+//             Crafty("LeftPoints").each(function () {
+//                 this.text(++this.points + " Points") });
+//         }
+//         if (this.x < 10) {
+//             this.x = _h;
+//             Crafty("RightPoints").each(function () {
+//                 this.text(++this.points + " Points") });
+//         }
+
+//         this.x += this.dX;
+//         this.y += this.dY;
+//     })
+//     .onHit('Paddle', function () {
+//     this.dX *= -1;
+// })
+
+</script>
+
+</html>

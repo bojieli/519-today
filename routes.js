@@ -42,10 +42,10 @@ module.exports = function (app) {
 		if(req.session.openID||req.path === '/login'||req.path === '/share'){
 			next();
 		}else{
-			//next();
-			//req.session.openID = 'owaixtwGljLuX4W4Ov6wOlQXle1U';
-			//next();
-			login(req,res);
+			// next();
+			req.session.openID = 'owaixtwGljLuX4W4Ov6wOlQXle1U';
+			next();
+			// login(req,res);
 		}
 	});
 //微信授权页面返回页面
