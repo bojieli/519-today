@@ -44,8 +44,11 @@ Crafty.init(_w, _h);
 var status = 'pre_start';
 var preStart;
 var dure = 500;
+var dure_level = 450;
 var fallHeight = 300;
 var upwardHeight = _w/3+10;
+var score = 0;
+var level = 0;
 /*
 status: 
 准备好开始 'pre_start'
@@ -54,6 +57,32 @@ status:
 下滑中    'falling'
 重新开始    'restarting'
 */
+var win = function (height){
+//改变分数和关数
+    height = height<<0;
+    score += height;
+    level++;
+    Crafty('Points').text(level+'关');
+    Crafty('Level').text(dure+'ms');
+//改变间隔事件
+
+    if(level < 5)
+        dure_level -= 20; //100
+    else if(level < 10)
+        dure_level -= 10; //50
+    else if(level < 20)
+        dure_level -=5 ;  //50
+    else if(level < 50)
+        dure_level -= 1;
+    else
+        dure_level -=0.2;
+    
+    dure = dure_level + Math.random()*50;
+    dure = dure<<0;
+}
+var fail = function (){
+    dure_level += 10; 
+}
 
 var mouseDown = function(){
     console.log('mouseDown,status:' + status);
@@ -84,6 +113,7 @@ var mouseUp = function(){
         case 'falling'://正在下落的时后放开,取得胜利
             status = 'restarting';//没切掉
             Crafty('Knife').cancelTween('y');
+            win( Crafty('Knife').y );
             Crafty('BaomanImg1').css('display','none');
             Crafty('Knife').trigger("changeBlack").trigger("restart");
         break;
@@ -106,6 +136,7 @@ var KnifeTweenEnd = function (str){
             break;
             case 'falling'://下滑结束，被切掉了
             status = 'restarting';//切掉了
+            fail();
             Crafty('hands').changeTo();
             Crafty('Knife').trigger("changeBlack").trigger("restart");
             Crafty('blood').trigger('show');
@@ -119,6 +150,10 @@ var KnifeTweenEnd = function (str){
     console.log('KnifeTweenEnd2,status:' + status);
 }
 Crafty.background('rgb(255,255,255)');
+Crafty.e("BaomanImg1, 2D, DOM, HTML")
+    .attr({x:0,y:_h-100,w:_w/3})
+    .replace("<img src='img/BaomanImg1.png' style='width:"+_w/3+"px;height:"+_w/3+"px'>")
+    .css('display','none');
 Crafty.e("Knife, 2D, DOM, HTML, Tween")
     .attr({x:_w/6, y:0, w:_w/2})
     .replace("<img src='img/knife_black.png' style='width:"+_w*2/3+"px'>")
@@ -143,7 +178,6 @@ Crafty.e("Knife, 2D, DOM, HTML, Tween")
         var self = this ;
         setTimeout(function(){
             self.tween({y:0},500);
-
             Crafty("blood").trigger('hide');
         },1000);
     })
@@ -162,10 +196,7 @@ Crafty.e("PressButton, 2D, DOM, HTML, Mouse")
     .bind('MouseOut',mouseUp)
     .bind('MouseIn',mouseDown);
 
-Crafty.e("BaomanImg1, 2D, DOM, HTML")
-    .attr({x:0,y:_h-100,w:_w/3})
-    .replace("<img src='img/BaomanImg1.png' style='width:"+_w/3+"px;height:"+_w/3+"px'>")
-    .css('display','none');
+
 
 Crafty.e("blood, 2D, DOM, HTML")
     .attr({x:0,y:_h-200})
@@ -177,9 +208,13 @@ Crafty.e("blood, 2D, DOM, HTML")
     .bind('hide',function(){
         this.css('display','none');
     });
-Crafty.e("LeftPoints, DOM, 2D, Text")
-    .attr({ x: 20, y: 20, w: 100, h: 20, level: 0 })
-    .text("第0关");
+
+Crafty.e("Points, DOM, 2D, Text")
+    .attr({ x: 10, y: 20, w: 100, h: 20 })
+    .text("0关");
+Crafty.e('Level, DOM, 2D, Text')
+    .attr({ x: 270, y:20, w: 100, h:20})
+    .text('0分')
 
 Crafty.e("hands, DOM, 2D, HTML")
     .attr({x:_w*2/3,y:_h-100
