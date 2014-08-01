@@ -31,6 +31,10 @@
             background: black;
             position: relative;
         }
+        .show-socre{
+            font-size: 30px;
+            color: green;
+        }
     </style>
 </head>
 <body>
@@ -61,7 +65,7 @@ var mouseDown = function(){
     switch(status){
         case 'pre_start'://当且仅当准备好的时候，才能够触发该事件
             status = 'upward';
-            Crafty('BaomanImg1').css('display','inline-block');//显示暴漫
+            Crafty('BaomanImg1').trigger('show');//显示暴漫
             Crafty('Knife').trigger("changeRed").trigger('myUpward');//把刀变成红色，让刀上滑
         break;
         }
@@ -83,9 +87,11 @@ var mouseUp = function(){
         break;
         case 'falling'://正在下落的时后放开,取得胜利
             status = 'restarting';//没切掉
+            Crafty('showScore').show(500);
             Crafty('Knife').cancelTween('y');
-            Crafty('BaomanImg1').css('display','none');
+            Crafty('BaomanImg1').trigger('hide');
             Crafty('Knife').trigger("changeBlack").trigger("restart");
+            
         break;
     }
     console.log('mouseUp2,status:' + status);
@@ -109,9 +115,11 @@ var KnifeTweenEnd = function (str){
             Crafty('hands').changeTo();
             Crafty('Knife').trigger("changeBlack").trigger("restart");
             Crafty('blood').trigger('show');
+            Crafty('BaomanImg2').trigger('show');
 
             break;
             case 'restarting'://重启结束，又可以开始了
+                Crafty("BaomanImg2").trigger('hide');
                 status = 'pre_start';
             break;
         }
@@ -165,7 +173,24 @@ Crafty.e("PressButton, 2D, DOM, HTML, Mouse")
 Crafty.e("BaomanImg1, 2D, DOM, HTML")
     .attr({x:0,y:_h-100,w:_w/3})
     .replace("<img src='img/BaomanImg1.png' style='width:"+_w/3+"px;height:"+_w/3+"px'>")
-    .css('display','none');
+    .css('display','none')
+    .bind('show',function(){
+        this.css('display','block');
+    })
+    .bind('hide',function(){
+        this.css('display','none');
+    });
+
+Crafty.e("BaomanImg2, 2D, DOM, HTML")
+    .attr({x:0,y:_h-200,w:_w/3})
+    .replace("<img src='img/BaomanImg2.png' style='width:"+_w/3+"px;height:"+_w/3+"px'>")
+    .css('display','none')
+    .bind('show',function(){
+        this.css('display','block');
+    })
+    .bind('hide',function(){
+        this.css('display','none');
+    });
 
 Crafty.e("blood, 2D, DOM, HTML")
     .attr({x:0,y:_h-200})
@@ -205,6 +230,22 @@ Crafty.e("hands, DOM, 2D, HTML")
     .bind('hide',function(){
         this.css('display','none');
     });   
+
+Crafty.e("showScore, 2D, DOM, HTML, Tween")
+    .attr({x:_w/2-40,y:_h/2
+        ,show : function(n){
+            this.replace("<span class='show-socre'>+"+n+"</span>");            
+            this.alpha = 1;
+            this.y += 40;
+            this.css("display","block");
+            this.tween({y:this.y-50,alpha:0},1000);
+        }
+    })
+    .replace("<span class='show-socre'>+0</span>")
+    .css("display","none")
+    .bind("TweenEnd",function(){
+        this.css("display",'none');
+    });
 
 function gameOver(){
     alert("game over ~~");
