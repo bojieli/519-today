@@ -58,7 +58,7 @@ Crafty.e("BaomanImg1, 2D, DOM, HTML")
     .css('display','none');
 
 Crafty.e("Knife, 2D, DOM, HTML, Tween")
-    .attr({x:_w/6,y:-350,w:_w/2,dure:500})
+    .attr({x:_w/6, y:-350, w:_w/2, dure:500, level:0 })
     .replace("<img src='img/knife_black.png' style='width:"+_w*2/3+"px'>")
     .bind('changeRed',function(){
         this.replace("<img src='img/knife_red.png' style='width:"+_w*2/3+"px'>");
@@ -91,9 +91,16 @@ Crafty.e("Knife, 2D, DOM, HTML, Tween")
     .bind('TweenEnd',function(){
         if(this.y==_h-350){
             Crafty("blood").trigger('show');
-        }else{
-            if(this.dure>300)
-                this.dure -= 50;
+        }else if(this.y == -350 );
+        else{
+            Crafty("LeftPoints").each(function () {
+                        this.text('第' + (++this.level) + " 关") });
+            if(this.dure > 300)
+                this.dure  -= 50 ; 
+            else if(this.dure > 250)
+                this.dure -=5;
+            else if(this.dure > 200)
+                this.dure = 200 + (this.dure - 200)*0.9
         }
     });
 
@@ -107,6 +114,9 @@ Crafty.e("blood, 2D, DOM, HTML")
     .bind('hide',function(){
         this.css('display','none');
     });
+Crafty.e("LeftPoints, DOM, 2D, Text")
+    .attr({ x: 20, y: 20, w: 100, h: 20, level: 0 })
+    .text("第0关");
     // .undraw();
 // //Ball
 // Crafty.e("2D, Canvas, Image, Collision")

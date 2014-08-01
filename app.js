@@ -25,6 +25,7 @@ require('./weixin/proxy').updateGlobalSceneID();
 var errorLogfile = fs.createWriteStream('../log/error.log',{flags : 'a'});
 var exceptionLogfile = fs.createWriteStream('../log/exception_error.log',{flags : 'a'});
 process.on('uncaughtException', function(err) {
+  err.Time = new Date().toUTCString();
   err.Stack = err.stack;
   exceptionLogfile.write(JSON.stringify(err) + ',\n');
   console.log(err);
@@ -81,6 +82,8 @@ if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
 
      // err.Stack = err.stack;
+      //err.date
+      err.Time = new Date().toUTCString();
       errorLogfile.write(JSON.stringify(err));
       console.log(err);
 
@@ -100,3 +103,5 @@ app.use(function(err, req, res, next) {
 
 
 module.exports = app;
+
+
