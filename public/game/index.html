@@ -90,32 +90,27 @@ Crafty.e("Knife, 2D, DOM, HTML, Tween")
         //     }
         //     this.y += this.dy; 
         // })
-        this.tween({y:_h-350},this.dure);
+        this.tween({y:_h-200},this.dure);
         this.end = true;
     })
     .bind('myStopMove',function(){
         // this.unbind('EnterFrame');
         var self = this ;
         setTimeout(function(){
-            self.tween({y:-350},500);
+            self.tween({y:-200},500);
             Crafty("blood").trigger('hide');
         },1000);
         this.cancelTween('y');
     })
     .bind('TweenEnd',function(){
-        if(this.y==_h-350){
+        if(this.y==_h-200){
             Crafty("blood").trigger('show');
             Crafty("hands").changeTo();
-        }else if(this.y == -350 );
+        }else if(this.y == -100 );
         else{
             Crafty("LeftPoints").each(function () {
                         this.text('第' + (++this.level) + " 关") });
-            if(this.dure > 400)
-                this.dure  -= 50 ; 
-            else if(this.dure > 350)
-                this.dure -=5;
-            else if(this.dure > 300)
-                this.dure = 200 + (this.dure - 200)*0.9
+            this.dure = 200 + (Math.random()*400)>>0 ;
         }
     });
 
