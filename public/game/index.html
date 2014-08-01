@@ -42,6 +42,12 @@
         }
         .game-over p{
             font-size: 28px;
+            width: 320px;
+            max-width: 480px;
+            height: 100%;
+            min-height: 460px;
+            max-height: 560px;            
+
         }
         button {
                 display: inline-block;
@@ -89,6 +95,19 @@ status:
 下滑中    'falling'
 重新开始    'restarting'
 */
+
+var knifeName = [
+'指甲刀',
+'铅笔刀',
+'剃须刀',
+'水果刀',
+'菜刀',
+'砍刀',
+'小李飞刀',
+'青龙偃月刀',
+'屠龙宝刀',
+'呵呵'
+];
 var countPersent = function(myScore){
     if(myScore<1800)
         return (myScore/20)>>0;
@@ -125,8 +144,8 @@ var win = function (height){
 var fail = function (){
     dure_level += 10; 
     Crafty('hands').changeTo();
-    if(Crafty('hands').current <= 0)
-        gameOver();
+    if(Crafty('hands').current <= 4)
+        gameOver(countPersent(score), level, score);
 }
 
 var mouseDown = function(){
@@ -335,20 +354,15 @@ Crafty.e("showScore, 2D, DOM, HTML, Tween")
     .bind("TweenEnd",function(){
         this.css("display",'none');
     });
-Crafty.e("gameOver, 2D, DOM, HTML")
-    .attr({x:0, y:0, w: _w, h: _h})
 
-<<<<<<< HEAD
-function gameOver(){
-        
-=======
 Crafty.e("gameOver, 2D, DOM, HTML")
-    .attr({x:0,y:0,w:_w,h:_h
-        ,show:function(str){
+    .attr({
+        x : 0, y : 0, w : _w, h : _h
+        ,show : function(str){
             this.replace(str);
             this.css("display","block");
         }
-        ,hide:function(){
+        ,hide : function(){
             this.css("display","none");
         }
     })
@@ -363,9 +377,8 @@ function gameOver(a,b,c){
         "<button onclick='share'>分享到朋友圈</button>"+
         "<button onclick='again'>再玩一局</button>"+
         "</div>";    
-    Crafty("gameOver").show(game_over_elem);
-
->>>>>>> f34f951666c9d63e2de87829685f9cab2f0c4fee
+    // Crafty("gameOver").show(game_over_elem);
+    Crafty("gameOver").show (game_over_elem);
 } 
 
 function share(){
