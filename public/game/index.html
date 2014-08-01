@@ -141,7 +141,7 @@ var win = function (height){
     dure = dure_level + Math.random()*50;
     dure = dure<<0;
 //改变刀的名称
-    
+
 
 }
 var fail = function (){
@@ -228,17 +228,17 @@ var KnifeTweenEnd = function (str){
 Crafty.background('rgb(255,255,255)');
 Crafty.e("BaomanImg1, 2D, DOM, HTML")
     .attr({x:0,y:_h-100,w:_w/3})
-    .replace("<img src='img/BaomanImg1.png' style='width:"+_w/3+"px;height:"+_w/3+"px'>")
+    .replace("<img src='img/BaomanImg1.png' style='width:"+_w/3+"px;height:"+_w/3+"px'>");
     .css('display','none');
 
 Crafty.e("Knife, 2D, DOM, HTML, Tween")
     .attr({x:_w/6, y:0, w:_w/2})
-    .replace("<img src='img/knife_black.png' style='width:"+_w*2/3+"px'>")
+    .replace("<img src='img/knife_black.png' style='width:"+_w*2/3+"px'></br>"+knifeName[0])
     .bind('changeRed',function(){
-        this.replace("<img src='img/knife_red.png' style='width:"+_w*2/3+"px'>");
+        this.replace("<img src='img/knife_red.png' style='width:"+_w*2/3+"px'></br>"+knifeName[0]);
     })
     .bind('changeBlack',function(){
-        this.replace("<img src='img/knife_black.png' style='width:"+_w*2/3+"px'>");
+        this.replace("<img src='img/knife_black.png' style='width:"+_w*2/3+"px'></br>"+knifeName[0]);
     })
     .bind('myStartMove',function(){
         this.tween({y:fallHeight},dure);
