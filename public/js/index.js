@@ -1,6 +1,7 @@
 require([
 	'./pro'
 ], function() {
+    alert($(window).height());
 	// 作临时全局变量使用
 	$.tempStorage = {};
 	//CountUp

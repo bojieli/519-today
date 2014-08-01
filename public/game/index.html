@@ -1,9 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>game test</title>
+	<title>“我是一把刀”画面太美，我不敢玩</title>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1 , user-scalable = no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta name="format-detection" content="telephone=no">
+    <script type="text/javascript" src="zepto.min.js"></script>
 	<script type="text/javascript" src="crafty.js"></script>
     <style type="text/css">
         body,div,html{
@@ -14,23 +16,36 @@
         }
         body{
             overflow: hidden;
+            background: black;
         }
         img{
             display: inline-block;
         }
+        #cr-stage{
+            width: 320px;
+            max-width: 480px;
+            height: 100%;
+            min-height: 460px;
+            max-height: 560px;
+            margin: 0 auto;
+            background: black;
+            position: relative;
+        }
     </style>
 </head>
 <body>
-
+    <div id="cr-stage"></div>
 </body>
 <script type="text/javascript">
 
-Crafty.init();
-var _w = Crafty.DOM.window.width  ;
-var _h = Crafty.DOM.window.height  ;
+var _w = 320;
+var _h = 460;
+Crafty.init(_w, _h);
 var status = 'pre_start';
 var preStart;
 var dure = 500;
+var fallHeight = 300;
+var upwardHeight = _w/3+10;
 /*
 status: 
 准备好开始 'pre_start'
@@ -38,7 +53,6 @@ status:
 正在倒计时  'count_down'
 下滑中    'falling'
 重新开始    'restarting'
-
 */
 
 var mouseDown = function(){
@@ -92,6 +106,7 @@ var KnifeTweenEnd = function (str){
             break;
             case 'falling'://下滑结束，被切掉了
             status = 'restarting';//切掉了
+            Crafty('hands').changeTo();
             Crafty('Knife').trigger("changeBlack").trigger("restart");
             Crafty('blood').trigger('show');
 
@@ -114,10 +129,11 @@ Crafty.e("Knife, 2D, DOM, HTML, Tween")
         this.replace("<img src='img/knife_black.png' style='width:"+_w*2/3+"px'>");
     })
     .bind('myStartMove',function(){
-        this.tween({y:_h-350},dure);
+        this.tween({y:fallHeight},dure);
+
     })
     .bind('myUpward',function(){
-        this.tween({y: -_w/3},200);
+        this.tween({y: -upwardHeight},200);
     })
     .bind('myBacktoOri',function(){
         this.y = 0;
@@ -127,6 +143,7 @@ Crafty.e("Knife, 2D, DOM, HTML, Tween")
         var self = this ;
         setTimeout(function(){
             self.tween({y:0},500);
+
             Crafty("blood").trigger('hide');
         },1000);
     })
@@ -150,8 +167,6 @@ Crafty.e("BaomanImg1, 2D, DOM, HTML")
     .replace("<img src='img/BaomanImg1.png' style='width:"+_w/3+"px;height:"+_w/3+"px'>")
     .css('display','none');
 
-
-
 Crafty.e("blood, 2D, DOM, HTML")
     .attr({x:0,y:_h-200})
     .replace("<img src='img/blood.png' style='width:"+_w+"px'>")
@@ -165,35 +180,35 @@ Crafty.e("blood, 2D, DOM, HTML")
 Crafty.e("LeftPoints, DOM, 2D, Text")
     .attr({ x: 20, y: 20, w: 100, h: 20, level: 0 })
     .text("第0关");
-    // .undraw();
-// //Ball
-// Crafty.e("2D, Canvas, Image, Collision")
-//     .image('fanqian.jpg')
-//     .attr({ x: 300, y: 150, w: 10, h: 10,
-//             dX: Crafty.math.randomInt(2, 5),
-//             dY: Crafty.math.randomInt(2, 5) })
-//     .bind('EnterFrame', function () {
-//         //hit floor or roof
-//         if (this.y <= 0 || this.y >= _h-10)
-//             this.dY *= -1;
 
-//         if (this.x > _w) {
-//             this.x = _h;
-//             Crafty("LeftPoints").each(function () {
-//                 this.text(++this.points + " Points") });
-//         }
-//         if (this.x < 10) {
-//             this.x = _h;
-//             Crafty("RightPoints").each(function () {
-//                 this.text(++this.points + " Points") });
-//         }
+Crafty.e("hands, DOM, 2D, HTML")
+    .attr({x:_w*2/3,y:_h-100
+        ,current :5
+        ,changeTo : function(n){
+            if(typeof n == 'undefined')
+                n = this.current-1;
+            if(n<0){
+                n=0;
+                gameOver();
+            }
+                
+            if(n>5)
+                n=5;
+            this.current = n;
+            this.replace("<img src='img/finger"+n+".png' style='width:"+_w/3+"px'>");
+        }
+    })
+    .replace("<img src='img/finger5.png' style='width:"+_w/3+"px'>")
+    .bind('show',function(){
+        this.css('display','block');
+    })
+    .bind('hide',function(){
+        this.css('display','none');
+    });   
 
-//         this.x += this.dX;
-//         this.y += this.dY;
-//     })
-//     .onHit('Paddle', function () {
-//     this.dX *= -1;
-// })
+function gameOver(){
+    alert("game over ~~");
+} 
 
 </script>
 
