@@ -36,6 +36,32 @@
             color: green;
             font-weight: bold; 
         }
+        .game-over{
+            background: black;
+            opacity: 0.5;
+        }
+        .game-over p{
+            font-size: 28px;
+        }
+        button {
+                display: inline-block;
+                padding: 6px 12px;
+                margin-bottom: 5px;
+                font-size: 21px;
+                font-weight: normal;
+                line-height: 1.9;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: middle;
+                cursor: pointer;
+                background-image: none;
+                border: 1px solid transparent;
+                border-radius: 10px;
+                color: #FFFFFF;
+                width : 90%;
+                background-color : #0079FF;
+        }  
+
     </style>
 </head>
 <body>
@@ -293,7 +319,11 @@ Crafty.e("hands, DOM, 2D, HTML")
 Crafty.e("showScore, 2D, DOM, HTML, Tween")
     .attr({x:_w/2-40,y:_h/2
         ,show : function(n){
-            this.replace("<span class='show-socre'>+"+n+"</span>");            
+            if(typeof n == 'string'){
+                this.replace("<span class='show-socre'>"+n+"</span>"); 
+            }else{
+                this.replace("<span class='show-socre'>+"+n+"</span>");
+            }              
             this.alpha = 1;
             this.y += 40;
             this.css("display","block");
@@ -308,10 +338,43 @@ Crafty.e("showScore, 2D, DOM, HTML, Tween")
 Crafty.e("gameOver, 2D, DOM, HTML")
     .attr({x:0, y:0, w: _w, h: _h})
 
+<<<<<<< HEAD
 function gameOver(){
         
+=======
+Crafty.e("gameOver, 2D, DOM, HTML")
+    .attr({x:0,y:0,w:_w,h:_h
+        ,show:function(str){
+            this.replace(str);
+            this.css("display","block");
+        }
+        ,hide:function(){
+            this.css("display","none");
+        }
+    })
+    .replace("")
+    .css("display","none");
+
+
+function gameOver(a,b,c){
+    var game_over_elem = "<div class='game-over'>"+
+        "<h3>你击败了全国"+a+"%的人</h3>"+
+        "<p>闯关数："+b+"<br>获得分数："+c+"</p>"+
+        "<button onclick='share'>分享到朋友圈</button>"+
+        "<button onclick='again'>再玩一局</button>"+
+        "</div>";    
+    Crafty("gameOver").show(game_over_elem);
+
+>>>>>>> f34f951666c9d63e2de87829685f9cab2f0c4fee
 } 
 
-</script>
+function share(){
 
+}
+
+function again(){
+
+}
+
+</script>
 </html>
