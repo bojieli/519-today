@@ -87,6 +87,61 @@ status:
 重新开始    'restarting'
 */
 
+var knifeName = [
+'指甲刀',
+'铅笔刀',
+'剃须刀',
+'水果刀',
+'菜刀',
+'砍刀',
+'小李飞刀',
+'青龙偃月刀',
+'屠龙宝刀',
+'呵呵'
+];
+var countPersent = function(myScore){
+    if(myScore<1800)
+        return (myScore/20)>>0;
+    else if(myScore<4500)
+        return ((myScore-1800)/30+90)>>0;
+    else 
+        return 99;
+}
+
+var win = function (height){
+//改变分数和关数
+    height = ((height+200)/5)>>0;
+    score += height;
+    Crafty("showScore").show(height);
+    level++;
+    Crafty('Points').text(level+'关');
+    Crafty('Level').text(score+'分');
+//改变间隔事件
+
+    if(level < 5)
+        dure_level -= 50; //250
+    else if(level < 10)
+        dure_level -= 10; //50
+    else if(level < 20)
+        dure_level -=5 ;  //50
+    else if(level < 50)
+        dure_level -= 1;
+    else
+        dure_level -=0.2;
+    
+    dure = dure_level + Math.random()*50;
+    dure = dure<<0;
+//改变刀的名称
+    
+
+}
+var fail = function (){
+    dure_level += 10; 
+    Crafty('hands').changeTo();
+    if(Crafty('hands').current <= 4)
+        gameOver(countPersent(score), level, score);
+}
+
 var mouseDown = function(){
     console.log('mouseDown,status:' + status);
 
