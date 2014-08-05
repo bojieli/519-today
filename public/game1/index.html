@@ -3,10 +3,16 @@
 <head>
     <title>“我是一把刀”画面太美，我不敢玩</title>
     <meta charset="utf-8">
+    <meta name="description" content="按住按钮，刀会随机延时，突然掉下来，测试你的反应速度">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
     <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="full-screen" content="true">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="360-fullscreen" content="true">
     <script type="text/javascript" src="zepto.min.js"></script>
-    <script type="text/javascript" src="crafty.js"></script>
+    <script type="text/javascript" src="crafty.game.js"></script>
     <style type="text/css">
         body,div,html{
             margin: 0;
@@ -43,11 +49,10 @@
             height: 460px;
             text-align: center;
             vertical-align: middle;
-            padding: 0px;            
+            padding: 0px;   
+            padding-top: 180px;         
         }
-        .game-over p{
-            font-size: 28px;
-        }
+
         button {
                 display: inline-block;
                 padding: 6px 12px;
@@ -81,10 +86,18 @@
             color: black;
             font-size: 14px; 
         }
-
+        #myicon{
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
     </style>
 </head>
 <body>
+    <div id="myicon">
+        <img src="img/icon.png" style="width:42px;height:42px">
+    </div>
     <div id="cr-stage"></div>
     <img src="img/share_arrow.png" id="share_arrow">
 </body>
@@ -170,16 +183,17 @@ var win = function (height){
 
 }
 var playAgain = function (){
-    dure = 500;
-    score = 0;
-    level = 0;
-    dure_level = 400;
-    knifeIndex = 0;
-    Crafty('hands').changeTo(5);
-    Crafty('Knife').trigger('myBacktoOri');
-    Crafty('Points').text(score+'分');
-    Crafty('Level').text(level+'关');
-    status = 'pre_start';
+    // dure = 500;
+    // score = 0;
+    // level = 0;
+    // dure_level = 400;
+    // knifeIndex = 0;
+    // Crafty('hands').changeTo(5);
+    // Crafty('Knife').trigger('myBacktoOri');
+    // Crafty('Points').text(score+'分');
+    // Crafty('Level').text(level+'关');
+    // status = 'pre_start';
+    location.href = location.href;
 }
 
 var fail = function (){
@@ -202,7 +216,7 @@ var fail = function (){
 }
 
 var mouseDown = function(){
-    console.log('mouseDown,status : '+ status);
+    // console.log('mouseDown,status : '+ status);
     
    
     switch(status){
@@ -212,11 +226,11 @@ var mouseDown = function(){
             Crafty('BaomanImg1').trigger('show');//显示暴漫
         break;
     }
-    console.log('mouseDown1,status : '+ status);
+    // console.log('mouseDown1,status : '+ status);
         
 }
 var mouseUp = function(){
-    console.log('mouseUp,status : '+ status);
+    // console.log('mouseUp,status : '+ status);
     Crafty('BaomanImg1').trigger('hide');
     
     switch(status){
@@ -239,11 +253,11 @@ var mouseUp = function(){
             win(Crafty('Knife').y);
         break;
     }
-    console.log('mouseUp1,status : '+ status);
+    // console.log('mouseUp1,status : '+ status);
 }
 
 var KnifeTweenEnd = function (str){
-    console.log('KnifeTweenEnd,status : '+ status);
+    // console.log('KnifeTweenEnd,status : '+ status);
     if(str.y||str.y==0)//如果是被取消的，那么就不做判断
     {
         switch(status){
@@ -270,7 +284,7 @@ var KnifeTweenEnd = function (str){
             break;
         }
     }
-    console.log('KnifeTweenEnd1,status : '+ status);
+    // console.log('KnifeTweenEnd1,status : '+ status);
 }
 Crafty.background('rgb(255,255,255)');
 function getKnifeHtml(img){
@@ -279,7 +293,7 @@ function getKnifeHtml(img){
 Crafty.e("Knife, 2D, DOM, HTML, Tween")
     .attr({x:_w/6, y:0, w:_w/2,
         setKnifeName : function(index){
-            console.log(knifeName[knifeIndex]);
+            // console.log(knifeName[knifeIndex]);
             document.getElementById('my_knife_text').innerText = knifeName[knifeIndex];
         }
     })
@@ -293,7 +307,7 @@ Crafty.e("Knife, 2D, DOM, HTML, Tween")
         document.getElementById('my_knife_text').innerText = knifeName[knifeIndex];
     })
     .bind('myStartMove',function(){
-        console.log('myStartMove');
+        // console.log('myStartMove');
         this.tween({y:fallHeight},dure);
 
     })
@@ -319,8 +333,8 @@ Crafty.e("Knife, 2D, DOM, HTML, Tween")
 
 
 Crafty.e("PressButton, 2D, DOM, HTML, Mouse")
-    .attr({x:_w/2-_w/5/2,y:_h-100,w:_w/5,h:_w/5})
-    .replace("<img src='img/button.png' style='width:"+_w/5+"px;height:"+_w/5+"px'>")
+    .attr({x:_w/2-_w/4/2,y:_h-100,w:_w/4,h:_w/4})
+    .replace("<img src='img/button.png' style='width:"+_w/4+"px;height:"+_w/4+"px'>")
     // .image('img/button.png')
     .bind('MouseDown', mouseDown)
     .bind('MouseUp', mouseUp)
@@ -434,18 +448,78 @@ Crafty.e("gameOver, 2D, DOM, HTML")
 
 function gameOver(a,b,c){
     var game_over_elem = "<div class='game-over'>"+
-        "<h3>你击败了全国"+a+"%的人</h3>"+
-        "<p>闯关数："+b+"<br>获得分数："+c+"</p>"+
         "<button onclick='share()'>分享给好友</button>"+
         "<button onclick='playAgain()'>还没玩够→_→</button>"+
         "</div>";    
     Crafty("gameOver").show(game_over_elem);
     document.title = "【我是一把刀】我用5根手指头闯了"+b+"关，击败了全国"+a+"%的人，你也来试试？";
+    status = 'game_over' ;
 } 
 
 function share(){
     document.getElementById('share_arrow').style.display = 'block';
 }
+
+</script>
+
+<script type="text/javascript">
+    var link = "http://"+location.host+location.pathname;
+    window.shareData = {
+        "imgUrl": link+"img/icon640.png",
+        "timeLineLink": link,
+        "tTitle": "【我是一把刀】画面太美，我不敢玩",
+        "tContent": "按住按钮，刀会随机突然掉下来，测试你的反应速度"
+    };
+
+
+    var mebtnopenurl = link;
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        
+        WeixinJSBridge.on('menu:share:appmessage', function(argv) {
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "img_url": window.shareData.imgUrl,
+                "link": window.shareData.timeLineLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tTitle
+            }, function(res) {
+                document.location.href = mebtnopenurl;
+            })
+        });
+
+        WeixinJSBridge.on('menu:share:timeline', function(argv) {
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.timeLineLink,
+                "desc": window.shareData.tContent,
+                "title": document.title
+            }, function(res) {
+                document.location.href = mebtnopenurl;
+            });
+        });
+
+
+        WeixinJSBridge.on('menu:share:weibo', function(argv) {
+            WeixinJSBridge.invoke('shareWeibo', {
+                "content": window.shareData.tContent,
+                "url": window.shareData.timeLineLink
+            }, function(res) {
+                document.location.href = mebtnopenurl;
+            });
+        });
+
+        }, false);
+
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-43722456-4', 'auto');
+  ga('send', 'pageview');
 
 </script>
 </html>

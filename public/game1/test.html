@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>game test</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta name="format-detection" content="telephone=no">
+    <script type="text/javascript" src="zepto.min.js"></script>
+	<!-- // <script type="text/javascript" src="crafty.js"></script> -->
+    <style type="text/css">
+        body,div,html{
+/*            margin: 0;
+            padding: 0;
+            border: 0;*/
+            /*overflow: hidden;*/
+        }
+        body{
+            /*overflow: hidden;*/
+        }
+        img{
+            /*display: inline-block;*/
+        }
+        #cr-stage{
+            width: 320px;
+            max-width: 480px;
+            margin: 0 auto;
+            background: black;
+            position: relative;
+        }
+    </style>
+</head>
+<body>
+    <div id="cr-stage"></div>
+</body>
+<script type="text/javascript">
+// var _w = getElementById('cr-stage').width;
+// var _h = getElementById('cr-stage').height;
+var _w,_h;
+Zepto(function($){
+    var _w = $(window).width();
+    var _h = $(window).height();
+    alert(_h);    
+});
+</script>
+
+</html>
