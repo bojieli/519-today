@@ -37,14 +37,16 @@ module.exports = function (app) {
 	});
 
 //如果没有登录就直接登录
-	app.all('*',function (req, res,next){
+	app.all('*', function (req, res,next){
 
+		console.log('app.all,openID:',req.session.openID);
 		if(req.session.openID||req.path === '/login'||req.path === '/share'){
 			next();
 		}else{
 			// next();
 			// req.session.openID = 'owaixtwGljLuX4W4Ov6wOlQXle1U';
 			// next();
+			
 			login(req,res);
 		}
 	});
@@ -74,7 +76,7 @@ module.exports = function (app) {
 	app.post('/visit',visit.addVisit);
 
 //address
-	app.get('/address',address.getAddressByOpenID);
+	app.post('/address',address.getAddressByOpenID);
 	app.post('/add_address',address.addAddress);
 	app.post('/delete_address',address.deleteAddress);
 	app.get('/default_address',address.defaultAddress);

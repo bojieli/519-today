@@ -1,6 +1,7 @@
 require([
 	'./pro'
 ], function() {
+    alert('start');
 	// 作临时全局变量使用
 	$.tempStorage = {};
 	//CountUp
@@ -288,7 +289,8 @@ require([
     }
     //====================加载地址=====================
     function getAddr(cb){
-        $.get("/address",function(data,status){
+        $.post("/address",function(data,status){
+            alert(JSON.stringify(data));
             if(status != 'success'){
                 // 加载地址失败
                 cb("fail to get address");
