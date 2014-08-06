@@ -94,7 +94,20 @@ module.exports = function (app) {
         }
 
     }
-    res.reply('欢迎关注安徽1919！访问主页:http://node.freeshell.ustc.edu.cn\n 退出:http://node.freeshell.ustc.edu.cn/logout');
+
+    var r = [{
+        title:"欢迎关注安徽1919！访问主页" ,
+        pic : process.env.HOST+"/images/home.jpg",
+        description : "打造安徽白酒速递第一品牌",
+        url : process.env.HOST
+      },
+      {
+        title:"查看返钱规则" ,
+        pic : process.env.HOST+"/images/fanqian.jpg",
+        description : "",
+        url : process.env.HOST+"/ruleintroduction"
+      }];
+    res.reply(r);
 
   }else if(message.Event === 'unsubscribe'){
     console.log('unsubscribe!');
@@ -125,20 +138,12 @@ module.exports = function (app) {
     console.log("recommend!");
     User.getSceneIDbyOpenID(req.query.openID, function(err,sceneID){
       if(err) return;
-
       api.createTmpQRCode(sceneID,1800,function(err,result){
         var url = api.showQRCodeURL(result.ticket);
-        //console.log(url);
-        //"window.location.href = 'http://baidu.com'"
-        //sceneIDurl = "window.location.href = 'http://519.today/share/?sceneID=" + sceneID + "'";
         sceneIDurl = "window.location.href = '/share/?sceneID=" + sceneID + "'"
         sceneIDurl = "<button onclick ="+ '"' +sceneIDurl+  '"' +"><b>分享到朋友圈</b></button>"
-       // sceneIDurl = "window.location.href = 'http://519.today/share/'";
         console.log(sceneIDurl);
         res.render('promote',{qrCodeurl : url, sceneIDurl : sceneIDurl});
-       // res.write('<img src="'+url+'" width="50%">')
-       // res.end();
-
       })
     
     })

@@ -1,0 +1,525 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>“我是一把刀”画面太美，我不敢玩</title>
+    <meta charset="utf-8">
+    <meta name="description" content="按住按钮，刀会随机延时，突然掉下来，测试你的反应速度">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="full-screen" content="true">
+    <meta name="screen-orientation" content="portrait">
+    <meta name="x5-fullscreen" content="true">
+    <meta name="360-fullscreen" content="true">
+    <script type="text/javascript" src="zepto.min.js"></script>
+    <script type="text/javascript" src="crafty.game.js"></script>
+    <style type="text/css">
+        body,div,html{
+            margin: 0;
+            padding: 0;
+            border: 0;
+            /*overflow: hidden;*/
+        }
+        body{
+            overflow: hidden;
+            background: black;
+        }
+        img{
+            display: inline-block;
+        }
+        #cr-stage{
+            width: 320px;
+            height: 460px;
+            margin: 0 auto;
+            background: black;
+            position: relative;
+        }
+        .show-socre{
+            font-size: 40px;
+            color: green;
+            font-weight: bold;
+            text-align: center;
+            width: 320px;
+            height: 100px;
+        }
+        .game-over{
+            background: black;
+            opacity: 0.5;
+            width: 320px;
+            height: 460px;
+            text-align: center;
+            vertical-align: middle;
+            padding: 0px;   
+            padding-top: 180px;         
+        }
+
+        button {
+                display: inline-block;
+                padding: 6px 12px;
+                margin-bottom: 5px;
+                font-size: 21px;
+                font-weight: normal;
+                line-height: 1.9;
+                text-align: center;
+                white-space: nowrap;
+                vertical-align: middle;
+                cursor: pointer;
+                background-image: none;
+                border: 1px solid transparent;
+                border-radius: 10px;
+                color: #FFFFFF;
+                width : 90%;
+                background-color : #ff0000;
+        }  
+        #share_arrow{
+            position: absolute;
+            right: 0;
+            top: 0;
+            display: none;
+            z-index: 1000;
+        }
+        #my_knife_text{
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            padding-top: 50px;
+            color: black;
+            font-size: 14px; 
+        }
+        #myicon{
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+        }
+    </style>
+</head>
+<body>
+    <div id="myicon">
+        <img src="img/icon.png" style="width:42px;height:42px">
+    </div>
+    <div id="cr-stage"></div>
+    <img src="img/share_arrow.png" id="share_arrow">
+</body>
+<script type="text/javascript">
+
+var _w = 320;
+var _h = 460;
+Crafty.init(_w, _h);
+var status = 'pre_start';
+var preStart;
+
+var fallHeight = 300;
+var upwardHeight = _w/3+10;
+
+var dure = 500;
+var score = 0;
+var level = 0;
+var dure_level = 400;
+var knifeIndex = 0;
+
+/*
+status: 
+准备好开始 'pre_start'
+正在往上滑 'upward'
+正在倒计时  'count_down'
+下滑中    'falling'
+重新开始    'restarting'
+结束          'game_over'
+*/
+
+var knifeName = [
+'',
+'指甲刀',
+'铅笔刀',
+'剃须刀',
+'水果刀',
+'菜刀',
+'砍刀',
+'小李飞刀',
+'青龙偃月刀',
+'屠龙宝刀',
+'呵呵'
+];
+var countPersent = function(myScore){
+    if(myScore<1800)
+        return (myScore/20)>>0;
+    else if(myScore<4500)
+        return ((myScore-1800)/30+90)>>0;
+    else 
+        return 99;
+}
+
+var win = function (height){
+//改变分数和关数
+    height = ((height+200)/5)>>0;
+    score += height;
+    Crafty("showScore").show(height);
+    level++;
+    Crafty('Points').text(score+'分');
+    Crafty('Level').text(level+'关');
+//改变间隔事件
+
+    if(level < 5)
+        dure_level -= 30; //250
+    else if(level < 10)
+        dure_level -= 10; //50
+    else if(level < 20)
+        dure_level -=5 ;  //50
+    else if(level < 50)
+        dure_level -= 1;
+    else
+        dure_level -=0.2;
+    
+    dure = dure_level + Math.random()*20;
+    dure = dure<<0;
+//改变刀的名称
+    if(level < 50)
+        knifeIndex = (level/5)<<0;
+    else
+        knifeIndex = 9;
+    Crafty("Knife").setKnifeName();
+    
+
+}
+var playAgain = function (){
+    // dure = 500;
+    // score = 0;
+    // level = 0;
+    // dure_level = 400;
+    // knifeIndex = 0;
+    // Crafty('hands').changeTo(5);
+    // Crafty('Knife').trigger('myBacktoOri');
+    // Crafty('Points').text(score+'分');
+    // Crafty('Level').text(level+'关');
+    // status = 'pre_start';
+    location.href = location.href;
+}
+
+var fail = function (){
+    dure_level += 10; 
+    Crafty('hands').changeTo();
+    if(Crafty('hands').current <= 0)
+    {
+        gameOver(countPersent(score), level, score);
+    }
+    var hands_count = Crafty('hands').current;
+    switch(hands_count){
+        case 4:
+            Crafty('showScore').show('在刀落下来前离开屏幕哦');
+        break;
+        case 3:
+            Crafty('showScore').show('下次反应快点哦,么么哒~~^_^');
+        break;
+    }
+        
+}
+
+var mouseDown = function(){
+    // console.log('mouseDown,status : '+ status);
+    
+   
+    switch(status){
+        case 'pre_start'://当且仅当准备好的时候，才能够触发该事件
+            status = 'upward';
+            Crafty('Knife').trigger("changeRed").trigger('myUpward');//把刀变成红色，让刀上滑
+            Crafty('BaomanImg1').trigger('show');//显示暴漫
+        break;
+    }
+    // console.log('mouseDown1,status : '+ status);
+        
+}
+var mouseUp = function(){
+    // console.log('mouseUp,status : '+ status);
+    Crafty('BaomanImg1').trigger('hide');
+    
+    switch(status){
+        case 'upward'://在刀往上滑的时候松手,回到原位
+            status = 'pre_start';
+            Crafty('Knife').cancelTween('y');
+            Crafty('Knife').trigger('myBacktoOri');
+        break;
+        case 'count_down'://在倒计时的时候松手，回到原位
+            status = 'pre_start';
+            Crafty('Knife').trigger('myBacktoOri');
+            clearTimeout(preStart);
+        break;
+        case 'falling'://正在下落的时后放开,取得胜利
+            status = 'restarting';//没切掉
+            Crafty('PressButton').trigger('hide');
+            Crafty('Knife').cancelTween('y');
+            
+            Crafty('Knife').trigger("changeBlack").trigger("restart");
+            win(Crafty('Knife').y);
+        break;
+    }
+    // console.log('mouseUp1,status : '+ status);
+}
+
+var KnifeTweenEnd = function (str){
+    // console.log('KnifeTweenEnd,status : '+ status);
+    if(str.y||str.y==0)//如果是被取消的，那么就不做判断
+    {
+        switch(status){
+            case 'upward'://上行结束，开始倒计时
+            status = 'count_down';
+            preStart = setTimeout(function(){
+                        Crafty('Knife').trigger("myStartMove");
+                        status = 'falling';
+                    },(Math.random()*2000>>0));
+
+            break;
+            case 'falling'://下滑结束，被切掉了
+            status = 'restarting';//切掉了
+            Crafty('Knife').trigger("changeBlack").trigger("restart");
+            Crafty('blood').trigger('show');
+            Crafty('BaomanImg2').trigger('show');
+            Crafty('PressButton').trigger('hide');
+            fail();
+            break;
+            case 'restarting'://重启结束，又可以开始了
+                Crafty("BaomanImg2").trigger('hide');
+                Crafty('PressButton').trigger('show');
+                status = 'pre_start';
+            break;
+        }
+    }
+    // console.log('KnifeTweenEnd1,status : '+ status);
+}
+Crafty.background('rgb(255,255,255)');
+function getKnifeHtml(img){
+    return "<div id='my_knife' src='img/knife_black.png' style='width:"+_w*2/3+"px;height:"+_w/3+"px;background-image: url(img/knife_"+img+".png)'><div id='my_knife_text'></div></div>";
+}
+Crafty.e("Knife, 2D, DOM, HTML, Tween")
+    .attr({x:_w/6, y:0, w:_w/2,
+        setKnifeName : function(index){
+            // console.log(knifeName[knifeIndex]);
+            document.getElementById('my_knife_text').innerText = knifeName[knifeIndex];
+        }
+    })
+    .replace(getKnifeHtml('black'))
+    .bind('changeRed',function(){
+        this.replace(getKnifeHtml('red'));
+        document.getElementById('my_knife_text').innerText = knifeName[knifeIndex];
+    })
+    .bind('changeBlack',function(){
+        this.replace(getKnifeHtml('black'));
+        document.getElementById('my_knife_text').innerText = knifeName[knifeIndex];
+    })
+    .bind('myStartMove',function(){
+        // console.log('myStartMove');
+        this.tween({y:fallHeight},dure);
+
+    })
+    .bind('myUpward',function(){
+        this.tween({y: -upwardHeight},200);
+    })
+    .bind('myBacktoOri',function(){
+        this.y = 0;
+        this.replace(getKnifeHtml('black'));
+        document.getElementById('my_knife_text').innerText = knifeName[knifeIndex];
+    })
+    .bind('restart',function(){
+        var self = this ;
+        setTimeout(function(){
+            self.tween({y:0},500);
+            Crafty("blood").trigger('hide');
+        },1000);
+    })
+    .bind('TweenEnd',KnifeTweenEnd);
+
+
+
+
+
+Crafty.e("PressButton, 2D, DOM, HTML, Mouse")
+    .attr({x:_w/2-_w/4/2,y:_h-100,w:_w/4,h:_w/4})
+    .replace("<img src='img/button.png' style='width:"+_w/4+"px;height:"+_w/4+"px'>")
+    // .image('img/button.png')
+    .bind('MouseDown', mouseDown)
+    .bind('MouseUp', mouseUp)
+    .bind('MouseOut',mouseUp)
+    .bind('MouseIn',mouseDown)
+    .bind('hide', function(){
+        this.css('display','none');
+    })
+    .bind('show', function(){
+        this.css('display','block');
+    })
+    ;
+
+Crafty.e("BaomanImg1, 2D, DOM, HTML")
+    .attr({x:0,y:_h-100,w:_w/3})
+    .replace("<img src='img/BaomanImg1.png' style='width:"+_w/3+"px;height:"+_w/3+"px'>")
+    .css('display','none')
+    .bind('show',function(){
+        this.css('display','block');
+    })
+    .bind('hide',function(){
+        this.css('display','none');
+    });
+
+Crafty.e("BaomanImg2, 2D, DOM, HTML")
+    .attr({x:0,y:_h-200,w:_w/3})
+    .replace("<img src='img/BaomanImg2.png' style='width:"+_w/3+"px;height:"+_w/3+"px'>")
+    .css('display','none')
+    .bind('show',function(){
+        this.css('display','block');
+    })
+    .bind('hide',function(){
+        this.css('display','none');
+    });
+
+Crafty.e("blood, 2D, DOM, HTML")
+    .attr({x:0,y:_h-200})
+    .replace("<img src='img/blood.png' style='width:"+_w+"px'>")
+    .css('display','none')
+    .bind('show',function(){
+        this.css('display','block');
+    })
+    .bind('hide',function(){
+        this.css('display','none');
+    });
+Crafty.e("Points, DOM, 2D, Text")
+    .attr({ x: 10, y: 20, w: 100, h: 20, level: 0 })
+    .text("0分");
+Crafty.e("Level, DOM, 2D, Text")
+    .attr({ x: 270, y: 20, w: 100, h: 20, level: 0 })
+    .text("0关");
+
+Crafty.e("hands, DOM, 2D, HTML")
+    .attr({x:_w*2/3,y:_h-100
+        ,current :5
+        ,changeTo : function(n){
+            if(typeof n == 'undefined')
+                n = this.current-1;
+            if(n<0){
+                n=0;
+                gameOver();
+            }
+                
+            if(n>5)
+                n=5;
+            this.current = n;
+            this.replace("<img src='img/finger"+n+".png' style='width:"+_w/3+"px'>");
+        }
+    })
+    .replace("<img src='img/finger5.png' style='width:"+_w/3+"px'>")
+    .bind('show',function(){
+        this.css('display','block');
+    })
+    .bind('hide',function(){
+        this.css('display','none');
+    });   
+
+Crafty.e("showScore, 2D, DOM, HTML, Tween")
+    .attr({x:0,y:_h/2,w : _w
+        ,show : function(n){
+            if(typeof n == 'string'){
+                this.replace("<span class='show-socre'>"+n+"</span>"); 
+            }else{
+                this.replace("<span class='show-socre'>+"+n+"</span>");
+            }              
+            this.alpha = 1;
+            this.y += 40;
+            this.css("display","block");
+            this.tween({y:this.y-50,alpha:0},1000);
+        }
+    })
+    .replace("<span class='show-socre'>+0</span>")
+    .css("display","none")
+    .bind("TweenEnd",function(){
+        this.css("display",'none');
+    });
+
+Crafty.e("gameOver, 2D, DOM, HTML")
+    .attr({x:0,y:0,w:_w,h:_h
+        ,show:function(str){
+            this.replace(str);
+            this.css("display","block");
+        }
+        ,hide:function(){
+            this.css("display","none");
+        }
+    })
+    .replace("")
+    .css("display","none");
+
+
+function gameOver(a,b,c){
+    var game_over_elem = "<div class='game-over'>"+
+        "<button onclick='share()'>分享给好友</button>"+
+        "<button onclick='playAgain()'>还没玩够→_→</button>"+
+        "</div>";    
+    Crafty("gameOver").show(game_over_elem);
+    document.title = "【我是一把刀】我用5根手指头闯了"+b+"关，击败了全国"+a+"%的人，你也来试试？";
+    status = 'game_over' ;
+} 
+
+function share(){
+    document.getElementById('share_arrow').style.display = 'block';
+}
+
+</script>
+
+<script type="text/javascript">
+    var link = "http://"+location.host+location.pathname;
+    window.shareData = {
+        "imgUrl": link+"img/icon640.png",
+        "timeLineLink": link,
+        "tTitle": "【我是一把刀】画面太美，我不敢玩",
+        "tContent": "按住按钮，刀会随机突然掉下来，测试你的反应速度"
+    };
+
+
+    var mebtnopenurl = link;
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        
+        WeixinJSBridge.on('menu:share:appmessage', function(argv) {
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "img_url": window.shareData.imgUrl,
+                "link": window.shareData.timeLineLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tTitle
+            }, function(res) {
+                document.location.href = mebtnopenurl;
+            })
+        });
+
+        WeixinJSBridge.on('menu:share:timeline', function(argv) {
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.timeLineLink,
+                "desc": window.shareData.tContent,
+                "title": document.title
+            }, function(res) {
+                document.location.href = mebtnopenurl;
+            });
+        });
+
+
+        WeixinJSBridge.on('menu:share:weibo', function(argv) {
+            WeixinJSBridge.invoke('shareWeibo', {
+                "content": window.shareData.tContent,
+                "url": window.shareData.timeLineLink
+            }, function(res) {
+                document.location.href = mebtnopenurl;
+            });
+        });
+
+        }, false);
+
+</script>
+<script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-43722456-4', 'auto');
+  ga('send', 'pageview');
+
+</script>
+</html>

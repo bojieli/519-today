@@ -1,5 +1,5 @@
 var config = {
-	port :6088,
+	port :6099,
 	session_secret: '519_Today',
 	db : 'mongodb://localhost/519_Today_dev',
 	db_name : '519_Today_dev',
@@ -30,5 +30,5 @@ var config = {
 	small_dir : '/images/small/',
 	large_dir : '/images/large/'
 }
-
+process.env.HOST = "http://519.today";
 module.exports = config;

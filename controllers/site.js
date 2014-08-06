@@ -28,7 +28,7 @@
 			});
 		}						
 		res.render('index',{
-			title : "安徽519",
+			title : "安徽1919",
 			r:r,
 			recommendList:recommendList
 		});

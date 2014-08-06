@@ -109,6 +109,11 @@ require([
         });
     }) ;
 
+    $('[data-target=".page5"]').on('tap',function(){
+        // alert($(this).data("from"));
+        $(".ui-tab.page5 a").data('target',$(this).data('from'));
+    });
+
     $(document).on('tap','[data-toggle="mytab"]',function(){
         // e.preventDefault();
         $(this).tab('show');
@@ -283,7 +288,8 @@ require([
     }
     //====================加载地址=====================
     function getAddr(cb){
-        $.get("/address",function(data,status){
+        $.post("/address",function(data,status){
+            alert(JSON.stringify(data)+"=========");
             if(status != 'success'){
                 // 加载地址失败
                 cb("fail to get address");
@@ -293,18 +299,21 @@ require([
         });
     }
     function updateAddrUI(cb){
-        var $li = $(".cart-address-list li.j-address-item");
-        var $myli = $(".my-address-list li.j-address-item");
+        $("li.j-single.j-address-item").remove();
+        var $li = $(".cart-address-list li.j-address-item-template");
+        var $myli = $(".my-address-list li.j-address-item-template");
         getAddr(function(err,data){
-            $.uploadErrorLog(data,"address");
+
             if(!data)
                 return;
             var r = [];
             localStorage.address = JSON.stringify(data);
+            alert(JSON.stringify(data));
             localStorage.defauleAddrIndex = 0;
             for(var i=0;i<data.length;i++){
                 var item = data[i];
                 var addli = $li.clone();
+                addli.removeClass("j-address-item-template").addClass("j-address-item");
                 addli.data('index',i);
                 addli.find('.j-province').text(item.province || "");
                 addli.find('.j-shi').text(item.city || "");
@@ -323,10 +332,10 @@ require([
                 $(".cart-address-list").prepend(addr);
                 addr = r.pop();
             }
-            $li.remove();
             for(var i=0;i<data.length;i++){
                 var item = data[i];
                 var addli = $myli.clone();
+                addli.removeClass("j-address-item-template").addClass("j-address-item");
                 addli.data('index',i);
                 addli.find('.j-province').text(item.province || "");
                 addli.find('.j-shi').text(item.city || "");
@@ -345,7 +354,6 @@ require([
                 $(".my-address-list").prepend(addr);
                 addr = r.pop();
             }
-            $myli.remove();
             cb && cb();            
         });
     }
@@ -376,6 +384,7 @@ require([
 
                 $.post("/delete_address",{index : $this.data('index')},function(data,status){
                     $this.remove();
+                    updateAddrUI();
                 });
             }
         };
@@ -501,7 +510,37 @@ require([
     }
     updateMyOrder();
 
-    $(document).on('click',"#detail_add_cart",function(){
-        $(this).trigger("tap");
+    //========================添加地址=========================
+    function addAdress(){
+        var address = {
+            province : "安徽"
+            ,city : "阜阳"
+            ,area : $("#distinct_list").val()
+            ,detail : $("#addr-detail-input").val()
+            ,name : $("#addr-name-input").val()
+            ,tel : $("#addr-tel-input").val()          
+        };
+        // 检查
+        $.post('/add_address',{address:address},function(data,status){
+            if(status!='success'){
+                alert("添加地址出错:(");
+                return;
+            }
+            if(data.error){
+                alert(data.message);
+            }else{
+                $(".ui-tab.page5 a").trigger('tap');
+                updateAddrUI();
+            }
+        });
+    }
+
+    $(".address-btn-ok").on('tap',function(){
+        this.disabled = true;
+        addAdress();
+    });
+
+    $(".addr-form").on('change',function(){
+        $(".address-btn-ok").prop('disabled', false);
     });
 })

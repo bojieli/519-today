@@ -34,6 +34,7 @@ var OrderSchema = new Schema({
   cashUse : Number,
   voucherUse : Number,
   status : Number, //(0:unconfirmed,1:confirmed)
+  isFirst : Boolean,
   totalPrice : Number
 },{ autoindex : false });
 

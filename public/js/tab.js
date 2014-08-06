@@ -58,6 +58,7 @@ define(['./event', './data', './touch'], function(){
             var data  = $this.data('tab');
 
             if (!data) $this.data('tab', (data = new Tab(this)));
+            data.element = $(this);
             if (typeof option == 'string') data[option]();
 
         });

@@ -14,6 +14,7 @@ var User = require('./proxy').User;
 var details = require('./controllers/details');
 var userOrder = require('./controllers/user_order');
 var errlog = require('./controllers/errlog');
+var ruleintroduction = require('./controllers/ruleintroduction');
 
 
 
@@ -41,10 +42,10 @@ module.exports = function (app) {
 		if(req.session.openID||req.path === '/login'||req.path === '/share'){
 			next();
 		}else{
-			//next();
-			req.session.openID = 'owaixtwGljLuX4W4Ov6wOlQXle1U';
-			next();
-			//login(req,res);
+			// next();
+			// req.session.openID = 'owaixtwGljLuX4W4Ov6wOlQXle1U';
+			// next();
+			login(req,res);
 		}
 	});
 //微信授权页面返回页面
@@ -73,7 +74,7 @@ module.exports = function (app) {
 	app.post('/visit',visit.addVisit);
 
 //address
-	app.get('/address',address.getAddressByOpenID);
+	app.post('/address',address.getAddressByOpenID);
 	app.post('/add_address',address.addAddress);
 	app.post('/delete_address',address.deleteAddress);
 	app.get('/default_address',address.defaultAddress);
@@ -94,5 +95,7 @@ module.exports = function (app) {
 	app.get('/getProduct',product.getProduct);
 	app.get('/details',details);
 	app.post('/errlog',errlog);
+
+	app.get('/ruleintroduction',ruleintroduction.index);
 
 }

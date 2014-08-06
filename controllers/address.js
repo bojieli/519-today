@@ -7,7 +7,7 @@
  * 用于处理与地址相关的请求
  * address
  */
-
+var config = require('../config');
 var User = require('../proxy').User;
 
 exports.getAddressByOpenID = function (req, res, next) {
@@ -26,7 +26,13 @@ exports.addAddress = function (req, res) {
 
 exports.deleteAddress = function (req, res) {
   User.deleteAddress(req.session.openID,req.body.index,function(err){
-    if(err) return next(err);
+    if(err){
+      if(err.errCode == config.errorCode_index)
+        res.send({message : 'index error', error : config.errorCode_index});
+      else
+        res.send({message : 'error', error : config.errorCode_index});
+     return next(err);
+}
      res.send({message : 'OK', error : 0});
   });
 };
