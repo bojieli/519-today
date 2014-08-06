@@ -74,7 +74,7 @@ module.exports = function (app) {
 	app.post('/visit',visit.addVisit);
 
 //address
-	app.get('/address',address.getAddressByOpenID);
+	app.post('/address',address.getAddressByOpenID);
 	app.post('/add_address',address.addAddress);
 	app.post('/delete_address',address.deleteAddress);
 	app.get('/default_address',address.defaultAddress);
