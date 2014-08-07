@@ -2,11 +2,11 @@ define([
     './scrollfix',
     './tab',
     './dialog',
-    './spinner',
+    // './spinner',
     './carousel',
-    './lazyload',
-    './countable',
-    './deletable',
+    // './lazyload',
+    // './countable',
+    // './deletable',
     './ajax'
 ],function () {
     return $;
