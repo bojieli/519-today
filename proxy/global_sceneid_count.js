@@ -3,6 +3,7 @@ var models = require('../models');
 var User = models.User;
 
 global.sceneID_web_count = 0;
+global.orderID_increment = 0;
 
 module.exports = function () {
   User.find({sceneID : {$gt : config.SCENEID_BASE,$lte : config.SCENEID_MAX}},function(err,users){

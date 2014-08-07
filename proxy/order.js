@@ -53,9 +53,9 @@ exports.createOrder = function(req,cb){
 }
 
 
-function getRandom(length){
+/*function getRandom(length){
   return Math.floor(Math.random() * Math.pow(10,length));
-}
+}*/
 
 function leftPadString(value,length){
   var valueString = value.toString();
@@ -72,17 +72,21 @@ function leftPadString(value,length){
 
 
 function getOrderID(){
-  var randomLength = 4;
   var date = new Date();
-  var datePart = date.getUTCFullYear().toString() +
-                    (date.getUTCMonth() + 1).toString() +
-                    date.getUTCDate().toString() +
-                    date.getUTCHours().toString() +
-                    date.getUTCMinutes().toString() +
-                    date.getUTCSeconds().toString() +
-                    date.getUTCMilliseconds().toString();
+  if(global.orderID_increment < 9999){
+    global.orderID_increment++;
+  }else{
+    global.orderID_increment = 0;
+  }
+  var datePart = leftPadString(date.getUTCFullYear().toString(),1) +
+                    leftPadString(date.getUTCMonth() + 1,2) +
+                    leftPadString(date.getUTCDate(),2) +
+                    leftPadString(date.getUTCHours(),2) +
+                    leftPadString(date.getUTCMinutes(),2) +
+                    leftPadString(date.getUTCSeconds(),2) +
+                    leftPadString(global.orderID_increment,4)
 
-  var randomPart = leftPadString(getRandom(randomLength),randomLength);
+  /*var randomPart = leftPadString(getRandom(randomLength),randomLength);*/
 
-  return 'f' + datePart + '_' + randomPart;
+  return datePart;
 }
