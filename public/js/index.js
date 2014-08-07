@@ -5,61 +5,40 @@ require([
 	// 作临时全局变量使用
 	$.tempStorage = {};
 	//CountUp
-	$('#countup').countable('start');
 
-	// Spinner
-	$('[data-spinner]').each(function() {
-		var $this = $(this);
-		$this.spinner('show')
-	});
+	// function initSearch() {
+	// 	var $search = $('#my-search');
+	// 	var $input = $('#my-search-input');
+	// 	$input.on('focus', function() {
+	// 		$search.addClass('js-focus')
+	// 	}).on('input', function() {
+	// 		if ($input[0].value) {
+	// 			$search.addClass('js-input')
+	// 		} else {
+	// 			$search.removeClass('js-input')
+	// 		}
+	// 	});
 
-	$('#show-body-spinner').on('tap', function() {
-		//var $this = $(this);
-		//var delay = $this.data('delay') || 6000;
+	// 	$('#my-search-reset').on('tap', function() {
+	// 		$input[0].value = '';
+	// 		$search.removeClass('js-input');
+	// 		$input[0].focus();
+	// 	});
 
-		$('body').spinner('show');
-		//setTimeout(function(){
-		//    $('body').spinner('hide');
-		//}, delay);
-	});
+	// 	$('#my-search-cancel').on('touchstart', function(evt) {
+	// 		$input[0].value = '';
+	// 		$search.removeClass('js-input');
+	// 		$search.removeClass('js-focus');
 
-	$('#hide-body-spinner').on('tap', function() {
-		$('body').spinner('hide');
-	});
+	// 		document.activeElement.blur();
+	// 		$input[0].blur();
 
-	function initSearch() {
-		var $search = $('#my-search');
-		var $input = $('#my-search-input');
-		$input.on('focus', function() {
-			$search.addClass('js-focus')
-		}).on('input', function() {
-			if ($input[0].value) {
-				$search.addClass('js-input')
-			} else {
-				$search.removeClass('js-input')
-			}
-		});
+	// 		evt.stopPropagation();
+	// 		evt.preventDefault();
+	// 	});
+	// }
 
-		$('#my-search-reset').on('tap', function() {
-			$input[0].value = '';
-			$search.removeClass('js-input');
-			$input[0].focus();
-		});
-
-		$('#my-search-cancel').on('touchstart', function(evt) {
-			$input[0].value = '';
-			$search.removeClass('js-input');
-			$search.removeClass('js-focus');
-
-			document.activeElement.blur();
-			$input[0].blur();
-
-			evt.stopPropagation();
-			evt.preventDefault();
-		});
-	}
-
-	initSearch();
+	// initSearch();
 
 	// Tab
 	$('[data-toggle="tab"]').on('shown:tab', function(e) {
@@ -70,32 +49,14 @@ require([
 		var tab = target.innerText.trim().toLowerCase();
 
 		if (target.inited) return;
-
-		if (tab == 'counter') {
-
-			$('[data-countable]').each(function() {
-				var $this = $(this);
-				$this.countable('start')
-			});
-
-		} else if (tab == 'spinner') {
-
-
-		} else if (tab == 'carousel') {
+        
+        if (tab == 'carousel') {
 
 			$('[data-ride="carousel"]').each(function() {
 				var $this = $(this);
 				$this.carousel($this.data());
 			});
-		} else if (tab == 'deleter') {
-
-			$('.my-deletable').deletable();
-
-		} else if (tab == 'lazyload') {
-			$('[data-lazy]').lazyload({
-				container: $.os.ios > 5 ? $('#page5-container') : window
-			});
-		}
+		} 
 
 		target.inited = true;
 
@@ -290,11 +251,6 @@ require([
     //====================加载地址=====================
     function getAddr(cb){
         $.post("/address",function(data,status){
-<<<<<<< HEAD
-            alert(JSON.stringify(data));
-=======
-            alert(JSON.stringify(data)+"=========");
->>>>>>> 9c2102e1e23d076f164692f2c04a70f24aa73ed7
             if(status != 'success'){
                 // 加载地址失败
                 cb("fail to get address");
@@ -313,9 +269,9 @@ require([
                 return;
             var r = [];
             localStorage.address = JSON.stringify(data);
-            alert(JSON.stringify(data));
             localStorage.defauleAddrIndex = 0;
-            for(var i=0;i<data.length;i++){
+
+            for(var i=0 ; i < data.length ; i++){ //------
                 var item = data[i];
                 var addli = $li.clone();
                 addli.removeClass("j-address-item-template").addClass("j-address-item");
@@ -463,6 +419,14 @@ require([
         var $parent = $process.parent();
         var list_process = [];
         var list_complete = [];
+
+        if(!arr  || arr.length==0){
+            $parent.append("<p class='no-order-info'>还没有订单哦:)</p>");
+        }else{
+            $(".no-order-info").remove();
+        }
+        
+
         arr.forEach(function(item){
             var $add = $complete.clone();
             if(item.status == 0){
@@ -500,11 +464,12 @@ require([
             $parent.prepend(a);
             a = list_process.pop();
         }        
-        $process.remove();
-        $complete.remove();
+        $process.hide();
+        $complete.hide();
     }
 
     function updateMyOrder(){
+
         $.post('/getuserorder',function(data,status){
             if(status!='success'){
                 alert("fail to getuserorder");
