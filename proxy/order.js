@@ -87,7 +87,6 @@ exports.getUserOrder = function (openID, cb){
                 num : orders[i].shopOnce[j].num
               };
               returnOrder.wines.push(wine);
-
             };
             returnOrders.push(returnOrder);
           }
@@ -135,7 +134,6 @@ function leftPadString(value,length){
 
 function getOrderID(){
   var date = new Date();
-
   var orderID_increment = ++ global.orderID_increment;
   if(global.orderID_increment > 9990)
     global.orderID_increment = 0;
@@ -147,8 +145,5 @@ function getOrderID(){
                     leftPadString(date.getUTCMinutes(),2) +
                     leftPadString(date.getUTCSeconds(),2) +
                     leftPadString(orderID_increment,4)
-
-  /*var randomPart = leftPadString(getRandom(randomLength),randomLength);*/
-
   return datePart;
 }
