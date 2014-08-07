@@ -1,8 +1,7 @@
-var ShopHistory = require('../proxy').ShopHistory;
+var Order = require('../proxy').Order;
 
 exports.getUserOrder = function (req, res, next) {
-	console.log("===========getUserOrder==========");
-  ShopHistory.getUserOrder(req.session.openID,function(err, orderInfos){
+  	Order.getUserOrder(req.session.openID,function(err, orderInfos){
     if(err) return next(err);
     res.send(orderInfos);
   });

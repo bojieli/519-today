@@ -290,7 +290,11 @@ require([
     //====================加载地址=====================
     function getAddr(cb){
         $.post("/address",function(data,status){
+<<<<<<< HEAD
             alert(JSON.stringify(data));
+=======
+            alert(JSON.stringify(data)+"=========");
+>>>>>>> 9c2102e1e23d076f164692f2c04a70f24aa73ed7
             if(status != 'success'){
                 // 加载地址失败
                 cb("fail to get address");
@@ -309,6 +313,7 @@ require([
                 return;
             var r = [];
             localStorage.address = JSON.stringify(data);
+            alert(JSON.stringify(data));
             localStorage.defauleAddrIndex = 0;
             for(var i=0;i<data.length;i++){
                 var item = data[i];

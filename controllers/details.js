@@ -21,6 +21,4 @@ module.exports = function(req, res, next){
 			num : req.query.num || 1
 		});
 	})
-
-
 };

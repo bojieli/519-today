@@ -39,7 +39,6 @@ module.exports = function (app) {
 //如果没有登录就直接登录
 	app.all('*', function (req, res,next){
 
-		console.log('app.all,openID:',req.session.openID);
 		if(req.session.openID||req.path === '/login'||req.path === '/share'){
 			next();
 		}else{

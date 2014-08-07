@@ -70,7 +70,15 @@ exports.findByID = function(id,cb){
 
 }
 exports.findByIDs = function(ids, cb){
-
+  Wine.find({id: {$in: ids}},afterFind);
+  function afterFind(err, wines) {
+    if(err){
+      errUtil.wrapError(err,config.errorCode_find,"findByIDs()","/proxy/wine", {ids:ids});
+      return cb(err,null);
+    }else{
+      cb(err, wines);
+    }
+  }
 }
 /**
 * 查找推荐的酒

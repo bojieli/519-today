@@ -11,13 +11,11 @@ mongoose.connect(config.db,function dberr(err){
 
 //different models
 require('./user');
-require('./shop_history');
 require('./wine');
 require('./collect');
 require('./order');
 
 exports.User = mongoose.model('User');
-exports.ShopHistory = mongoose.model('ShopHistory');
 exports.Wine = mongoose.model('Wine');
 exports.Collect = mongoose.model('Collect');
 exports.Order = mongoose.model('Order');
