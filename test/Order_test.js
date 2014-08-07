@@ -38,7 +38,7 @@ for(var i = 0; i< 10 ; i++){
 Order.getUserOrder(openID,function(err,result){
 	console.log('--------------------------------------------------------');
 	for (var i = 0; i < result.length; i++) {
-		//console.log('status:' + result[i].status);
+		console.log('status:' + result[i].status);
 		console.log(JSON.stringify(result[i]));
 		console.log('--------------------------------------------------------');
 	};
