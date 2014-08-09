@@ -156,4 +156,9 @@ module.exports = function (app) {
     
     })
   });
+
+  app.get('/about1919',function(req,res){
+    var url = "http://mp.weixin.qq.com/s?__biz=MzA4MTg3MzYwMQ==&mid=200581729&idx=1&sn=693fbe867361594f44781c9af8a24cc5#rd";
+    res.redirect(url);
+  });
 }
