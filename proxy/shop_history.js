@@ -132,7 +132,7 @@ exports.getUserOrder = function(openID,cb){
       });
       return cb(err);
     }
-    if(!orders){
+    if(!orders || orders.length==0){
       return cb(null,[]);
     }
 

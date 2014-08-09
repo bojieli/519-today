@@ -180,9 +180,9 @@ ol, ul  {
     background-color: transparent;
 
     color: rgb(111, 111, 116);
-    font-size: 24px;
+    font-size: 22px;
     text-align: center;
-    padding: 2px 0;
+    padding: 0;
 }
 
 .ui-bottom-bar-button .ui-label {

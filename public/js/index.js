@@ -3,41 +3,6 @@ require([
 ], function() {
 	// 作临时全局变量使用
 	$.tempStorage = {};
-	//CountUp
-
-	// function initSearch() {
-	// 	var $search = $('#my-search');
-	// 	var $input = $('#my-search-input');
-	// 	$input.on('focus', function() {
-	// 		$search.addClass('js-focus')
-	// 	}).on('input', function() {
-	// 		if ($input[0].value) {
-	// 			$search.addClass('js-input')
-	// 		} else {
-	// 			$search.removeClass('js-input')
-	// 		}
-	// 	});
-
-	// 	$('#my-search-reset').on('tap', function() {
-	// 		$input[0].value = '';
-	// 		$search.removeClass('js-input');
-	// 		$input[0].focus();
-	// 	});
-
-	// 	$('#my-search-cancel').on('touchstart', function(evt) {
-	// 		$input[0].value = '';
-	// 		$search.removeClass('js-input');
-	// 		$search.removeClass('js-focus');
-
-	// 		document.activeElement.blur();
-	// 		$input[0].blur();
-
-	// 		evt.stopPropagation();
-	// 		evt.preventDefault();
-	// 	});
-	// }
-
-	// initSearch();
 
 	// Tab
 	$('[data-toggle="tab"]').on('shown:tab', function(e) {
@@ -91,11 +56,6 @@ require([
     /**
      * =======================UI-跳转========================
      */
-  	// $(".item-wrapper .item").on("tap",function(){
-  	// 	var code = $(this).data('code');
-  	// 	location.href = "/details?code="+code;
-  	// }) ; 
-  	// $(".item-wrapper .item").trigger("tap");
   	$(".my-top-bar").on("tap",function(){
 
   		var $this = $(this);
@@ -490,6 +450,14 @@ require([
             ,tel : $("#addr-tel-input").val()          
         };
         // 检查
+        var mobilePattern = /^1[3|4|5|7|8][0-9]{9}$/;
+        if(address.detail.length==0){
+            return alert("详细地址不能为空");
+        }else if(address.name.length==0){
+            return alert("姓名不能为空");
+        }else if(!mobilePattern.test(address.tel)){
+            return alert("请输入11位长度的手机号码");
+        }
         $.post('/add_address',{address:address},function(data,status){
             if(status!='success'){
                 alert("添加地址出错:(");
@@ -512,4 +480,5 @@ require([
     $(".addr-form").on('change',function(){
         $(".address-btn-ok").prop('disabled', false);
     });
+
 })
