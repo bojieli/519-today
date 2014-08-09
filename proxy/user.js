@@ -323,7 +323,7 @@ exports.deleteAddress = function(openID,index,cb){
       if(index < 0 ||index >= userAddress.length){
           var err ={};
           errUtil.wrapError(err,config.errorCode_index,"deleteAddress()","/proxy/user",
-             {order: order});
+             {openID : openID,index:index});
           return cb(err);
       }
 

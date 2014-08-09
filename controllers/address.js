@@ -11,6 +11,8 @@ var config = require('../config');
 var User = require('../proxy').User;
 
 exports.getAddressByOpenID = function (req, res, next) {
+  console.log('getAddressByOpenID');
+    
   User.getAddressByOpenID(req.session.openID,function(err, user){
   	if(err) return next(err);
   	res.send(user.address);

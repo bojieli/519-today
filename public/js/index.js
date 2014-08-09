@@ -1,6 +1,7 @@
 require([
 	'./pro'
 ], function() {
+    alert('start');
 	// 作临时全局变量使用
 	$.tempStorage = {};
 

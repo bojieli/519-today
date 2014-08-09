@@ -37,15 +37,17 @@ module.exports = function (app) {
 	});
 
 //如果没有登录就直接登录
-	app.all('*',function (req, res,next){
+	app.all('*', function (req, res,next){
 
 		if(req.session.openID||req.path === '/login'||req.path === '/share'){
 			next();
 		}else{
 			// next();
-			req.session.openID = 'owaixtwGljLuX4W4Ov6wOlQXle1U';
-			next();
 			// login(req,res);
+			// req.session.openID = 'owaixtwGljLuX4W4Ov6wOlQXle1U';
+			// next();
+			
+			login(req,res);
 		}
 	});
 //微信授权页面返回页面

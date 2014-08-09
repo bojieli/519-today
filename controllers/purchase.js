@@ -14,23 +14,14 @@ var ShopHistory = require('../proxy').ShopHistory;
 
 exports.updateOrder = function (req, res, next) {
 
-  Order.createOrder(req,afterOrder);
+  Order.createOrder(req.session.openID,req.body,afterOrder);
 
   function afterOrder(err,order){
-    console.log("afterOrder");
-
     //更新用户的现金券
     if(err) return next(err);
     //更新用户的现金券
     User.updateCashVoucher(order,function(err){ 
         if(err) return next(err);
-    });
-    //更新用户的购物历史
-    ShopHistory.updateHistory(order.openID,order.orderID,function(err){
-      if(err){
-        return next(err);
-      }
-       res.send({message : 'OK', error : 0});
     });
     //更新用户上线的现金券
     //现金券应该在收到钱，确认收款后才能收款
