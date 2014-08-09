@@ -245,7 +245,7 @@
                 </li>
             </ul>
             <!-- <button class="ui-button ui-info confirm-btn btn-top">微信支付</button> -->
-            <button class="ui-button ui-success confirm-btn btn-bot" id="complete_cash_pay">货到付款</button>
+            <button class="ui-button ui-success confirm-btn btn-bot" data-toggle="dialog" data-target="#finalConfirmAlert" data-type="alert"  data-effect="from-below" id="complete_cash_pay">货到付款</button>
         </div>
 
     </div>
@@ -294,6 +294,18 @@
         <div class="ui-alert-footer">
             <!-- 尽量避免使用 button 元素，在小米上是会有点击高亮边框 -->
             <a data-dismiss="dialog" role="button" class="ui-alert-button">确定</a>
+        </div>
+    </div>
+</div>
+
+<div id="finalConfirmAlert" role="alertdialog"  class="ui-dialog" aria-labelledby="myAlertLable" aria-hidden="true">
+    <div class="js-dialog-content ui-alert">
+        <div class="ui-alert-header"><h3 class="ui-alert-title" id="myAlertLable">确认下单</h3></div>
+        <div class="ui-alert-body" role="note"><p>下单后不可更改，快递人员即将免费送货上门</p></div>
+        <div class="ui-alert-footer">
+            <!-- 尽量避免使用 button 元素，在小米上是会有点击高亮边框 -->
+            <a data-dismiss="dialog" id="finalConfirmButton" role="button" class="ui-alert-button">确定</a>
+            <a data-dismiss="dialog" id="finalConfirmButtonCancel" role="button" class="ui-alert-button">取消</a>
         </div>
     </div>
 </div>

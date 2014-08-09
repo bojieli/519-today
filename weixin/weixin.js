@@ -136,13 +136,21 @@ module.exports = function (app) {
 
   app.get('/recommend',function (req, res){
     console.log("recommend!");
-    User.getSceneIDbyOpenID(req.query.openID, function(err,sceneID){
+    User.getSceneIDbyOpenID(req.session.openID, function(err,sceneID){
       if(err) return;
+      var  sceneIDurl = "window.location.href = '/share/?sceneID=" + sceneID + "'";
+      sceneIDurl = "<button onclick ="+ '"' +sceneIDurl+  '"' +"><b>分享到朋友圈</b></button>";
+      if(req.session.qrCode && req.session.qrCode.expireTime > new Date().getTime()){
+        var url = req.session.qrCode.url;
+        return res.render('promote',{qrCodeurl : url, sceneIDurl : sceneIDurl});
+      }
+
       api.createTmpQRCode(sceneID,1800,function(err,result){
         var url = api.showQRCodeURL(result.ticket);
-        sceneIDurl = "window.location.href = '/share/?sceneID=" + sceneID + "'"
-        sceneIDurl = "<button onclick ="+ '"' +sceneIDurl+  '"' +"><b>分享到朋友圈</b></button>"
-        console.log(sceneIDurl);
+        req.session.qrCode = {
+          url : url,
+          expireTime : new Date().getTime()+1800*1000
+        };
         res.render('promote',{qrCodeurl : url, sceneIDurl : sceneIDurl});
       })
     

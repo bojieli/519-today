@@ -326,10 +326,11 @@ require([
         purchase.voucherUse = 0;
         purchase.totalPrice = parseFloat($("#cart_total_cost").text());
         localStorage.purchase = JSON.stringify(purchase);
+        $("#complete_cash_pay").removeAttr('disabled','disabled');
     });
 
     //=======================货到付款=======================
-    $("#complete_cash_pay").on('tap',function(){
+    $("#finalConfirmButton").on('tap',function(){
         var purchase = JSON.parse(localStorage.purchase);
         var addresses = JSON.parse(localStorage.address);
         var index = parseInt(localStorage.defauleAddrIndex);
@@ -350,7 +351,13 @@ require([
             // 跳转页面
             $('.ui-bottom-bar-button[data-target=".page3"]').trigger('tap');
             $('.ui-button[data-target="#page3-tab1"]').trigger('tap');
-        });
+        });        
+    });
+    $("#complete_cash_pay").on('tap',function(){
+        $(this).attr('disabled','disabled');
+    });
+    $("#finalConfirmButtonCancel").on('tap',function(){
+        $("#complete_cash_pay").removeAttr('disabled','disabled');
     });
     function clearCart(){
         localStorage.cart = '{}';
@@ -398,6 +405,7 @@ require([
             var $li = $add.find("li.jiu-single");
             var $ul = $add.find("ul.jiu-li");
             item.wines.forEach(function(wine){
+                // alert(JSON.stringify(wine));
                 var $addli = $li.clone();
                 $addli.find(".jiu-detail").text(wine.describe);
                 $addli.find(".order-list-price").text(wine.wechatPrice);
