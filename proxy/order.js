@@ -85,7 +85,7 @@ exports.getUserOrder = function (openID, cb){
               Wineids.push(orders[i].shopOnce[j].id);
               var wine = {
                 id : orders[i].shopOnce[j].id,
-                num : orders[i].shopOnce[j].num
+                num : orders[i].shopOnce[j].number
               };
               returnOrder.wines.push(wine);
             };
@@ -104,6 +104,7 @@ exports.getUserOrder = function (openID, cb){
           returnOrders[i].wines[j].describe = Wines[index].describe;
           returnOrders[i].wines[j].wechatPrice = Wines[index].wechatPrice;
           returnOrders[i].wines[j].littlePic = config.small_dir + Wines[index].littlePic;
+          
           delete returnOrders[i].wines[j].id;
         };
       };
