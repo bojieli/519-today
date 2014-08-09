@@ -18,10 +18,18 @@ exports.updateOrder = function (req, res, next) {
 
   function afterOrder(err,order){
     //更新用户的现金券
-    if(err) return next(err);
+    if(err){
+      res.send({message : 'error', error : err.errCode}) ;
+      return next(err);
+    }
+    
     //更新用户的现金券
     User.updateCashVoucher(order,function(err){ 
-        if(err) return next(err);
+        if(err){ 
+          res.send({message : 'error', error : err.errCode}) ;
+          return next(err);
+        }
+        res.send({message : 'OK', error : 0});
     });
     //更新用户上线的现金券
     //现金券应该在收到钱，确认收款后才能收款

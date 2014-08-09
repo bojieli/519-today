@@ -76,7 +76,7 @@ exports.getUserOrder = function (openID, cb){
         var count = 0;
 
         for (var i = 0; i < orders.length; i++) {
-          if(orders[i].status != 5||count++ < 5){
+          if((orders[i].status != 5)||count++ < 5){
             var returnOrder = {};
             returnOrder.orderID = orders[i].orderID;
             returnOrder.status = orders[i].status;
