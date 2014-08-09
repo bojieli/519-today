@@ -374,6 +374,7 @@ require([
 
     //=======================我的订单=======================
     function ininMyOrderUI(arr){
+        $(".my-order-item").remove();
         var $process = $(".order-processing.template") ;
         var $complete = $(".order-complete.template") ;
         var $parent = $process.parent();
