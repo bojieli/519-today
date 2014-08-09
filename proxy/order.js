@@ -76,10 +76,13 @@ exports.getUserOrder = function (openID, cb){
         var count = 0;
 
         for (var i = 0; i < orders.length; i++) {
-          if((orders[i].status != 5)||count++ < 5){
+          if((orders[i].status < 5)||count++ < 5){
             var returnOrder = {};
             returnOrder.orderID = orders[i].orderID;
-            returnOrder.status = orders[i].status;
+            if(orders[i].status==5)
+              returnOrder.status = 1;
+            else
+              returnOrder.status = 0;
             returnOrder.wines = [];
             for (var j = 0; j < orders[i].shopOnce.length; j++) {
               Wineids.push(orders[i].shopOnce[j].id);
@@ -104,7 +107,7 @@ exports.getUserOrder = function (openID, cb){
           returnOrders[i].wines[j].describe = Wines[index].describe;
           returnOrders[i].wines[j].wechatPrice = Wines[index].wechatPrice;
           returnOrders[i].wines[j].littlePic = config.small_dir + Wines[index].littlePic;
-          
+
           delete returnOrders[i].wines[j].id;
         };
       };
