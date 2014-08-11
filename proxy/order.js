@@ -79,6 +79,11 @@ exports.getUserOrder = function (openID, cb){
           if((orders[i].status < 5)||count++ < 5){
             var returnOrder = {};
             returnOrder.orderID = orders[i].orderID;
+            returnOrder.time = orders[i].date.getFullYear() + '年' +
+            orders[i].date.getMonth() + '月' + 
+            orders[i].date.getDate() + '日' +
+            orders[i].date.getHours() + '点' +
+            orders[i].date.getMinutes() + '分';
             if(orders[i].status==5)
               returnOrder.status = 1;
             else
@@ -102,6 +107,7 @@ exports.getUserOrder = function (openID, cb){
       if(err)
         cb(err);
       for (var i = 0; i < returnOrders.length; i++) {
+
         for (var j = 0; j < returnOrders[i].wines.length; j++) {
           var index = findWinebyid(returnOrders[i].wines[j].id);
           returnOrders[i].wines[j].describe = Wines[index].describe;
@@ -111,6 +117,7 @@ exports.getUserOrder = function (openID, cb){
           delete returnOrders[i].wines[j].id;
         };
       };
+      //returnOrders.sort(by('date'));
       cb(null, returnOrders);
       function findWinebyid(id){
         for (var i = 0; i < Wines.length; i++){
