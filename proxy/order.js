@@ -117,7 +117,7 @@ exports.getUserOrder = function (openID, cb){
           delete returnOrders[i].wines[j].id;
         };
       };
-      //returnOrders.sort(by('date'));
+      returnOrders.reverse();
       cb(null, returnOrders);
       function findWinebyid(id){
         for (var i = 0; i < Wines.length; i++){
