@@ -81,7 +81,7 @@ exports.getUserOrder = function (openID, cb){
             returnOrder.orderID = orders[i].orderID;
             returnOrder.time = orders[i].date.getFullYear() + '/' +
             orders[i].date.getMonth() + '/' + 
-            orders[i].date.getDate() + ',' +
+            orders[i].date.getDate() + '  ' +
             orders[i].date.getHours() + ':' +
             orders[i].date.getMinutes();
             if(orders[i].status==5)
