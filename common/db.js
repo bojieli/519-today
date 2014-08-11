@@ -11,7 +11,7 @@ var config_id = 1919;
 
 mongoose.model('Config',ConfigSchema);
 
-var Config = mongoose.mongoose('Config');
+var Config = mongoose.model('Config');
 
 exports.getConfig = function(cb){
   Config.findOne({id:config_id},function(err,doc){
@@ -24,10 +24,11 @@ exports.getConfig = function(cb){
   });
 }
 
-exports.setConfig = function(obj){
-  Config.update({id:config_id},{$set:obj},function(err){
+exports.setConfig = function(obj,cb){
+  Config.update({id:config_id},{$set:obj},{upsert:true},function(err){
     if(err){
       throw "update config error"+err;
     }
+    cb();
   });
 }
