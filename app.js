@@ -24,12 +24,12 @@ require('./weixin/proxy').updateGlobalSceneID();
 
 var errorLogfile = fs.createWriteStream('../log/error.log',{flags : 'a'});
 var exceptionLogfile = fs.createWriteStream('../log/exception_error.log',{flags : 'a'});
-process.on('uncaughtException', function(err) {
-  err.Time = new Date().toUTCString();
-  err.Stack = err.stack;
-  exceptionLogfile.write(JSON.stringify(err) + ',\n');
-  console.log(err);
-});
+// process.on('uncaughtException', function(err) {
+//   err.Time = new Date().toUTCString();
+//   err.Stack = err.stack;
+//   exceptionLogfile.write(JSON.stringify(err) + ',\n');
+//   console.log(err);
+// });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
