@@ -402,7 +402,7 @@ require([
             $add.removeClass("template");
             $add.addClass("my-order-item");
             $add.find(".order-id").text(item.orderID);
-            $add.find(".order-id").text(item.time);
+            $add.find(".order-time").text(item.time);
             var $li = $add.find("li.jiu-single");
             var $ul = $add.find("ul.jiu-li");
             item.wines.forEach(function(wine){
