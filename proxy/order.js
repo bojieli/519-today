@@ -79,11 +79,11 @@ exports.getUserOrder = function (openID, cb){
           if((orders[i].status < 5)||count++ < 5){
             var returnOrder = {};
             returnOrder.orderID = orders[i].orderID;
-            returnOrder.time = orders[i].date.getFullYear() + '年' +
-            orders[i].date.getMonth() + '月' + 
-            orders[i].date.getDate() + '日' +
-            orders[i].date.getHours() + '点' +
-            orders[i].date.getMinutes() + '分';
+            returnOrder.time = orders[i].date.getFullYear() + '/' +
+            orders[i].date.getMonth() + '/' + 
+            orders[i].date.getDate() + ',' +
+            orders[i].date.getHours() + ':' +
+            orders[i].date.getMinutes();
             if(orders[i].status==5)
               returnOrder.status = 1;
             else
