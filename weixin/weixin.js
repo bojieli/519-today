@@ -144,15 +144,23 @@ module.exports = function (app) {
         var url = req.session.qrCode.url;
         return res.render('promote',{qrCodeurl : url, sceneIDurl : sceneIDurl});
       }
-
-      api.createTmpQRCode(sceneID,1800,function(err,result){
-        var url = api.showQRCodeURL(result.ticket);
-        req.session.qrCode = {
-          url : url,
-          expireTime : new Date().getTime()+1800*1000
-        };
-        res.render('promote',{qrCodeurl : url, sceneIDurl : sceneIDurl});
-      })
+      createTmpQRCode();
+      function createTmpQRCode(){
+        api.createTmpQRCode(sceneID,1800,function(err,result){
+          if(err){
+            console.log(err);
+            throw "wechat api createTmpQRCode error" + err;
+            return createTmpQRCode();
+          }
+          var url = api.showQRCodeURL(result.ticket);
+          console.log(url);
+          req.session.qrCode = {
+            url : url,
+            expireTime : new Date().getTime()+1800*1000
+          };
+          res.render('promote',{qrCodeurl : url, sceneIDurl : sceneIDurl});
+        });
+      }
     
     })
   });
