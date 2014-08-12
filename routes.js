@@ -39,14 +39,33 @@ module.exports = function (app) {
 //如果没有登录就直接登录
 	app.all('*', function (req, res,next){
 
-		if(req.session.openID||req.path === '/login'||req.path === '/share'){
+		if(req.session.openID){
+			//如果没有访问过我们的网站，如果有shareID,
+			if(!req.session.hasVisited){
+				req.session.hasVisited = true;
+				if(req.session.shareID){
+					User.updatePreOpenIDbyShareID(req.session.openID, req.session.shareID, function(err){
+						if(err)
+							return next(err);
+					})
+				}else{
+					User.updatePreOpenIDbyShareID(req.session.openID, null, function(err){
+						if(err)
+							return next(err);
+					})
+				}
+				//更改数据库里面的preOpenID,并且next
+			}				
 			next();
-		}else{
-			// next();
-			// login(req,res);
-			// req.session.openID = 'owaixtwGljLuX4W4Ov6wOlQXle1U';
-			// next();
-			
+		}else if(req.path === '/login'){
+			next();
+		}else if(req.path === '/share'){
+			//如果ShareID未被使用且，分享页面里面有id，那么就将session里面的shareID置成id
+			if((!req.session.hasVisited)&&req.query.id){
+				req.session.shareID = req.query.id;
+			}
+			next();
+		}else{	
 			login(req,res);
 		}
 	});

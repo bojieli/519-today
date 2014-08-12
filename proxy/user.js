@@ -399,3 +399,29 @@ exports.generateWithdrawal = function (openID, cb){
   );
 }
 
+exports.updatePreOpenIDbyShareID = function(openID, shareID, cb){
+  //通过openID找到preOpenID,如果没有就执行下一步
+  //通过shareID找到preOpenID，如果能找到就执行下一步
+  //将preOpenID,
+  async.waterfall([
+    function findPreOpenIDbyOpenID(callback){
+      User.findOne({'openID' : openID},'preOpenID',callback);
+    },
+    function findPreOpenIDbyshareID(user, callback){
+      if(user.preOpenID)
+        return callback(null,null)
+      User.findOne({'sceneID' : shareID}, 'openID', callback);
+    }
+    ],function(err, user){
+      if(!user)
+        return cb(null);
+      if(!user.openID)
+        return cb(null);
+      User.update({'openID' : openID}, {'preOpenID' : user.openID}, cb);
+    })
+}
+
+exports.setPreOpenIDtoNo = function(openID, cb){
+  User.update({'openID' : openID}, {'preOpenID' : 'no'}, cb);
+}
+
