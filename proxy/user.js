@@ -1,8 +1,9 @@
-
 var config = require('../config');
 var errUtil = require('./wrap_error');
 var models = require('../models');
+var Withdrawal = require('./withdrawal');
 var User = models.User;
+var async = require('async');
 
 /**
 * 根据用户的openID查找用户
@@ -380,4 +381,21 @@ exports.setDefault = function(openID,index,cb){
   }
 }
 
+
+exports.generateWithdrawal = function (openID, cb){
+  async.waterfall([
+    function findbyOpenID(callback){
+      User.findOne({'openID' : openID}, 'cash' , callback);
+    },
+    function gennerate(user, callback){
+      Withdrawal.createWithdrawal(openID, user.cash, callback);
+    }
+    ],
+    function(err, withdrawalCode){
+      if(err)
+        return cb(err);
+      cb(null, withdrawalCode);
+    }
+  );
+}
 
