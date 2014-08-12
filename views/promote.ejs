@@ -6,32 +6,46 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <meta name="format-detection" content="telephone=no">
     <title>我的推荐</title>
+    <script type="text/javascript" src="/js/zepto.min.js"></script>
     <style>
-        img {
+        img.qr {
 	        max-width :80%;
 	        display:block;
             margin-bottom:30px;
         }
 
         button {
-                display: inline-block;
-                padding: 6px 12px;
-                margin-bottom: 5px;
-                font-size: 21px;
-                font-weight: normal;
-                line-height: 1.9;
-                text-align: center;
-                white-space: nowrap;
-                vertical-align: middle;
-                cursor: pointer;
-                background-image: none;
-                border: 1px solid transparent;
-                border-radius: 10px;
-                color: #FFFFFF;
-                width : 90%;
-                background-color : #0079FF;
+            display: inline-block;
+            padding: 6px 12px;
+            margin-bottom: 5px;
+            font-size: 21px;
+            font-weight: normal;
+            line-height: 1.9;
+            text-align: center;
+            white-space: nowrap;
+            vertical-align: middle;
+            cursor: pointer;
+            background-image: none;
+            border: 1px solid transparent;
+            border-radius: 10px;
+            color: #FFFFFF;
+            width : 90%;
+            background-color : #0079FF;
         }
+        .guide{
+            width: 100%;
+            height: 100%;
+            display: none;
+            z-index: 100;
+            position: fixed;
+            top: 0;
+            left: 0;
+            background-color:rgba(0, 0, 0, 0.8);
 
+        }
+        .guide img{
+            max-width: 100%;
+        }
     </style>
 
 </head>
@@ -39,10 +53,77 @@
     <h1 style ="text-align:center;color: #0079FF">请朋友扫一扫</h1>
     <div id="content">
         <center>
-            <img src =<%=qrCodeurl%>>
+            <img class="qr" src =<%=qrCodeurl%>>
             <button onclick ="window.location.href = '/ruleintroduction'"><b>查看返券规则</b></button>
-            <%-sceneIDurl%>
+            <button onclick ="share()"><b>分享给朋友</b></button>
         </center>
     </div>
+    <div class="guide" id="share_guide">
+        <img src="/images/share.png">
+    </div>
+    <script type="text/javascript">
+    var shareID = <%= sceneID %> ;
+    function share () {
+        // body...
+        $('#share_guide').show();
+
+    }
+    $("#share_guide").on('click',function(){
+        $(this).hide();
+    });
+
+    var link = "http://"+location.host+"/share?id="+shareID;
+    window.shareData = {
+        "imgUrl": "http://"+ location.host + "/images/shareImg.png",
+        "timeLineLink": link,
+        "tTitle": "今年最in的喝酒方式，微信定酒，送货上门，价格更低，还能拿佣金",
+        "tContent": "号外！号外！微信平台可以直接下单订酒啦！微信上直接下单，同城配送，免费上门"
+    };
+
+
+    var mebtnopenurl = link;
+    document.addEventListener('WeixinJSBridgeReady', function onBridgeReady() {
+        
+        WeixinJSBridge.on('menu:share:appmessage', function(argv) {
+            WeixinJSBridge.invoke('sendAppMessage', {
+                "img_url": window.shareData.imgUrl,
+                "link": window.shareData.timeLineLink,
+                "desc": window.shareData.tContent,
+                "title": window.shareData.tTitle
+            }, function(res) {
+                // document.location.href = mebtnopenurl;
+                $("#share_guide").hide();
+            })
+        });
+
+        WeixinJSBridge.on('menu:share:timeline', function(argv) {
+            WeixinJSBridge.invoke('shareTimeline', {
+                "img_url": window.shareData.imgUrl,
+                "img_width": "640",
+                "img_height": "640",
+                "link": window.shareData.timeLineLink,
+                "desc": window.shareData.tContent,
+                "title": shareData.tTitle
+            }, function(res) {
+                // document.location.href = mebtnopenurl;
+                $("#share_guide").hide();
+            });
+        });
+
+
+        WeixinJSBridge.on('menu:share:weibo', function(argv) {
+            WeixinJSBridge.invoke('shareWeibo', {
+                "content": window.shareData.tContent,
+                "url": window.shareData.timeLineLink
+            }, function(res) {
+                // document.location.href = mebtnopenurl;
+                $("#share_guide").hide();
+            });
+        });
+
+        }, false);
+
+
+    </script>
 </body>
 </html>
