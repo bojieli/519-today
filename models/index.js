@@ -14,8 +14,10 @@ require('./user');
 require('./wine');
 require('./collect');
 require('./order');
+require('./withdrawal');
 
 exports.User = mongoose.model('User');
 exports.Wine = mongoose.model('Wine');
 exports.Collect = mongoose.model('Collect');
 exports.Order = mongoose.model('Order');
+exports.Withdrawal = mongoose.model('Withdrawal');

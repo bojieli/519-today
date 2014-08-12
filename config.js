@@ -7,6 +7,8 @@ var config = {
 	appid : 'wxd8c15c2734dacb07',
 	secret : '188081716b20d3d655ed14328dcf7e90',
 	host : 'http://519.today',
+	withdrawalOpenID : 'owaixt4mctd2ZtHxa3dyAKTvFMIo', //冬冬的openid
+	withdrawalKey : 'ZhangXiangZhongYaoMa?Zhongyao!', 
 
 	/*
 	*some important errorCode
