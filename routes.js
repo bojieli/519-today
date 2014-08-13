@@ -38,9 +38,6 @@ module.exports = function (app) {
 
 //如果没有登录就直接登录
 	app.all('*', function (req, res,next){
-		console.log('openID:' + req.session.openID);
-		console.log('hasVisited:' + req.session.hasVisited);
-		console.log('shareID:' + req.session.shareID);
 		if(req.session.openID){
 			//如果没有访问过我们的网站，如果有shareID,
 			if(!req.session.hasVisited){
@@ -67,6 +64,8 @@ module.exports = function (app) {
 				req.session.shareID = req.query.id;
 			}
 			next();
+		}else if(req.path === '/logout'){
+			next();
 		}else{	
 			login(req,res);
 		}
@@ -84,6 +83,8 @@ module.exports = function (app) {
 
 //用户退出登录，测试时使用
 	app.get("/logout",function(req,res){
+		req.session.hasVisited = null;
+		req.session.shareID = null;
 		if(req.session.openID){
 			req.session.openID = null;
 			res.send("logout success!");
