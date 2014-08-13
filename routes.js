@@ -38,7 +38,9 @@ module.exports = function (app) {
 
 //如果没有登录就直接登录
 	app.all('*', function (req, res,next){
-
+		console.log('openID:' + req.session.openID);
+		console.log('hasVisited:' + req.session.hasVisited);
+		console.log('shareID:' + req.session.shareID);
 		if(req.session.openID){
 			//如果没有访问过我们的网站，如果有shareID,
 			if(!req.session.hasVisited){
