@@ -1,4 +1,4 @@
-var config = require('../config')
+var config = require('../config');
 var models = require('../models');
 var Crypto = require('cryptojs').Crypto;
 var Withdrawal = models.Withdrawal;
