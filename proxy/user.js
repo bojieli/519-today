@@ -417,11 +417,11 @@ exports.updatePreOpenIDbyShareID = function(openID, shareID, cb){
         return cb(null);
       if(!user.openID)
         return cb(null);
-      User.update({'openID' : openID}, {'preOpenID' : user.openID}, cb);
+      User.update({'openID' : openID}, {$set : {'preOpenID' : user.openID}}, cb);
     })
 }
 
 exports.setPreOpenIDtoNo = function(openID, cb){
-  User.update({'openID' : openID}, {'preOpenID' : 'no'}, cb);
+  User.update({'openID' : openID}, {$set : {'preOpenID' : 'no'}}, cb);
 }
 

@@ -49,7 +49,7 @@ module.exports = function (app) {
 							return next(err);
 					})
 				}else{
-					User.updatePreOpenIDbyShareID(req.session.openID, null, function(err){
+					User.setPreOpenIDtoNo(req.session.openID, function(err){
 						if(err)
 							return next(err);
 					})

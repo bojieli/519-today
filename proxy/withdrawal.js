@@ -38,5 +38,5 @@ exports.complete = function(ehs, cb){
 	var eb2= Crypto.util.hexToBytes (ehs);
 	var ub2= Crypto.DES.decrypt (eb2, config.withdrawalKey, {asBytes: true, mode: mode});
 	var us2= Crypto.charenc.UTF8.bytesToString (ub2);
-	Withdrawal.update({'_id' : us2}, {'isUsed' : true, 'useDate' : new Date()}, cb);
+	Withdrawal.update({'_id' : us2}, {$set : {'isUsed' : true, 'useDate' : new Date()}}, cb);
 }
