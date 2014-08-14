@@ -106,8 +106,7 @@
             }
             $(this).attr("disabled","disabled");
             var $this = $(this);
-            $.post("http://kf.519.today:8001/orderaction",{orderID:orderID,arrivetime: val,method:"ship"},function(data,status){
-                alert('feedback');
+            $.post("/orderaction",{orderID:orderID,arrivetime: val,method:"ship"},function(data,status){
                 if(status != 'success'|| data.code != 'ok'){
                     $this.removeAttr("disabled","disabled");
                     return alert("通信失败,请重新尝试！");
@@ -122,7 +121,7 @@
                 return;
             $(this).attr("disabled","disabled");
             var $this = $(this);
-            $.post("http://kf.519.today:8001/orderaction",{orderID:orderID,method:"receive"},function(data,status){
+            $.post("/orderaction",{orderID:orderID,method:"receive"},function(data,status){
                 alert('feedback');
                 if(status != 'success' || data.code != 'ok'){
                     $this.removeAttr("disabled","disabled");
