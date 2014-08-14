@@ -99,7 +99,6 @@
     <SCRIPT TYPE="text/javascript">
         var orderID = '<%= order.orderID %>' ;
         $("#start").on('click',function(){
-            alert('click');
             var val = $("select").val();
             if(val=='请选择时间'){
                 return alert("请选择预计到达时间");
@@ -116,13 +115,11 @@
         });
         $("#complete").on('click',function(){
             var r = confirm("确定配送完成了吗，不可更改");
-            alert('click');
             if(!r)
                 return;
             $(this).attr("disabled","disabled");
             var $this = $(this);
             $.post("/orderaction",{orderID:orderID,method:"receive"},function(data,status){
-                alert('feedback');
                 if(status != 'success' || data.code != 'ok'){
                     $this.removeAttr("disabled","disabled");
                     return alert("通信失败,请重新尝试！");

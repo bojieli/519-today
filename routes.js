@@ -68,11 +68,6 @@ module.exports = function (app) {
 		}else if(req.path === '/logout'){
 			next();
 		}else if(req.path === '/orderaction'){
-			res.set({
-		       'Access-Control-Allow-origin' : '*',
-		       'Access-Control-Allow-Headers' : 'X-Requested-With',
-		       'Access-Control-Allow-Methods' : 'POST'
-	   		}) ;
 			next();
 		}else{
 			login(req,res);

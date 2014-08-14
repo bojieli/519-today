@@ -57,6 +57,7 @@ exports.operate = function(req,res,next){
     }else if(postData.method == 'receive'){
       message = "您的订单" + order.orderID + "已收货，如出现问题,请联系客服！";
     }
+    console.log(order.openID);
     wechatAPI.sendText(order.openID,message,function(err){
       if(err){
         next(err);

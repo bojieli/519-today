@@ -31,7 +31,7 @@ exports.updateOrder = function (req, res, next) {
         "通畅，如需帮助可拨打客服电话：\n\n0558-88888888";
     api.sendText(req.session.openID, messageText, function(err,ret){
       if(err){
-        throw "fail to send custom text"+err;
+        next(err);
         return;
       }
       console.log(ret);
