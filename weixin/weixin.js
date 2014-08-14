@@ -1,6 +1,5 @@
 var wechat = require("wechat");
-var API = wechat.API;
-var api = new API('wxd8c15c2734dacb07', '188081716b20d3d655ed14328dcf7e90');
+var api = require('../common/api');
 
 var User = require('./proxy');
 
