@@ -1,10 +1,7 @@
 var config = require('../config');
 var request = require('request');
 var User = require('../proxy').User;
-
-
-
-
+var api = require('../common/api');
 
 module.exports = function(req,res){
 

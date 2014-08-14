@@ -15,6 +15,7 @@ var api = new API(appkey, secret//);
 		if(!doc){
 			return callback(null,{});
 		}
+		console.log(doc.access_token);
 		callback(null,JSON.parse(doc.access_token));
 	});
 }, function (token, callback) {
