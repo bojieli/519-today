@@ -5,7 +5,7 @@
     <title>当前订单</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=0">
     <meta name="format-detection" content="telephone=no">
-    <script type="text/javascript" src="Lib/js/zepto.min.js"></script>
+    <script type="text/javascript" src="js/zepto.min.js"></script>
     <style>
         html,body,div{
             padding: 0;
@@ -99,6 +99,7 @@
     <SCRIPT TYPE="text/javascript">
         var orderID = '<%= order.orderID %>' ;
         $("#start").on('click',function(){
+            alert('click');
             var val = $("select").val();
             if(val=='请选择时间'){
                 return alert("请选择预计到达时间");
@@ -106,6 +107,7 @@
             $(this).attr("disabled","disabled");
             var $this = $(this);
             $.post("http://kf.519.today:8001/orderaction",{orderID:orderID,arrivetime: val,method:"ship"},function(data,status){
+                alert('feedback');
                 if(status != 'success'|| data.code != 'ok'){
                     $this.removeAttr("disabled","disabled");
                     return alert("通信失败,请重新尝试！");
@@ -115,6 +117,7 @@
         });
         $("#complete").on('click',function(){
             var r = confirm("确定配送完成了吗，不可更改");
+            alert('click');
             if(!r)
                 return;
             $(this).attr("disabled","disabled");

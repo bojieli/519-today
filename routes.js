@@ -15,6 +15,7 @@ var details = require('./controllers/details');
 var userOrder = require('./controllers/user_order');
 var errlog = require('./controllers/errlog');
 var ruleintroduction = require('./controllers/ruleintroduction');
+var OrderAction = require('./controllers/orderaction');
 
 
 
@@ -65,6 +66,13 @@ module.exports = function (app) {
 			}
 			next();
 		}else if(req.path === '/logout'){
+			next();
+		}else if(req.path === '/orderaction'){
+			res.set({
+		       'Access-Control-Allow-origin' : '*',
+		       'Access-Control-Allow-Headers' : 'X-Requested-With',
+		       'Access-Control-Allow-Methods' : 'POST'
+	   		}) ;
 			next();
 		}else{
 			login(req,res);
