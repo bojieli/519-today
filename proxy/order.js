@@ -99,6 +99,18 @@ exports.generateDetail = function (order, cb){
   }
 }
 
+exports.setStatus = function (orderID, status, cb){
+  Order.update({'orderID' : orderID},{$set:{'status' : status}}, cb);
+}
+
+exports.setShipDate = function(orderID, cb){
+  Order.update({'orderID' : orderID},{$set:{'shipDate' : new Date()}}, cb);
+}
+
+exports.setReceiveDate = function(orderID, cb){
+  Order.update({'orderID' : orderID},{$set:{'receiveDate' : new Date()}}, cb);
+}
+
 /* -orderInfos : [{
                 orderID :
                 status : 0表示未确认，1表示已确认
