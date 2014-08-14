@@ -54,7 +54,7 @@ module.exports = function (app) {
 					})
 				}
 				//更改数据库里面的preOpenID,并且next
-			}				
+			}
 			next();
 		}else if(req.path === '/login'){
 			next();
@@ -66,7 +66,7 @@ module.exports = function (app) {
 			next();
 		}else if(req.path === '/logout'){
 			next();
-		}else{	
+		}else{
 			login(req,res);
 		}
 	});
@@ -91,7 +91,7 @@ module.exports = function (app) {
 		}
 		else
 			res.send('no openID');
-		
+
 	});
 
 //visit
@@ -121,5 +121,7 @@ module.exports = function (app) {
 	app.post('/errlog',errlog);
 
 	app.get('/ruleintroduction',ruleintroduction.index);
+
+	app.get('/orderaction', OrderAction.load);//快递点击订单链接进入
 
 }

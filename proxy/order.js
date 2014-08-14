@@ -49,11 +49,56 @@ exports.createOrder = function(openID,info,cb){
       }
     }
   );
-  
-  
-
-  
 }
+
+exports.findbyOrderID = function(orderID, cb){
+  Order.findOne({'orderID' : orderID},cb);
+}
+
+exports.generateDetail = function (order, cb){
+  var data = {};
+  var ids = [];
+  for (var i = 0; i < order.shopOnce.length; i++) {
+    ids.push(order.shopOnce[i].id);
+  };
+
+  Wine.findByIDs(ids, afterFind);
+  function afterFind(err, _wines){
+    if(err)
+      return cb(err);
+    //var _wines = results._findWineByIDs;
+    for (var i = 0; i < order.shopOnce.length; i++) {
+      var index = findWinebyid(order.shopOnce[i].id);
+      order.shopOnce[i].describe = _wines[index].describe;
+      order.shopOnce[i].wechatPrice = _wines[index].wechatPrice;
+      delete order.shopOnce[i].id;
+    };
+    function findWinebyid(id){
+      for (var i = 0; i < _wines.length; i++) {
+        if(id ==_wines[i].id)
+          return i;
+      };
+    }
+    data.orderID = order.orderID;
+    data.status = order.status;
+    data.date = formatDate(order.date);
+    data.shipDate = formatDate(order.shipDate);
+    data.receiveDate = formatDate(order.receiveDate);
+    data.isFirst = order.isFirst;
+    data.address = order.address;
+    data.notes = order.notes||'';
+    data.cashNeeded = order.totalPrice;
+    data.cashTotal = order.cashUse + order.voucherUse + order.totalPrice;
+    data.coupon = order.cashUse;
+    data.voucher = order.voucherUse;
+    data.shopOnce = order.shopOnce;
+    data.dispatchCenter = order.dispatchCenter;
+    data.shipStaff = order.shipStaff;
+    data.customerService = order.customerService;
+    cb(null, data);
+  }
+}
+
 /* -orderInfos : [{
                 orderID :
                 status : 0表示未确认，1表示已确认
@@ -80,7 +125,7 @@ exports.getUserOrder = function (openID, cb){
             var returnOrder = {};
             returnOrder.orderID = orders[i].orderID;
             returnOrder.time = orders[i].date.getFullYear() + '/' +
-            orders[i].date.getMonth() + '/' + 
+            orders[i].date.getMonth() + '/' +
             orders[i].date.getDate() + '  ' +
             orders[i].date.getHours() + ':' +
             orders[i].date.getMinutes();
@@ -101,7 +146,7 @@ exports.getUserOrder = function (openID, cb){
           }
         };
         Wine.findByIDs (Wineids, callback);
-      }     
+      }
     ],
     function GenerateOrderInfos(err, Wines){
       if(err)
@@ -148,7 +193,7 @@ function getOrderID(){
   var orderID_increment = ++ global.orderID_increment;
   if(global.orderID_increment > 9990)
     global.orderID_increment = 0;
- 
+
   var datePart = leftPadString(date.getUTCFullYear().toString(),1) +
                     leftPadString(date.getUTCMonth() + 1,2) +
                     leftPadString(date.getUTCDate(),2) +
