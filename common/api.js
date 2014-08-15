@@ -10,6 +10,7 @@ var dir = process.cwd();
 var api = new API(appkey, secret//);
 	, function (callback) {
   // 传入一个获取全局token的方法
+
 	db.getConfig(function(err,doc){
 		if(err){
 			return callback(err);
