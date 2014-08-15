@@ -17,8 +17,10 @@ exports.getConfig = function(cb){
   Config.findOne({id:config_id},function(err,doc){
     if(err){
       throw "find config error:" + err;
+
       return cb(err);
     }
+
     cb(null,doc);
       
   });
