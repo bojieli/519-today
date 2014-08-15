@@ -53,11 +53,10 @@ exports.operate = function(req,res,next){
     }
     var message;
     if(postData.method == 'ship'){
-      message = "您的订单" + order.orderID + "已发货，预计到达时间为" + postData.arrivetime + "以后，如有特殊情况,请与快递员联系,联系电话：" + "187148888888";
+      message = "您的订单" + order.orderID + "已发货，预计到达时间为" + postData.arrivetime + "以内，如有特殊情况,请与快递员联系,联系电话：" + "187148888888";
     }else if(postData.method == 'receive'){
       message = "您的订单" + order.orderID + "已收货，如出现问题,请联系客服！";
     }
-    console.log(order.openID);
     wechatAPI.sendText(order.openID,message,function(err){
       if(err){
         next(err);
