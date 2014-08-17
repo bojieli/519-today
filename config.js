@@ -1,3 +1,4 @@
+// s0.gewu.me master
 var config = {
 	port :6088,
 	session_secret: '519_Today',
