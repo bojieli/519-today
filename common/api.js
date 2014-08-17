@@ -18,7 +18,6 @@ var api = new API(appkey, secret//);
 		if(!doc){
 			return callback(null,{});
 		}
-		console.log(doc.access_token);
 		callback(null,JSON.parse(doc.access_token));
 	});
 }, function (token, callback) {
@@ -27,8 +26,64 @@ var api = new API(appkey, secret//);
   db.setConfig({access_token:JSON.stringify(token)},callback);
 
 });
+function handleErr(err, _action){
+	if(err.code === -1){
+		return _action();
+	}else if(err.code === 40001){
+		function action_getAccessToken(){
+			api.getAccessToken(function(err, token){
+				if(err){
+					if(err.code === -1)
+						return action_getAccessToken();
+					return callback(err);
+				}
+				return _action();
+			})
+		}
+		action_getAccessToken();
+	}
+}
+module.exports.sendText = function (openID, text, callback){
+	function _action(){
+		api.sendText(openID, text, function(err){
+			if(err){
+				handleErr(err, _action);
+			}
+			callback(null);
+		});
+	}
+	_action();
+}
 
-module.exports = api;
+module.exports.createTmpQRCode = function(sceneId, expire, callback){
+	function _action(){
+		api.createTmpQRCode(sceneId, expire, function(err){
+			if(err)
+				handleErr(err, _action);
+			callback(null);
+		})
+	}
+}
+
+module.exports.sendNews = function(openID, articles, callback){
+	function _action(){
+		api.sendNews(openID, articles, function(err){
+			if(err)
+				handleErr(err, _action);
+			callback(null);
+		})
+	}
+}
+
+
+
+module.exports.refresh = function (callback){
+	api.getAccessToken(callback);
+}
+
+// module.exports.sendNews
+
+//module.exports = api;
 // =======send text=======
 // api.sendText('openid', 'Hello world', callback);
 
