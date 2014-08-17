@@ -1,5 +1,4 @@
 var config = require('../config');
-var errUtil = require('./wrap_error');
 var models = require('../models');
 var Withdrawal = require('./withdrawal');
 var User = models.User;
@@ -14,19 +13,7 @@ var async = require('async');
 * @param {Function} cb
 */
 exports.getUserByOpenID = function(openID,cb){
-  User.findOne({ openID : openID },userFind);
-
-  function userFind(err,user){
-    if(err) {
-      errUtil.wrapError(err,config.errorCode_find,"getUserByOpenID()","/proxy/user",{
-        openID:openID
-      });
-      return cb(err,null);
-    }else{
-      cb(err,user);
-    }
-
-  }
+  User.findOne({ openID : openID },cb);
 }
 
 
@@ -40,12 +27,8 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
   User.findOne({openID : openID},afterFind);
 
   function afterFind(err,user){
-    if(err) {
-        errUtil.wrapError(err,config.errorCode_find,"afterVertify()","/proxy/user",{
-          openID: openID,preOpenID : preOpenID,basicInfo : basicInfo});
-        return cb(err);
-    }
-
+    if(err) 
+      return cb(err);
     if(user){
       if(preOpenID && basicInfo){
         User.update({openID : openID},
@@ -80,17 +63,12 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
   }
 
   function afterUpdate(err){
-    if(err) {
-      errUtil.wrapError(err,config.errorCode_update,"afterVertify()","/proxy/user",
-        {openID: openID,preOpenID : preOpenID,basicInfo : basicInfo});
+    if(err) 
       return cb(err);
-    }
   }
 
   function afterCreate(err,user){
   if(err) {
-      errUtil.wrapError(err,config.errorCode_create,"afterVertify()","/proxy/user",
-        {openID: openID,preOpenID : preOpenID,basicInfo : basicInfo});
       return cb(err);
     }else if(user){
       global.sceneID_web_count++;
@@ -111,19 +89,7 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
 * @param {Function} cb
 */
 exports.getCashVoucherByOpenID = function(openID,cb){
-  User.findOne({openID : openID},'cash voucher', userFind);
-
-  function userFind(err,user){
-    if(err) {
-      errUtil.wrapError(err,config.errorCode_find,"getCashVoucherByOpenID()","/proxy/user",
-        {openID: openID});
-      return cb(err,{});
-    }else{
-      cb(err,user);
-    }
-
-  }
-
+  User.findOne({openID : openID},'cash voucher', cb);
 }
 /**
 * 根据用户的openID查找用户的地址
@@ -134,19 +100,7 @@ exports.getCashVoucherByOpenID = function(openID,cb){
 * @param {Function} cb
 */
 exports.getAddressByOpenID = function(openID,cb){
-
   User.findOne({openID : openID}, 'address', cb);
-
-   function userFind(err,user){
-    if(err) {
-      errUtil.wrapError(err,config.errorCode_find,"getAddressByOpenID()","/proxy/user",
-        {openID: openID});
-      return cb(err,{});
-    }else{
-      cb(err,user);
-    }
-
-  }
 }
 
 /**提交购物订单以后更新现金券和代金券的数量
@@ -159,8 +113,6 @@ exports.updatePreCash = function (order, cb){
 
   function userFind1 (err, user){
     if(err) {
-      errUtil.wrapError(err,config.errorCode_find,"updatePreCash().userFind1()","/proxy/user",
-        {order: order});
       return cb(err);
     }
 
@@ -174,8 +126,6 @@ exports.updatePreCash = function (order, cb){
 
   function userFind2 (err,user){
     if(err) {
-      errUtil.wrapError(err,config.errorCode_find,"updatePreCash().userFind2()","/proxy/user",
-         {order: order});
       return cb(err);
     }
     if(user.preOpenID){
@@ -187,8 +137,6 @@ exports.updatePreCash = function (order, cb){
   }
   function userFind3 (err,user){
     if(err) {
-      errUtil.wrapError(err,config.errorCode_find,"updatePreCash().userFind3()","/proxy/user",
-         {order: order});
       return cb(err);
     }
     if(user.preOpenID){
@@ -200,8 +148,6 @@ exports.updatePreCash = function (order, cb){
 
   function afterUpdate(err){
     if(err) {
-      errUtil.wrapError(err,config.errorCode_update,"updatePreCash().afterUpdate()","/proxy/user",
-        {order: order});
       return cb(err);
     }else{
       cb(err);
@@ -218,8 +164,6 @@ exports.updateCashVoucher = function(order,cb){
 
   function userFind(err,user){
     if(err) {
-      errUtil.wrapError(err,config.errorCode_find,"updateCashVoucher()","/proxy/user",
-         {order: order});
       return cb(err);
     }
 
@@ -227,9 +171,8 @@ exports.updateCashVoucher = function(order,cb){
 
         if(order.cashUse > 0){
           if(order.cashUse > user.cash){
-            var err ={};
-            errUtil.wrapError(err,config.errorCode_cash,"updateCashVoucher()","/proxy/user",
-               {order: order});
+            var err =new Error();
+            err.describe = 'updateCashVoucher(),order.cashUse > user.cash'
             return cb(err);
           }else{
             User.update({openID : order.openID},
@@ -263,21 +206,10 @@ exports.updateCashVoucher = function(order,cb){
 
           User.update({openID : order.openID},
                         {$set : {voucher : userVoucher}},
-                        afterUpdate);
+                        cb);
       }
     }
   }
-
-  function afterUpdate(err){
-    if(err){
-      errUtil.wrapError(err,config.errorCode_update,"updateCashVoucher()","/proxy/user",
-               {order: order});
-      return cb(err);
-    }else{
-      cb(err);
-    }
-  }
-
 }
 
 exports.addAddress = function(openID,address,cb){
@@ -286,8 +218,6 @@ exports.addAddress = function(openID,address,cb){
 
   function afterFind(err,user){
     if(err){
-      errUtil.wrapError(err,config.errorCode_find,"addAddress()","/proxy/user",
-         {openID : openID,address : address});
       return cb(err);
     }
 
@@ -301,8 +231,6 @@ exports.addAddress = function(openID,address,cb){
 
   function afterUpdate(err){
    if(err){
-      errUtil.wrapError(err,config.errorCode_update,"addAddress()","/proxy/user",
-         {openID : openID,address : address});
       return cb(err);
     }else{
       cb(err);
@@ -315,31 +243,18 @@ exports.deleteAddress = function(openID,index,cb){
 
   function afterFind(err,user){
     if(err){
-      errUtil.wrapError(err,config.errorCode_find,"deleteAddress()","/proxy/user",
-         {openID : openID,index:index});
       return cb(err);
     }
     if(user){
       var userAddress = user.address;
       if(index < 0 ||index >= userAddress.length){
-          var err ={};
-          errUtil.wrapError(err,config.errorCode_index,"deleteAddress()","/proxy/user",
-             {openID : openID,index:index});
+          var err =new Error();
+          err.describe = 'deleteAddress(),index < 0 ||index >= userAddress.length';
           return cb(err);
       }
 
       userAddress.splice(index,1);
-      User.update({openID : openID} , {$set : {address : userAddress}},afterUpdate);
-    }
-  }
-
-  function afterUpdate(err){
-   if(err){
-      errUtil.wrapError(err,config.errorCode_update,"deleteAddress()","/proxy/user",
-         {openID : openID,index:index});
-      return cb(err);
-    }else{
-      cb(err);
+      User.update({openID : openID} , {$set : {address : userAddress}},cb);
     }
   }
 }
@@ -350,33 +265,20 @@ exports.setDefault = function(openID,index,cb){
 
   function afterFind(err,user){
     if(err){
-      errUtil.wrapError(err,config.errorCode_find,"setDefault()","/proxy/user",
-         {openID : openID,index:index});
       return cb(err);
     }
     if(user){
       var userAddress = user.address;
       if(index < 0 ||index >= userAddress.length){
-        var err ={};
-        errUtil.wrapError(err,config.errorCode_index,"setDefault()","/proxy/user",
-           {order: order});
+        var err =new Error();
+        err.describe = 'setDefault(),index < 0 ||index >= userAddress.length';
         return cb(err);
       }
       var defaultAddress = userAddress[index];
       userAddress.splice(index,1);
       userAddress.unshift(defaultAddress);
 
-      User.update({openID : openID} , {$set : {address : userAddress}},afterUpdate);
-    }
-  }
-
-  function afterUpdate(err){
-   if(err){
-      errUtil.wrapError(err,config.errorCode_update,"setDefault()","/proxy/user",
-         {openID : openID,index:index});
-      return cb(err);
-    }else{
-      cb(err);
+      User.update({openID : openID} , {$set : {address : userAddress}},cb);
     }
   }
 }
