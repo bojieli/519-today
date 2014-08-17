@@ -1,5 +1,4 @@
 var congfig = require('../config');
-var errUtil = require('./wrap_error');
 var models = require('../models');
 var Order = models.Order;
 var async = require('async');
@@ -42,7 +41,6 @@ exports.createOrder = function(openID,info,cb){
     }],
     function afterCreate(err,order){
       if(err){
-        errUtil.wrapError(err,congfig.errorCode_create,"createOrder()","/proxy/order",{req:req});
         return cb(err);
       }else{
         cb(err,order);

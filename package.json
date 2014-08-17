@@ -21,6 +21,7 @@
     "urllib" : "*",
     "wechat":"~0.8.4",
     "async":"*" ,
-    "cryptojs" : "*"
+    "cryptojs" : "*",
+    "bunyan" : "*"
   }
 }
