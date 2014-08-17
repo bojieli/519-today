@@ -15,12 +15,11 @@ exports.load = function (req, res, next){
       }]
     },function(err, results){
       if(err){
-        //res.send();
         return next(err);
       }
       if(results._order){
-      data.order = results._generateOrder ;
-      res.render('order_action',data);
+        data.order = results._generateOrder ;
+        res.render('order_action',data);
       }
   });
 }

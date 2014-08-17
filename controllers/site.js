@@ -10,7 +10,7 @@
  var Wine = require('../proxy').Wine;
  var config = require('../config');
 
- exports.visitHome = function(req,res,next){
+exports.visitHome = function(req,res,next){
 	var recommendList = [];
 	var recordList = [];
 	var r = 'home';		

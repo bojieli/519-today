@@ -24,15 +24,12 @@ exports.updateOrder = function (req, res, next) {
       res.send({message : 'error', error : err.errCode}) ;
       return next(err);
     }
-    console.log("===========order============");
-    console.log(order);
     var messageText = "您已经成功下单，订单编号:\n"+order.orderID+"\n需支付现金"+
         order.totalPrice+"元\n我们的快递人员即将送货上门，请保持手机号码"+order.address.tel+
         "通畅，如需帮助可拨打客服电话：\n\n0558-88888888";
     api.sendText(req.session.openID, messageText, function(err,ret){
       if(err){
-        next(err);
-        return;
+        return next(err);
       }
       console.log(ret);
     });
