@@ -10,33 +10,5 @@
 var User = require('../proxy').User;
 var User_wechat = require('../weixin/proxy');
 exports.visitShare = function (req, res) {
- 	//res.redirect('/');
- 	/*
- 	if(!req.query.scendID){
- 		User.getSceneIDbyOpenID(req.session.openID,function(err,scendID){
- 			res.redirect('/share?scendID=' + scendID);
- 		})
- 	}
- 	else
- 	{
- 		res.send('ScendID:\t' + req.query.scendID);
- 	}*/
- 	//res.send(req.query.sceneID);
- 	/*
- 	User_wechat.getOpenIDbySceneID(openID, function(err, openID){
- 		if(req.session.openID === )
- 	})*/
 	res.render('share');
- 	
- 	/*
-
-
- 	if(!req.query.openID){
- 		res.redirect('/share?openID=' + req.session.openID);
- 	}
- 	else{
- 		res.send('openID:\t' + req.query.openID);
- 	}*/
- 	//res.send('share');
-
 };
