@@ -9,17 +9,8 @@ var config = {
 	secret : '81ae37cb50e1f3fb49eda224f6ffad73',
 	host : 'http://519.today',
 	withdrawalOpenID : 'owaixt4mctd2ZtHxa3dyAKTvFMIo', //冬冬的openid
-	withdrawalKey : 'ZhangXiangZhongYaoMa?Zhongyao!', 
+	withdrawalKey : 'ZhangXiangZhongYaoMa?Zhongyao!',
 
-	/*
-	*some important errorCode
-	*/
-	errCode_cash : 1000,
-	errCode_voucher : 10001,
-	errCode_find : 10002,
-	errorCode_update : 10003,
-	errorCode_create : 10004,
-	errorCode_index : 10005,
 	address_maxNum : 10,
 
 	//sceneID_base
