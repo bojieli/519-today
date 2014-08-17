@@ -26,7 +26,7 @@ var info = {
   voucherUse : 0,
   totalPrice : 20
 }
-var openID = 'owaixtwzZUF3Qma5s8xH0N__mwK0c';
+var openID = 'owaixtwzZUF3Qma5s8xH0N__mwK0';
 /*
 for(var i = 0; i< 10 ; i++){
 	Order.createOrder(openID,info,function(err,order){
