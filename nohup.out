@@ -1,0 +1,1147 @@
+-----------------API---------------------
+function:function (callback) {
+  // 传入一个获取全局token的方法
+
+	db.getConfig(function(err,doc){
+		if(err){
+			return callback(err);
+		}
+		if(!doc){
+			return callback(null,{});
+		}
+		console.log(doc.access_token);
+		callback(null,JSON.parse(doc.access_token));
+	});
+}
+[Function]
+Failed to load c++ bson extension, using pure JS version
+Connected to mongodb via mongoose
+Connected to mongodb session store
+519Today listening on port 6088
+God bless love....
+req_path:	/
+function
+[90mGET / [36m302 [90m22ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m1ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/ruleintroduction
+function
+[90mGET /ruleintroduction [36m302 [90m7ms - 524b[0m
+request
+
+TypeError: Cannot read property 'preOpenID' of undefined
+    at Request._callback (/home/zw/519-today/plugins/login.js:65:28)
+    at Request.self.callback (/home/zw/519-today/node_modules/request/request.js:122:22)
+    at Request.EventEmitter.emit (events.js:98:17)
+    at Request.<anonymous> (/home/zw/519-today/node_modules/request/request.js:1019:14)
+    at Request.EventEmitter.emit (events.js:117:20)
+    at IncomingMessage.<anonymous> (/home/zw/519-today/node_modules/request/request.js:970:12)
+    at IncomingMessage.EventEmitter.emit (events.js:117:20)
+    at _stream_readable.js:920:16
+    at process._tickCallback (node.js:415:13)
+-----------------API---------------------
+function:function (callback) {
+  // 传入一个获取全局token的方法
+
+	db.getConfig(function(err,doc){
+		if(err){
+			return callback(err);
+		}
+		if(!doc){
+			return callback(null,{});
+		}
+		console.log(doc.access_token);
+		callback(null,JSON.parse(doc.access_token));
+	});
+}
+[Function]
+Failed to load c++ bson extension, using pure JS version
+Connected to mongodb via mongoose
+Connected to mongodb session store
+519Today listening on port 6088
+God bless love....
+req_path:	/
+function
+[90mGET / [36m302 [90m19ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+[90mPOST /wechat?signature=eb03826429add13bc2b7d14efeac16002085690d&timestamp=1408206383&nonce=1936009389 [32m200 [90m10ms[0m
+LOCATION
+[90mPOST /wechat?signature=a68dadd168a7c058c64e6c46947643736d7d33cd&timestamp=1408206403&nonce=1403119212 [32m200 [90m6ms[0m
+[90mGET / [32m200 [90m4204ms[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+LOCATION
+[90mPOST /wechat?signature=84b4b406f804227fcdc9023b6240864474c4ef7e&timestamp=1408209166&nonce=567112925 [32m200 [90m7ms[0m
+[90mPOST /wechat?signature=28aaa16ccaaa43b674b0fbd6860b402b88b0958e&timestamp=1408209167&nonce=1608357347 [32m200 [90m5ms[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+[90mPOST /wechat?signature=7befb8b79df97479f663f37542fd889ecdda0b05&timestamp=1408209221&nonce=844756440 [32m200 [90m6ms[0m
+req_path:	/promote
+function
+[90mGET /promote [36m302 [90m5ms - 506b[0m
+request
+[90mGET /login?path=/promote&code=005f8aab2655f0d71234a32cbb092ecd&state=STATE [36m302 [90m273ms - 72b[0m
+[90mGET /promote [36m302 [90m6ms - 108b[0m
+recommend!
+[90mGET /recommend [32m200 [90m60001ms[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m6ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m12ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m14ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m1ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m6ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m6ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m9ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m9ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m12ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m1ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m32ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m1ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m1ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m1ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m1ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 492b[0m
+request
+[90mGET /login?path=/&code=005c7f4550c0b7da0202da2beb56b0de&state=STATE [36m302 [90m240ms - 58b[0m
+[90mGET / [32m200 [90m48842ms[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+-----------------API---------------------
+function:function (callback) {
+  // 传入一个获取全局token的方法
+
+	db.getConfig(function(err,doc){
+		if(err){
+			return callback(err);
+		}
+		if(!doc){
+			return callback(null,{});
+		}
+		console.log(doc.access_token);
+		callback(null,JSON.parse(doc.access_token));
+	});
+}
+[Function]
+Failed to load c++ bson extension, using pure JS version
+Connected to mongodb via mongoose
+Connected to mongodb session store
+519Today listening on port 6088
+God bless love....
+req_path:	/
+function
+[90mGET / [36m302 [90m18ms - 250b[0m
+-----------------API---------------------
+function:function (callback) {
+  // 传入一个获取全局token的方法
+
+	db.getConfig(function(err,doc){
+		if(err){
+			return callback(err);
+		}
+		if(!doc){
+			return callback(null,{});
+		}
+		console.log(doc.access_token);
+		callback(null,JSON.parse(doc.access_token));
+	});
+}
+[Function]
+Failed to load c++ bson extension, using pure JS version
+Connected to mongodb via mongoose
+Connected to mongodb session store
+519Today listening on port 6088
+God bless love....
+req_path:	/
+function
+[90mGET / [36m302 [90m19ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mHEAD / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mHEAD / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mHEAD / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mHEAD / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m26ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m5ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m7ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m4ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m2ms - 250b[0m
+req_path:	/
+function
+[90mGET / [36m302 [90m3ms - 250b[0m
+[90mPOST /wechat?signature=b97b428b8c8a65c2aa725b599c1dc0218066334a&timestamp=1408253545&nonce=1978034386 [32m200 [90m13ms[0m
+[90mGET / [32m200 [90m27ms - 16.79kb[0m
+[90mGET /css/pro.css?embed [32m200 [90m7ms - 21.05kb[0m
+[90mGET /css/index.css [32m200 [90m2ms - 6.99kb[0m
+[90mGET /vendor/ionicons/css/ionicons.css [32m200 [90m1ms - 2.27kb[0m
+[90mGET /js/require.js [32m200 [90m1ms - 14.86kb[0m
+[90mGET / [32m200 [90m15ms - 16.79kb[0m
+[90mGET /vendor/ionicons/fonts/ionicons.ttf?v=1.5.2 [32m200 [90m1ms - 2.33kb[0m
+[90mGET /build/index.js [32m200 [90m1ms - 47.77kb[0m
+
+/home/zw/519-today/node_modules/mongoose/lib/utils.js:413
+        throw err;
+              ^
+TypeError: Cannot read property 'address' of null
+    at Promise.<anonymous> (/home/zw/519-today/controllers/address.js:17:17)
+    at Promise.<anonymous> (/home/zw/519-today/node_modules/mongoose/lib/promise.js:120:8)
+    at Promise.EventEmitter.emit (events.js:95:17)
+    at Promise.emit (/home/zw/519-today/node_modules/mongoose/lib/promise.js:59:38)
+    at Promise.complete (/home/zw/519-today/node_modules/mongoose/lib/promise.js:70:20)
+    at /home/zw/519-today/node_modules/mongoose/lib/query.js:898:30
+    at /home/zw/519-today/node_modules/mongoose/lib/utils.js:408:16
+    at /home/zw/519-today/node_modules/mongoose/node_modules/mongodb/lib/mongodb/collection.js:955:5
+    at /home/zw/519-today/node_modules/mongoose/node_modules/mongodb/lib/mongodb/cursor.js:153:9
+    at /home/zw/519-today/node_modules/mongoose/node_modules/mongodb/lib/mongodb/cursor.js:193:11

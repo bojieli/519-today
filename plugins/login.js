@@ -11,7 +11,6 @@ module.exports = function(req,res){
 	console.log('req_path:\t' + reqpath111);
 	//query里面可能会有一个openID参数，这个参数作为上线
 	//将来需要其他参数，也可以在req里面传过来
-	var req_query = req.query;
 	req.session.param = {
 		preOpenID:req.query.openID
 	};
@@ -51,7 +50,6 @@ module.exports.Oath2 = function (req,res){
 
 			  		req.session.openID = userinfo.openid;
 			  		//获得用户数据，存储用户数据
-			  		console.log(JSON.parse(body));
 
 			  		var basicInfo = {
 			  			nickname : userinfo.nickname,
