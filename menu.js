@@ -14,11 +14,11 @@ var createMenuData = {
 	{	
 		"type":"view",
 		"name":"买酒",
-		"url":"http://519.today/"
+		"url":config.host
 	},{
 		"type":"view", 
 		"name":"推广",
-		"url":"http://519.today/promote"
+		"url":config.host+"/promote"
 	},{
 		"type":"click" ,
 		"name":"更多",
@@ -41,12 +41,12 @@ var createMenuData = {
 		{
 			"name":"关于我们",
 			"type":"view",
-			"url":"http://519.today/about1919"
+			"url":config.host+"/about1919"
 		},
 		{
 			"type":"view", 
 			"name":"登出",
-			"url":"http://519.today/logout"
+			"url":config.host+"/logout"
 		}
 		]
 	}]
