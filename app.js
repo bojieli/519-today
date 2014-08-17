@@ -10,6 +10,7 @@ require('./models');
 var session = require('express-session');
 var MongoStore = require('connect-mongo')(session);
 var weixin = require('./weixin/weixin');
+var mongodb = require('mongodb');
 var app = express();
 //error handle
 
@@ -42,36 +43,45 @@ app.use(bodyParser.urlencoded());
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+app.use(require('cookie-parser')(config.session_secret));
 
 // Configuration in session
-app.use(require('cookie-parser')(config.session_secret));
-app.use(session({
-  secret: config.session_secret,
-  key: 'sid',
-  store: new MongoStore({
-    db: config.db_name,
-    host: config.host
-  }),
-  resave: true,
-  saveUninitialized: true,
-}));
+var MongoClient = require('mongodb').MongoClient;
+MongoClient.connect(config.db_native, function(err, session_store) { 
+  if (err) {
+     console.error('Failed to connect to mongodb for session store');
+     return;
+  }
+  console.log('Connected to mongodb session store');
 
-weixin(app);
-routes(app);
+  app.use(session({
+    secret: config.session_secret,
+    key: 'sid',
+    store: new MongoStore({ db: session_store }),
+    resave: true,
+    saveUninitialized: true,
+  }));
 
-app.listen(config.port, function (err) {
-  console.log("519Today listening on port %d", config.port);
-  console.log("God bless love....");
-  //throw new Error('dgjalsjgldjslgasljgldsjgldasj');
-  //test.test();
-});
+  /// we should initialize the session store before declaring routes
+  weixin(app);
+  routes(app);
 
+  /// catch 404 and forward to error handler
+  /// this should be executed after any other app.use() as this is a catch-all fallback
+  app.use(function(req, res, next) {
+      var err = new Error('Not Found');
+      err.status = 404;
+      next(err);
+  });
 
-/// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
+  /// listen after everything is ready...
+  /// do not expose inconsistent startup states to user
+  app.listen(config.port, function (err) {
+    console.log("519Today listening on port %d", config.port);
+    console.log("God bless love....");
+    //throw new Error('dgjalsjgldjslgasljgldsjgldasj');
+    //test.test();
+  });
 });
 
 /// error handlers

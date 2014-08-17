@@ -2,7 +2,7 @@ var urllib = require('urllib');
 
 var wxapp = {
 	id : 'wxd8c15c2734dacb07',
-	secret : '188081716b20d3d655ed14328dcf7e90'
+	secret : '81ae37cb50e1f3fb49eda224f6ffad73'
 }
 var URLS = {
 	GET_TOKEN : 'https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid='+wxapp.id+'&secret='+wxapp.secret ,
