@@ -138,10 +138,10 @@ module.exports = function (app) {
       if(err) return next(err);
       var  sceneIDurl = "window.location.href = '/share/?sceneID=" + sceneID + "'";
       sceneIDurl = "<button onclick ="+ '"' +sceneIDurl+  '"' +"><b>分享到朋友圈</b></button>";
-      // if(req.session.qrCode && req.session.qrCode.expireTime > new Date().getTime()){
-      //   var url = req.session.qrCode.url;
-      //   return res.render('promote',{qrCodeurl : url, sceneID : sceneID});
-      // }
+      if(req.session.qrCode && req.session.qrCode.expireTime > new Date().getTime()){
+        var url = req.session.qrCode.url;
+        return res.render('promote',{qrCodeurl : url, sceneID : sceneID});
+      }
       createTmpQRCode();
       function createTmpQRCode(){
         api.createTmpQRCode(sceneID,1800,function(err,result){
