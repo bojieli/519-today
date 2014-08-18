@@ -38,7 +38,7 @@ define(['./os', './event', './data', './touch', './transition', './fixed'], func
         var e    = $.Event(showEvent, { relatedTarget: _relatedTarget });
 
         this.$element.trigger(e);
-
+ 
         if (this.isShown || e.isDefaultPrevented()) return;
 
         this.isShown = true;
@@ -176,8 +176,7 @@ define(['./os', './event', './data', './touch', './transition', './fixed'], func
             var $this   = $(this).emulateFixed();
 
             var data    = $this.data('dialog');
-            var options = $.extend({}, Dialog.DEFAULTS, $this.data(), typeof option == 'object' && option)
-
+            var options = $.extend({}, Dialog.DEFAULTS, $this.data(), typeof option == 'object' && option);
             if (!data) data = new Dialog(this, options);
             if (options.cache) $this.data('dialog', data);
             if (typeof option == 'string') data[option](_relatedTarget);
@@ -192,7 +191,6 @@ define(['./os', './event', './data', './touch', './transition', './fixed'], func
         var option  = $target.data('dialog') ? 'toggle' : $.extend({}, $target.data(), $this.data());
 
         if ($this.is('a')) e.preventDefault();
-
         $target.dialog(option, this)
     })
 

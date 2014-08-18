@@ -295,7 +295,7 @@
 
 <div id="myAlert" role="alertdialog"  class="ui-dialog" aria-labelledby="myAlertLable" aria-hidden="true">
     <div class="js-dialog-content ui-alert">
-        <div class="ui-alert-header"><h3 class="ui-alert-title" class="myAlertLable">申请提现</h3></div>
+        <div class="ui-alert-header"><h3 class="ui-alert-title">申请提现</h3></div>
         <div class="ui-alert-body" role="note"><p>返回公众号，点击“现金券”菜单，按照操作来申请提现</p></div>
         <div class="ui-alert-footer">
             <!-- 尽量避免使用 button 元素，在小米上是会有点击高亮边框 -->
@@ -306,8 +306,18 @@
 
 <div class="dialogTemplate" role="alertdialog"  class="ui-dialog" aria-labelledby="myAlertLable" aria-hidden="true">
     <div class="js-dialog-content ui-alert">
-        <div class="ui-alert-header"><h3 class="ui-alert-title" class="myAlertLable"></h3></div>
+        <div class="ui-alert-header"><h3 class="ui-alert-title"></h3></div>
         <div class="ui-alert-body" role="note"><p></p></div>
+        <div class="ui-alert-footer">
+            <!-- 尽量避免使用 button 元素，在小米上是会有点击高亮边框 -->
+        </div>
+    </div>
+</div>
+
+<div id="emptyAddressAlert" role="alertdialog"  class="ui-dialog" aria-labelledby="myAlertLable" aria-hidden="true">
+    <div class="js-dialog-content ui-alert">
+        <div class="ui-alert-header"><h3 class="ui-alert-title">地址不能为空</h3></div>
+        <div class="ui-alert-body" role="note"><p>您还没有添加地址，请先添加地址</p></div>
         <div class="ui-alert-footer">
             <!-- 尽量避免使用 button 元素，在小米上是会有点击高亮边框 -->
             <a data-dismiss="dialog" role="button" class="ui-alert-button">确定</a>
