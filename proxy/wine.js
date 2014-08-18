@@ -62,3 +62,7 @@ exports.findByIDs = function(ids, cb){
 exports.findRecommend = function(cb){
 	Wine.find({"tag.isRecommend" : true} , cb);
 }
+
+exports.findAllWines = function(cb){
+  Wine.find({},cb);
+}

@@ -15,20 +15,30 @@ exports.visitHome = function(req,res,next){
 	var recordList = [];
 	var baijiu = [];
 	var hongjiu = [];
-	var r = 'home';		
+	var r = 'home';
 	if(req.query && req.query.r){
-		r = req.query.r;		
+		r = req.query.r;
 	}
-	Wine.findRecommend( function (err,wineList){
+	Wine.findAllWines(function (err,allwines){
 		if(err) return next(err);
-		for(var i=0;i<wineList.length;i++){
-			recommendList.push({
-				LittlePic : config.small_dir + wineList[i].littlePic,
-				Code : wineList[i].id,
-				MarketPrice : wineList[i].marketPrice,
-				WechatPrice : wineList[i].wechatPrice
-			});
-		}						
+
+		for(var i=0;i<allwines.length;i++){
+			var wine = {
+				LittlePic : config.small_dir + allwines[i].littlePic,
+				Code : allwines[i].id,
+				MarketPrice : allwines[i].marketPrice,
+				WechatPrice : allwines[i].wechatPrice,
+				tag : allwines[i].tag
+			}
+			if(wine.tag.isRecommend){
+				recommendList.push(wine);
+			}
+			if(wine.tag.type == "白酒"){
+				baijiu.push(wine);
+			}else if(wine.tag.type == "红酒"){
+				hongjiu.push(wine);
+			}
+		}
 		res.render('index',{
 			title : "安徽1919",
 			r:r,
@@ -36,5 +46,5 @@ exports.visitHome = function(req,res,next){
 			baijiu : baijiu,
 			hongjiu : hongjiu
 		});
-	})
-};
+	});
+}
