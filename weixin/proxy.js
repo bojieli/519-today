@@ -1,5 +1,6 @@
 var config = require('./config');
 var models = require('../models');
+var async = require('async');
 var User = models.User;
 
 global.sceneID_weixin_count = 0;
@@ -7,8 +8,7 @@ global.sceneID_weixin_count = 0;
 exports.updateGlobalSceneID = function () {
   User.find({sceneID : {$gt : config.SCENEID_BASE,$lte : config.SCENEID_MAX}},function(err,users){
       if(err){
-        console.error("Get global sceneID error!");
-        process.exit(1);
+        return cb(err);
       }else{
         global.sceneID_weixin_count = users.length;
       }
@@ -30,15 +30,7 @@ exports.updateCurrentAddress = function(openID,address,cb){
     district : address.district.name
   };
 
-  User.update({ openID : openID },{$set : {currentAddress : currentAddress}},afterUpdate);
-
-  function afterUpdate(err,user){
-    if(err){
-      cb(config.errCode_update,null);
-    }else{
-      cb(err,user);
-    }
-  }
+  User.update({ openID : openID },{$set : {currentAddress : currentAddress}},cb);
 }
 
 /**
@@ -49,11 +41,11 @@ exports.addByRecommend = function(openID,preOpenID,cb){
   User.findOne({openID : openID},afterFind);
 
   function afterFind(err,user){
-    if(err) return cb(config.errCode_find,null);
-    if(user && preOpenID){
-      User.update({openID : openID},{$set : { preOpenID : preOpenID}},afterUpdate);
-      return;
-    }
+    if(err) return cb(err);
+    // if(user && preOpenID){
+    //   User.update({openID : openID},{$set : { preOpenID : preOpenID}},afterUpdate);
+    //   return;
+    // }
     if(!user){
       var sceneID = getSceneID();
       var newUser = {
@@ -98,7 +90,7 @@ exports.addByRecommend = function(openID,preOpenID,cb){
 exports.getSceneIDbyOpenID = function (openID, cb){
   User.findOne({openID : openID},'sceneID',afterFind);
   function afterFind(err, user){
-    if(err) return cb(config.errCode_find,null);
+    if(err) return cb(err);
     cb(err, user.sceneID);
   }
 }
@@ -106,35 +98,26 @@ exports.getSceneIDbyOpenID = function (openID, cb){
 exports.getOpenIDbySceneID = function (sceneID, cb){
   User.findOne({sceneID : sceneID},'openID',afterFind);
   function afterFind (err , user){
-    if(err) return cb(config.errCode_find,null);
+    if(err) return cb(err);
     cb(err , user.openID);
   }
 }
 
 exports.unSubscribe = function(openID,cb){
-  User.update({openID : openID},{$set : {preOpenID : null,hasFollow : false,cash : 0,voucher : []}},afterUpdate);
 
-  User.find({preOpenID : openID},'openID',afterFind);
-
-  function afterFind(err,users){
-    if(err) return cb(config.errCode_find);
-    if(users){
-      var openIDList = [];
-      for(var i = 0,l = users.length;i < l; i++){
-        openIDList.push(users[i].openID);
-      }
-
-      User.update({openID : {$in : openIDList}},{$set : { preOpenID : null}},afterUpdate);
+  async.auto({
+    updateOpenID : function(callback){
+      User.update({openID : openID},{$set : {preOpenID : 'no',hasFollow : false,cash : 0,voucher : []}},callback);
+    },
+    updatePreOpenID : function(callback){
+      User.update({preOpenID : openID},{$set : { preOpenID : 'no'}},{ multi: true },callback);
     }
-  }
+  },function(err, results){
+    if(err)
+      return cb(err);
+    cb(null);
+  });
 
-   function afterUpdate(err,user){
-    if(err){
-          cb(config.errCode_update);
-        }else{
-          cb(err);
-        }
-  }
 }
 
 

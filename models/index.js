@@ -27,7 +27,7 @@ exports.Wine = mongoose.model('Wine');
 exports.Collect = mongoose.model('Collect');
 exports.Order = mongoose.model('Order');
 exports.Withdrawal = mongoose.model('Withdrawal');
-exports.AccessToken = mongoose.model('AccessToken');
+exports.AccessToken = mongoose.model(config.accessToken);
 exports.DispatchCenter = mongoose.model('DispatchCenter');
 exports.ShipStaff = mongoose.model('ShipStaff');
 

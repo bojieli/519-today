@@ -14,6 +14,11 @@ exports.getAddressByOpenID = function (req, res, next) {
 
   User.getAddressByOpenID(req.session.openID,function(err, user){
   	if(err) return next(err);
+    if(!user){
+      var _err = new Error();
+      _err.describe = 'getAddressByOpenID !user';
+      return next(_err); 
+    }
   	res.send(user.address);
   })
 };
