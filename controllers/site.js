@@ -13,6 +13,8 @@
 exports.visitHome = function(req,res,next){
 	var recommendList = [];
 	var recordList = [];
+	var baijiu = [];
+	var hongjiu = [];
 	var r = 'home';		
 	if(req.query && req.query.r){
 		r = req.query.r;		
@@ -30,7 +32,9 @@ exports.visitHome = function(req,res,next){
 		res.render('index',{
 			title : "安徽1919",
 			r:r,
-			recommendList:recommendList
+			recommendList : recommendList,
+			baijiu : baijiu,
+			hongjiu : hongjiu
 		});
 	})
 };

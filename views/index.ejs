@@ -4,9 +4,9 @@
     <div class="ui-tab page1  <%= r=='home' ? 'js-active':'' %>">
         <ul class="ui-groupbutton" role="tablist">
             <li class="ui-button js-active" data-toggle="tab" data-target="#page1-tab1" aria-controls="tab1" role="tab">推荐</li>
-            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab2" role="tab">全部</li>
-<!--             <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab3" role="tab">红酒</li>
-            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab4" role="tab">啤酒</li> -->
+            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab2" role="tab">白酒</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab3" role="tab">红酒</li>
+<!--             <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab4" role="tab">啤酒</li> -->
         </ul>
     </div>
     <div class="ui-tab page2 <%= r=='shopcart' ? 'js-active':'' %>">
@@ -80,12 +80,12 @@
             <div class="page1-tab1-bot">
                 <p class="tab-info">全部白酒</p>
                 <ul class="item-wrapper">
-                    <% for(var i=0;i<recommendList.length;i++){ %>
-                    <a class="item" href="/details?code=<%= recommendList[i].Code %>" data-code= <%= recommendList[i].Code %> >
+                    <% for(var i=0;i<baijiu.length;i++){ %>
+                    <a class="item" href="/details?code=<%= baijiu[i].Code %>" data-code= <%= baijiu[i].Code %> >
                         <div class="item-inner">
-                            <img src= <%= recommendList[i].LittlePic %> alt="">
-                            <span class="market-sale">市场价：<%= recommendList[i].MarketPrice %>元</span>
-                            <span class="wx-sale">微信价：<%= recommendList[i].WechatPrice %>元</span>
+                            <img src= <%= baijiu[i].LittlePic %> alt="">
+                            <span class="market-sale">市场价：<%= baijiu[i].MarketPrice %>元</span>
+                            <span class="wx-sale">微信价：<%= baijiu[i].WechatPrice %>元</span>
                         </div>
                     </a>
                     <% } %>
@@ -95,6 +95,20 @@
 
         <div class="ui-tab" id="page1-tab2" role="tabpanel">
            <!-- 红酒 -->
+            <div class="page1-tab1-bot">
+                <p class="tab-info">全部白酒</p>
+                <ul class="item-wrapper">
+                    <% for(var i=0;i<hongjiu.length;i++){ %>
+                    <a class="item" href="/details?code=<%= hongjiu[i].Code %>" data-code= <%= hongjiu[i].Code %> >
+                        <div class="item-inner">
+                            <img src= <%= hongjiu[i].LittlePic %> alt="">
+                            <span class="market-sale">市场价：<%= hongjiu[i].MarketPrice %>元</span>
+                            <span class="wx-sale">微信价：<%= hongjiu[i].WechatPrice %>元</span>
+                        </div>
+                    </a>
+                    <% } %>
+                </ul>
+            </div>           
         </div>
 
         <div class="ui-tab" id="page1-tab2" role="tabpanel">

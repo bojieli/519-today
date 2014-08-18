@@ -212,7 +212,7 @@ require([
     			$.uploadErrorLog('fail to request /getTicket');
     			return cb("fail");
     		}
-    		cb(null,data);
+    		cb(null,data); 
     	});
     }
     function updateTicket(cart){
