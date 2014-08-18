@@ -47,7 +47,7 @@ require([
     //=======================my dialog=====================
     function myDialogAlert($this,content){
         var self = $this[0] ;
-        var $(".dialoginuse").remove();
+        $(".dialoginuse").remove();
         var $target = $(".dialogTemplate").clone();
         $target.removeClass("dialogTemplate");
         $target.addClass("dialoginuse");
