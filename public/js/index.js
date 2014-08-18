@@ -125,13 +125,7 @@ require([
             }
             $.uploadErrorLog(data);
             var products = data.list;
-            if(arr.length==products.length){
-                cb(null,data);
-            }else{
-            	var err = "商品数量出错";
-            	cb(err);
-            	$.uploadErrorLog(err);
-            }
+            cb(null,data);
         });        
     } ;
 
