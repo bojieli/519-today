@@ -45,28 +45,42 @@ require([
         $(this).tab('show');
     });
     //=======================my dialog=====================
-    function myDialogAlert($this,content){
-        var self = $this[0] ;
-        $(".dialoginuse").remove();
-        var $target = $(".dialogTemplate").clone();
-        $target.removeClass("dialogTemplate");
-        $target.addClass("dialoginuse");
-        $target.find(".myAlertLable").text(content.title);
-        $target.find(".ui-alert-body p").text(content.body);
-        var option  = $.extend({}, $target.data(), $this.data());
-        var buttons = content.buttons;
-        buttons.forEach(function(b){
-            var button = '<a data-dismiss="dialog" role="button" class="ui-alert-button">'+b.name+'</a>';
-            var $button = $(button);
-            if(b.callback){
-                $button.on('tap',b.callback);
-            }
-            $target.find(".ui-alert-footer").append($button);
-        });
+    function myDialogAlert($this,target){
+        var self = $this[0];
+        $this.data("target",target);
+        var $target = $(target);
+        var option  = $target.data('dialog') ? 'toggle' : $.extend({}, $target.data(), $this.data());
 
         if ($this.is('a')) e.preventDefault();
-        alert(JSON.stringify(option));
+
         $target.dialog(option, self);        
+        // var self = $this[0] ;
+        // $(".dialoginuse").remove();
+        // var $target = $(".dialogTemplate").clone();
+        // $target.removeClass("dialogTemplate");
+        // $target.addClass("dialoginuse");
+        // $(".dialogTemplate").after($target[0]);
+        // $target = $(".dialoginuse");
+        // alert($target.length);
+        // $target.find(".ui-alert-title").text(content.title);
+        // $target.find(".ui-alert-body p").text(content.body);
+        // $this.data("target",".dialoginuse");
+        // var option  = $.extend({}, $target.data(), $this.data());
+        // var buttons = content.buttons;
+        // buttons.forEach(function(b){
+        //     var button = '<a data-dismiss="dialog" role="button" class="ui-alert-button">'+b.name+'</a>';
+        //     var $button = $(button);
+        //     if(b.callback){
+        //         $button.on('tap',b.callback);
+        //     }
+        //     $target.find(".ui-alert-footer").append(button);
+        // });
+
+        // if ($this.is('a')) e.preventDefault();
+        
+        // option.target = ".dialoginuse";
+        // alert(JSON.stringify(option));
+        // $target.dialog(option, self);        
     }
 
 	//=======================css fix=======================
@@ -378,29 +392,35 @@ require([
         });        
     });
     $("#complete_cash_pay").on('tap',function(){
+
+        var addresses = localStorage.address ? JSON.parse(localStorage.address) : [];
+        if(!addresses || addresses.length==0){
+            return myDialogAlert($(this),"#emptyAddressAlert");
+        }
+        myDialogAlert($(this),"#finalConfirmAlert");
         $(this).attr('disabled','disabled');
-        myDialogAlert($(this),{
-            title : "确认下单",
-            body : "确认下单吗 下单后如有问题请与客服联系",
-            buttons : [
-            {
-                name : "确认",
-                callback : function(){
-                    alert("确认");
-                }
-            },
-            {
-                name : "取消",
-                callback : function(){
-                    $("#complete_cash_pay").removeAttr('disabled','disabled');
-                }
-            }
-            ]
-        });
+        // myDialogAlert($(this),{
+        //     title : "确认下单",
+        //     body : "确认下单吗 下单后如有问题请与客服联系",
+        //     buttons : [
+        //     {
+        //         name : "确认",
+        //         callback : function(){
+        //             alert("确认");
+        //         }
+        //     },
+        //     {
+        //         name : "取消",
+        //         callback : function(){
+        //             $("#complete_cash_pay").removeAttr('disabled','disabled');
+        //         }
+        //     }
+        //     ]
+        // });
     });
-    // $("#finalConfirmButtonCancel").on('tap',function(){
-    //     $("#complete_cash_pay").removeAttr('disabled','disabled');
-    // });
+    $("#finalConfirmButtonCancel").on('tap',function(){
+        $("#complete_cash_pay").removeAttr('disabled','disabled');
+    });
     function clearCart(){
         localStorage.cart = '{}';
         $(".order-load-info p").text("购物车中没有商品");
