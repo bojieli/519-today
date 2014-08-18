@@ -42,11 +42,10 @@ exports.addByRecommend = function(openID,preOpenID,cb){
 
   function afterFind(err,user){
     if(err) return cb(err);
-    // if(user && preOpenID){
-    //   User.update({openID : openID},{$set : { preOpenID : preOpenID}},afterUpdate);
-    //   return;
-    // }
-    if(!user){
+    if(user){
+      User.update({openID : openID},{$set : { hasFollow : true}},cb);
+      return;
+    }else{
       var sceneID = getSceneID();
       var newUser = {
         openID : openID,
@@ -63,15 +62,6 @@ exports.addByRecommend = function(openID,preOpenID,cb){
       User.create(newUser,afterCreate);
     }
 
-  }
-
-
-  function afterUpdate(err,user){
-    if(err){
-          cb(config.errCode_update);
-        }else{
-          cb(err);
-        }
   }
 
   function afterCreate(err,user){
