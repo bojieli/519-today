@@ -41,7 +41,7 @@ var createMenuData = {
 		{
 			"name":"关于我们",
 			"type":"view",
-			"url":"http://519.today/about1919"
+			"url":config.host+"/about1919"
 		},
 		{
 			"type":"view", 
