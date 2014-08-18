@@ -161,10 +161,13 @@ exports.getUserOrder = function (openID, cb){
     function GenerateOrderInfos(err, Wines){
       if(err)
         cb(err);
+      console.log(JSON.stringify(Wines));
       for (var i = 0; i < returnOrders.length; i++) {
 
         for (var j = 0; j < returnOrders[i].wines.length; j++) {
           var index = findWinebyid(returnOrders[i].wines[j].id);
+          console.log('id:' + returnOrders[i].wines[j].id);
+          console.log('index:' + index);
           returnOrders[i].wines[j].describe = Wines[index].describe;
           returnOrders[i].wines[j].wechatPrice = Wines[index].wechatPrice;
           returnOrders[i].wines[j].littlePic = config.small_dir + Wines[index].littlePic;

@@ -26,23 +26,23 @@ var UserSchema = new Schema({
   },
   hasFollow : Boolean,
   cash : Number,
-  voucher : [{
+  voucher : {type : [{
     value : Number,
     number : Number
-  }],
+  }], default : []},
   currentAddress : {
     province : String,
     city : String,
     district : String
   },
-  address : [{
+  address : {type : [{
     province : String,
     city : String,
     area : String,
     detail : String,
     name : String,  //收件人
     tel : String
-  }]
+  }], default : []}
 }, { autoIndex: false });
 
 mongoose.model('User',UserSchema);

@@ -5,6 +5,7 @@ var ShipStaff = require('../proxy').ShipStaff;
 var wechatAPI = require('../common/api');
 
 exports.load = function (req, res, next){
+  console.log('order_action');
   ShipStaff.findByOpenID(req.session.openID,function(err,shipstaff){
     if(err){
       return next(err);
