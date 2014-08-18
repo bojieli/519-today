@@ -49,6 +49,7 @@ require([
         var self = $this[0] ;
         var $(".dialoginuse").remove();
         var $target = $(".dialogTemplate").clone();
+        $target.removeClass("dialogTemplate");
         $target.addClass("dialoginuse");
         $target.find(".myAlertLable").text(content.title);
         $target.find(".ui-alert-body p").text(content.body);
@@ -64,7 +65,7 @@ require([
         });
 
         if ($this.is('a')) e.preventDefault();
-
+        alert(JSON.stringify(option));
         $target.dialog(option, self);        
     }
 
