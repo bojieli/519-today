@@ -18,7 +18,7 @@ require('./order');
 require('./withdrawal');
 require('./access_token');
 require('./dispatch_center');
-require('/ship_staff')
+require('./ship_staff')
 
 
 

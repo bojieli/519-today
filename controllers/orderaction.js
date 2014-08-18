@@ -34,7 +34,6 @@ exports.load = function (req, res, next){
     }
   });
 }
-}
 
 //当快递点击确认发货和收货的动作，注意确认收货时需要给上线返现
 exports.operate = function(req,res,next){
@@ -96,4 +95,5 @@ exports.operate = function(req,res,next){
 
       });
     }
+  });
 }
