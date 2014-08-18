@@ -27,7 +27,7 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
   User.findOne({openID : openID},afterFind);
 
   function afterFind(err,user){
-    if(err) 
+    if(err)
       return cb(err);
     if(user){
       if(preOpenID && basicInfo){
@@ -55,7 +55,7 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
         cash : 0,
         voucher :[],
         currentAddress :{},
-        //address : []
+        address : []
       }
 
       User.create(newUser,afterCreate);
@@ -63,7 +63,7 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
   }
 
   function afterUpdate(err){
-    if(err) 
+    if(err)
       return cb(err);
   }
 
@@ -103,11 +103,7 @@ exports.getAddressByOpenID = function(openID,cb){
   User.findOne({openID : openID}, 'address', cb);
 }
 
-/**提交购物订单以后更新现金券和代金券的数量
-* Callback:
-* -errorCode : defined in config.js
-* @param{Order} order :订单信息
-*/
+
 exports.updatePreCash = function (order, cb){
   User.findOne({openID : order.openID}, userFind1);
 
@@ -156,6 +152,11 @@ exports.updatePreCash = function (order, cb){
 
 }
 
+/**提交购物订单以后更新现金券和代金券的数量
+* Callback:
+* -errorCode : defined in config.js
+* @param{Order} order :订单信息
+*/
 exports.updateCashVoucher = function(order,cb){
   if(order.cashUse <= 0 && order.voucherUse <= 0)  return cb(null);
 
@@ -171,12 +172,12 @@ exports.updateCashVoucher = function(order,cb){
 
         if(order.cashUse > 0){
           if(order.cashUse > user.cash){
-            var err =new Error();
+            var err = new Error();
             err.describe = 'updateCashVoucher(),order.cashUse > user.cash'
             return cb(err);
           }else{
             User.update({openID : order.openID},
-                        {$inc : {cash : -order.cashUse}},
+                        {$inc : {cash : - order.cashUse}},
                         afterUpdate);
           }
 
@@ -198,7 +199,11 @@ exports.updateCashVoucher = function(order,cb){
             }
           }
 
-          if(!hasVoucher) return cb(config.errCode_voucher);
+          if(!hasVoucher){
+            var err = new Error();
+            err.describe = 'updateCashVoucher(),cannot find user.voucher equal order.voucher';
+            return cb(err);
+          }
           //代金券已经用完，从数组中删除
           if(deleteIndex !== -1){
             userVoucher.splice(deleteIndex,1);
@@ -315,6 +320,9 @@ exports.updatePreOpenIDbyShareID = function(openID, shareID, cb){
       User.findOne({'sceneID' : shareID}, 'openID', callback);
     }
     ],function(err, user){
+      if(err){
+        cb(err);
+      }
       if(!user)
         return cb(null);
       if(!user.openID)

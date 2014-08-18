@@ -109,14 +109,14 @@ exports.setReceiveDate = function(orderID, cb){
   Order.update({'orderID' : orderID},{$set:{'receiveDate' : new Date()}}, cb);
 }
 
-/* -orderInfos : [{
-                orderID :
-                status : 0表示未确认，1表示已确认
-                wines:[{describe : String,
-                wechatPrice : Number,
-                littlePic : String,
-                num:Number}]
-                }]
+exports.setShipStaff = function(orderID, shipStaff, cb){
+  Order.update({'orderID' : orderID},{$set:{'shipStaff' : shipStaff}}, cb);
+}
+exports.setCustomerService = function(orderID, customerService, cb){
+  Order.update({'orderID' : orderID},{$set:{'customerService' : customerService}}, cb);
+}
+
+/* 获取用户的购物历史，返回最多5条已收货订单和所有的未收货订单
                 */
 exports.getUserOrder = function (openID, cb){
   var returnOrders = [];
@@ -151,10 +151,10 @@ exports.getUserOrder = function (openID, cb){
                 num : orders[i].shopOnce[j].number
               };
               returnOrder.wines.push(wine);
-            };
+            }
             returnOrders.push(returnOrder);
           }
-        };
+        }
         Wine.findByIDs (Wineids, callback);
       }
     ],
@@ -170,31 +170,18 @@ exports.getUserOrder = function (openID, cb){
           returnOrders[i].wines[j].littlePic = config.small_dir + Wines[index].littlePic;
 
           delete returnOrders[i].wines[j].id;
-        };
-      };
+        }
+      }
       returnOrders.reverse();
       cb(null, returnOrders);
       function findWinebyid(id){
         for (var i = 0; i < Wines.length; i++){
           if(Wines[i].id == id)
             return i;
-        };
+        }
       }
     }
   );
-}
-
-function leftPadString(value,length){
-  var valueString = value.toString();
-  if(valueString.length >= length){
-    return valueString.substr(0,length);
-  }else{
-    var pad = "";
-    for(var i = 0;i < length - valueString.length; i++){
-      pad = pad + "0";
-    }
-    return pad + valueString;
-  }
 }
 
 

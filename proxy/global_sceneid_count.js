@@ -19,15 +19,15 @@ global.leftPadString = function (value,length){
 global.formatDate = function(date){
   // return date.toString();
   return date.getFullYear() + '-' + leftPadString(date.getMonth() + 1,2) + '-'
-  + leftPadString(date.getDay(),2) + '  ' + leftPadString(date.getHours(),2) + ':' 
+  + leftPadString(date.getDay(),2) + '  ' + leftPadString(date.getHours(),2) + ':'
   + leftPadString(date.getMinutes(), 2);
 }
 
 module.exports = function () {
   User.find({sceneID : {$gt : config.SCENEID_BASE,$lte : config.SCENEID_MAX}},function(err,users){
       if(err){
-	throw err;
         console.error("Get global sceneID error!");
+	      throw err;
       }else{
       	if(users){
         	global.sceneID_web_count = users.length;
