@@ -332,6 +332,14 @@ exports.updatePreOpenIDbyShareID = function(openID, shareID, cb){
 }
 
 exports.setPreOpenIDtoNo = function(openID, cb){
-  User.update({'openID' : openID}, {$set : {'preOpenID' : 'no'}}, cb);
+  User.findOne({'openID' : openID}, 'preOpenID', function(err, user){
+    if(err)
+      return cb(err);
+    if(!user.preOpenID)
+      User.update({'openID' : openID}, {$set : {'preOpenID' : 'no'}}, cb);
+    else
+      cb(null);
+  })
+  
 }
 

@@ -87,6 +87,7 @@ module.exports = function (app) {
 	app.get("/logout",function(req,res){
 		req.session.hasVisited = null;
 		req.session.shareID = null;
+		req.session.qrCode = null;
 		if(req.session.openID){
 			req.session.openID = null;
 			res.send("logout success!");

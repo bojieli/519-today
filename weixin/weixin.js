@@ -140,6 +140,7 @@ module.exports = function (app) {
       sceneIDurl = "<button onclick ="+ '"' +sceneIDurl+  '"' +"><b>分享到朋友圈</b></button>";
       if(req.session.qrCode && req.session.qrCode.expireTime > new Date().getTime()){
         var url = req.session.qrCode.url;
+        console.log(url);
         return res.render('promote',{qrCodeurl : url, sceneID : sceneID});
       }
       createTmpQRCode();
@@ -150,12 +151,16 @@ module.exports = function (app) {
             throw err;
             return createTmpQRCode();
           }
-          var url = api.showQRCodeURL(result.ticket);
-          req.session.qrCode = {
-            url : url,
-            expireTime : new Date().getTime()+1800*1000
-          };
-          res.render('promote',{qrCodeurl : url, sceneID : sceneID});
+          if(result.ticket){
+            var url = api.showQRCodeURL(result.ticket);
+            req.session.qrCode = {
+              url : url,
+              expireTime : new Date().getTime()+1500*1000
+            };
+            res.render('promote',{qrCodeurl : url, sceneID : sceneID});
+          }else{
+            res.render('promote',{qrCodeurl : null, sceneID : sceneID});
+          }
         });
       }
     
