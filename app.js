@@ -26,6 +26,8 @@ var errlog = bunyan.createLogger({
 //更新globalSceneID
 require('./proxy/global_sceneid_count')();
 require('./weixin/proxy').updateGlobalSceneID();
+Error.stackTraceLimit = Infinity;
+
 
 
 // var errorLogfile = fs.createWriteStream('../log/error.log',{flags : 'a'});
@@ -102,7 +104,8 @@ if (app.get('env') === 'development') {
      //  //err.date
      //  err.Time = new Date().toUTCString();
      //  errorLogfile.write(JSON.stringify(err));
-     //  console.log(err);
+     console.log(err);
+     console.log(err.stack);
      errlog.error(err);
     });
 }
