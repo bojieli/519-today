@@ -14,11 +14,11 @@ var createMenuData = {
 	{	
 		"type":"view",
 		"name":"买酒",
-		"url":config.host
+		"url": config.host,
 	},{
 		"type":"view", 
 		"name":"推广",
-		"url":config.host+"/promote"
+		"url": config.host + '/promote'
 	},{
 		"type":"click" ,
 		"name":"更多",
@@ -46,7 +46,7 @@ var createMenuData = {
 		{
 			"type":"view", 
 			"name":"登出",
-			"url":config.host+"/logout"
+			"url":config.host + "/logout"
 		}
 		]
 	}]

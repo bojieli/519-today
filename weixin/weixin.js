@@ -133,10 +133,9 @@ module.exports = function (app) {
   //res.reply(message.MsgType);
 })));
 
-  app.get('/recommend',function (req, res){
-    console.log("recommend!");
+  app.get('/recommend',function (req, res, next){
     User.getSceneIDbyOpenID(req.session.openID, function(err,sceneID){
-      if(err) return;
+      if(err) return next(err);
       var  sceneIDurl = "window.location.href = '/share/?sceneID=" + sceneID + "'";
       sceneIDurl = "<button onclick ="+ '"' +sceneIDurl+  '"' +"><b>分享到朋友圈</b></button>";
       // if(req.session.qrCode && req.session.qrCode.expireTime > new Date().getTime()){
@@ -148,11 +147,10 @@ module.exports = function (app) {
         api.createTmpQRCode(sceneID,1800,function(err,result){
           if(err){
             console.log(err);
-            throw "wechat api createTmpQRCode error" + err;
+            throw err;
             return createTmpQRCode();
           }
           var url = api.showQRCodeURL(result.ticket);
-          console.log(url);
           req.session.qrCode = {
             url : url,
             expireTime : new Date().getTime()+1800*1000

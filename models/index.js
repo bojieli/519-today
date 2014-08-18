@@ -16,9 +16,18 @@ require('./wine');
 require('./collect');
 require('./order');
 require('./withdrawal');
+require('./access_token');
+require('./dispatch_center');
+require('./ship_staff')
+
+
 
 exports.User = mongoose.model('User');
 exports.Wine = mongoose.model('Wine');
 exports.Collect = mongoose.model('Collect');
 exports.Order = mongoose.model('Order');
 exports.Withdrawal = mongoose.model('Withdrawal');
+exports.AccessToken = mongoose.model('AccessToken');
+exports.DispatchCenter = mongoose.model('DispatchCenter');
+exports.ShipStaff = mongoose.model('ShipStaff');
+

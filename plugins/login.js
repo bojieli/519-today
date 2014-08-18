@@ -5,16 +5,6 @@ var api = require('../common/api');
 
 module.exports = function(req,res){
 
-	//console.log('164dsg64ar5e6tg'+req.originalUrl);
-	//将path和query事先存储起来
-	var reqpath111 = req.path;
-	console.log('req_path:\t' + reqpath111);
-	//query里面可能会有一个openID参数，这个参数作为上线
-	//将来需要其他参数，也可以在req里面传过来
-	req.session.param = {
-		preOpenID:req.query.openID
-	};
-
 	//跳转到微信授权页面，授权完成之后会跳转到/Login界面
 	var wechart_redirect_url = 'https://open.weixin.qq.com/connect/oauth2/authorize?'+
 						'appid='+ config.appid +
@@ -27,7 +17,8 @@ module.exports = function(req,res){
 
 }
 
-module.exports.Oath2 = function (req,res){
+module.exports.Oath2 = function (req, res, next){
+
 
   		var data = req.query;
   		var from_path = data.path;
@@ -60,10 +51,11 @@ module.exports.Oath2 = function (req,res){
 							headimgurl : userinfo.headimgurl,
 							privilege : userinfo.privilege
 			  		}
-			  		if(req.session.param.preOpenID)
-			  			User.afterVertify(userinfo.openid,req.session.param.preOpenID,basicInfo,function(err){});
-			  		else
-			  			User.afterVertify(userinfo.openid,null,basicInfo,function(err){});
+
+			  		User.afterVertify(userinfo.openid,null,basicInfo,function(err){
+			  			if(err)
+			  				return next(err);
+			  		});
 
 			  		res.redirect(from_path);
 				});

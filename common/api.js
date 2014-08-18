@@ -1,30 +1,32 @@
 var API = require('wechat').API;
-var db = require('./db');
 var config = require('../config');
-var appkey = config.appid;
-var secret = config.secret;
+var AccessToken = require('../proxy').AccessToken;
 
 
-var fs = require('fs');
-var dir = process.cwd();
-var api = new API(appkey, secret//);
+var api = new API(config.appid, config.secret//);
 	, function (callback) {
   // 传入一个获取全局token的方法
 
-	db.getConfig(function(err,doc){
+	AccessToken.getAccessToken(function(err,doc){
 		if(err){
-			return callback(err);
+			throw err;
+			return callback(null,{});
 		}
 		if(!doc){
 			return callback(null,{});
 		}
-		callback(null,JSON.parse(doc.access_token));
+		callback(null, JSON.parse(doc.accessToken));
 	});
 }, function (token, callback) {
   // 请将token存储到全局，跨进程、跨机器级别的全局，比如写到数据库、redis等
   // 这样才能在cluster模式及多机情况下使用，以下为写入到文件的示例
-  db.setConfig({access_token:JSON.stringify(token)},callback);
-
+  AccessToken.setAccessToken(JSON.stringify(token),function(err){
+  	if(err){
+  		throw err;
+  		return;
+  	}
+  	callback();
+  });
 });
 function handleErr(err, _action){
 	if(err.code === -1){
@@ -57,12 +59,14 @@ module.exports.sendText = function (openID, text, callback){
 
 module.exports.createTmpQRCode = function(sceneId, expire, callback){
 	function _action(){
-		api.createTmpQRCode(sceneId, expire, function(err){
+		api.createTmpQRCode(sceneId, expire, function(err, result){
 			if(err)
 				handleErr(err, _action);
-			callback(null);
+			callback(null, result);
 		})
 	}
+	_action();
+
 }
 
 module.exports.sendNews = function(openID, articles, callback){
@@ -73,6 +77,7 @@ module.exports.sendNews = function(openID, articles, callback){
 			callback(null);
 		})
 	}
+	_action();
 }
 
 
@@ -80,6 +85,10 @@ module.exports.sendNews = function(openID, articles, callback){
 module.exports.refresh = function (callback){
 	api.getAccessToken(callback);
 }
+
+module.exports.showQRCodeURL = function(ticket){
+	return api.showQRCodeURL(ticket);
+};
 
 // module.exports.sendNews
 

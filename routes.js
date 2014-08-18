@@ -40,21 +40,19 @@ module.exports = function (app) {
 //如果没有登录就直接登录
 	app.all('*', function (req, res,next){
 		if(req.session.openID){
-			//如果没有访问过我们的网站，如果有shareID,
-			if(!req.session.hasVisited){
-				req.session.hasVisited = true;
-				if(req.session.shareID){
+			if(!req.session.hasVisited){			//如果没有访问过我们的网站
+				req.session.hasVisited = true;		
+				if(req.session.shareID){			//如果session里面有shareID,就用shareID更新preOpenID
 					User.updatePreOpenIDbyShareID(req.session.openID, req.session.shareID, function(err){
 						if(err)
 							return next(err);
 					})
-				}else{
+				}else{								//如果没有，就把PreOpenID设置成No
 					User.setPreOpenIDtoNo(req.session.openID, function(err){
 						if(err)
 							return next(err);
 					})
 				}
-				//更改数据库里面的preOpenID,并且next
 			}
 			next();
 		}else if(req.path === '/login'){

@@ -3,3 +3,4 @@ exports.Wine = require('./wine');
 exports.Collect = require('./collect');
 exports.Order = require('./order');
 exports.Withdrawal = require('./withdrawal');
+exports.AccessToken = require('./access_token');
