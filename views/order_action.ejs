@@ -29,7 +29,8 @@
             font-size: 22px;
         }
         .content button {
-            margin-top: 10px;
+            margi
+            n-top: 10px;
             display: inline-block;
             padding: 6px 12px;
             margin-bottom: 5px;
@@ -90,8 +91,8 @@
                 <option>60分钟</option>
             </select>
             <center>
-                <button id="start">开始配送</button>
-                <button id="complete">配送完成</button>
+                <button id="start" <% if(order.status != 3){%> disabled = "disabled"<%}%>><%=order.status == 3 ? "开始配送" : "配送中" %></button>
+                <button id="complete" <% if(order.status != 4){%> disabled = "disabled"<%}%>><%=order.status == 4 ? "完成配送" : "已完成"%></button>
             </center>
 
         </p>
@@ -110,7 +111,7 @@
                     $this.removeAttr("disabled","disabled");
                     return alert("通信失败,请重新尝试！");
                 }
-                $this.text("已开始");
+                $this.text("配送中");
             });
         });
         $("#complete").on('click',function(){
@@ -124,7 +125,7 @@
                     $this.removeAttr("disabled","disabled");
                     return alert("通信失败,请重新尝试！");
                 }
-                $this.text("已配送");
+                $this.text("已完成");
             });
         });
     </SCRIPT>
