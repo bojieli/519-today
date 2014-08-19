@@ -118,7 +118,7 @@ require([
     //=======================获取商品详情====================
     $.getProductDetail = function(arr,cb){
         // 远程获取购物车中的商品信息
-        $.get("/getProduct",{r:arr},function(data,status){
+        $.post("/getProduct",{r:arr},function(data,status){
             if(status != "success"){
                 // 请求失败  
                 return;
@@ -207,7 +207,7 @@ require([
     });
     //======================获取券===========================
     function getTicket(cb){
-    	$.get("/cash_voucher",function(data,status){
+    	$.post("/cash_voucher",function(data,status){
     		if(status!='success'){
     			$.uploadErrorLog('fail to request /getTicket');
     			return cb("fail");
@@ -239,6 +239,7 @@ require([
 	    	}
 	    });    	
     }
+
     //====================加载地址=====================
     function getAddr(cb){
         $.post("/address",function(data,status){
@@ -322,7 +323,7 @@ require([
     $("#addressActionsheet ul li").on('tap',function(){
         var handle = {
             'setDefault' : function($this){
-                $.get("/default_address",{index : $this.data('index')},function(data,status){
+                $.post("/set_default_address",{index : $this.data('index')},function(data,status){
                     if(status !== 'success'){
                         $.uploadErrorLog({r:"fail to set default address"},"delete_address");
                         return alert("网络故障，稍后重试");
@@ -380,6 +381,8 @@ require([
             // 更新购物车
             // 更新我的订单
             updateMyOrder();
+            // 更新我的现金券
+            updateMyCash();
             // 跳转页面
             $('.ui-bottom-bar-button[data-target=".page3"]').trigger('tap');
             $('.ui-button[data-target="#page3-tab1"]').trigger('tap');
@@ -424,15 +427,17 @@ require([
         $("#order-confirm-container").hide();       
     }
     //=======================显示券=========================
-    $.get('/cash_voucher',function(data,status){
-        if(status !== 'success'){
-            $.uploadErrorLog({r:"fail to get cash"},"cash_voucher");
-            return alert("网络故障，稍后重试");
-        } 
-        var cash = data.cash;
-        $("#my_cash_num").text(cash);
-        $("#my_cash_num").data('to',cash);        
-    });
+    function updateMyCash(){
+        $.post('/cash_voucher',function(data,status){
+            if(status !== 'success'){
+                $.uploadErrorLog({r:"fail to get cash"},"cash_voucher");
+                return alert("网络故障，稍后重试");
+            } 
+            var cash = data.cash;
+            $("#my_cash_num").text(cash);
+            $("#my_cash_num").data('to',cash);        
+        });
+    }
 
     //=======================我的订单=======================
     function ininMyOrderUI(arr){
