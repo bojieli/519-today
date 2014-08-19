@@ -30,6 +30,7 @@
 }
 .item-inner .name{
 	display: block;
+	height: 14px;
 	overflow: hidden;
 	font-size: 12px;
 	text-align: center;
