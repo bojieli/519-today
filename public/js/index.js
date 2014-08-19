@@ -438,7 +438,7 @@ require([
             $("#my_cash_num").data('to',cash);        
         });
     }
-
+    updateMyCash();
     //=======================我的订单=======================
     function ininMyOrderUI(arr){
         $(".my-order-item").remove();
