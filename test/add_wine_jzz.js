@@ -4,8 +4,8 @@ function action1(){
   Wine.find(function(err, wines){
     for (var i = 0; i < wines.length; i++) {
       var details = 
-      '度数：' + wines[i].details.degree + '<br>' +
-      '容量：' + wines[i].details.volume + '<br>' + 
+      '度数：' + wines[i].details.degree + '°<br>' +
+      '容量：' + wines[i].details.volume + 'ml<br>' + 
       '产地：' + wines[i].details.place + '<br>';
       Wine.update({'_id' : wines[i]._id},{$set : {detail : details}},{upsert : true}, function(err){
         return;
