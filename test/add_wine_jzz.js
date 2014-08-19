@@ -1,4 +1,21 @@
 var Wine = require('../models').Wine;
+
+function action1(){
+  Wine.find(function(err, wines){
+    for (var i = 0; i < wines.length; i++) {
+      var details = 
+      '度数：' + wines[i].details.degree + '<br>' +
+      '容量：' + wines[i].details.volume + '<br>' + 
+      '产地：' + wines[i].details.place + '<br>';
+      Wine.update({'_id' : wines[i]._id},{$set : {detail : details}},{upsert : true}, function(err){
+        return;
+      })
+    };
+  })
+}
+  setTimeout(action1, 500);
+
+
 function addWine(id, name, marketPrice, wechatPrice, degree, volume){
   var wine = new Wine({
     id : "jzz_0" + id,
@@ -8,8 +25,8 @@ function addWine(id, name, marketPrice, wechatPrice, degree, volume){
     wechatPrice : wechatPrice,
     littlePic : "jzz_0" + id +"-2.jpg",
     details : {
-      degree : 43,
-      volume : 460,
+      degree : degree,
+      volume : volume,
       place : '阜阳'
     },
     bigPic : ["jzz_0" + id +"-1.jpg","jzz_0" + id +"-2.jpg"],
@@ -22,7 +39,7 @@ function addWine(id, name, marketPrice, wechatPrice, degree, volume){
   })
   wine.save();
 }
-setTimeout(action, 500);
+// setTimeout(action, 500);
 function action(){
   addWine(26, '老窖池龙窖', 268, 268, 53, 460);
   addWine(20, '金种子一坛好酒', 1680, 65, 1500);

@@ -14,11 +14,12 @@ var Schema = mongoose.Schema;
   marketPrice : Number,
   wechatPrice : Number,
   littlePic : String,
-  details : {
-  	degree : Number,
-  	volume : Number,
-  	place : String
-  },
+  details :  {
+      degree : String,
+      volume : String,
+      place : String
+    },
+  detail : String,
   bigPic : [String],
   tag : {
   	winetype : String,

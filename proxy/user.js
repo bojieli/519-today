@@ -103,7 +103,9 @@ exports.getAddressByOpenID = function(openID,cb){
   User.findOne({openID : openID}, 'address', cb);
 }
 
-
+function toDecimal(x){
+  return ((x*100)>>0)/100;
+}
 exports.updatePreCash = function (order, cb){
   User.findOne({openID : order.openID}, userFind1);
 
@@ -114,7 +116,7 @@ exports.updatePreCash = function (order, cb){
 
     if(user.preOpenID){
       User.update({openID : user.preOpenID},
-                  {$inc : {cash : order.totalPrice * config.ratio_1}},
+                  {$inc : {cash : toDecimal(order.totalPrice * config.ratio_1)}},
                   afterUpdate);
       User.findOne({openID : user.preOpenID}, userFind2);
     }
@@ -126,7 +128,7 @@ exports.updatePreCash = function (order, cb){
     }
     if(user.preOpenID){
       User.update({openID : user.preOpenID},
-                  {$inc : {cash : order.totalPrice * config.ratio_2}},
+                  {$inc : {cash : toDecimal(order.totalPrice * config.ratio_2)}},
                   afterUpdate);
       User.findOne({openID : user.preOpenID}, userFind3);
     }
@@ -137,7 +139,7 @@ exports.updatePreCash = function (order, cb){
     }
     if(user.preOpenID){
       User.update({openID : user.preOpenID},
-                  {$inc : {cash : order.totalPrice * config.ratio_3}},
+                  {$inc : {cash : toDecimal(order.totalPrice * config.ratio_3)}},
                   afterUpdate);
     }
   }
