@@ -21,7 +21,7 @@ var Schema = mongoose.Schema;
   },
   bigPic : [String],
   tag : {
-  	type : String,
+  	winetype : String,
   	isRecommend : Boolean
   },
   visitNum : Number,

@@ -21,7 +21,7 @@ exports.visitHome = function(req,res,next){
 	}
 	Wine.findAllWines(function (err,allwines){
 		if(err) return next(err);
-
+		console.log(JSON.stringify(allwines));
 		for(var i=0;i<allwines.length;i++){
 			var wine = {
 				LittlePic : config.small_dir + allwines[i].littlePic,
@@ -33,12 +33,16 @@ exports.visitHome = function(req,res,next){
 			if(wine.tag.isRecommend){
 				recommendList.push(wine);
 			}
+			//console.log(JSON.stringify(allwines[i]));
+			// console.log(JSON.stringify(allwines[i].tag.type))
 			if(wine.tag.type == "白酒"){
 				baijiu.push(wine);
 			}else if(wine.tag.type == "红酒"){
 				hongjiu.push(wine);
 			}
 		}
+		console.log(baijiu.length);
+		console.log(hongjiu.length);
 		res.render('index',{
 			title : "安徽1919",
 			r:r,
