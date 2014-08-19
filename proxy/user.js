@@ -161,62 +161,68 @@ exports.updatePreCash = function (order, cb){
 */
 exports.updateCashVoucher = function(order,cb){
   if(order.cashUse <= 0 && order.voucherUse <= 0)  return cb(null);
-
-
-  User.findOne({openID : order.openID},userFind);
-
-  function userFind(err,user){
-    if(err) {
-      return cb(err);
-    }
-
-    if(user){
-
-        if(order.cashUse > 0){
-          if(order.cashUse > user.cash){
-            var err = new Error();
-            err.describe = 'updateCashVoucher(),order.cashUse > user.cash'
-            return cb(err);
-          }else{
-            User.update({openID : order.openID},
-                        {$inc : {cash : - order.cashUse}},
-                        afterUpdate);
-          }
-
-        }
-
-        if(order.voucherUse > 0){
-          var hasVoucher = false;
-          var deleteIndex = -1;
-          var userVoucher = user.voucher;
-          for(var i = 0,l = userVoucher.length;i < l; i++){
-            if(userVoucher[i].value == order.voucherUse && userVoucher[i].number >= 1){
-              hasVoucher = true;
-              userVoucher[i].number = userVoucher[i].number - 1;
-
-              if(userVoucher[i].number === 0){
-                deleteIndex = i;
-              }
-              break;
-            }
-          }
-
-          if(!hasVoucher){
-            var err = new Error();
-            err.describe = 'updateCashVoucher(),cannot find user.voucher equal order.voucher';
-            return cb(err);
-          }
-          //代金券已经用完，从数组中删除
-          if(deleteIndex !== -1){
-            userVoucher.splice(deleteIndex,1);
-          }
-
-          User.update({openID : order.openID},
-                        {$set : {voucher : userVoucher}},
-                        cb);
+  async.auto({
+    _findUser : function(callback){
+      User.findOne({openID : order.openID},callback)
+    },
+    _updateCash : ['_findUser', function(callback, results){
+      if(order.cashUse<=0){
+        return callback(null);
       }
-    }
-  }
+      var user = results._findUser;
+      if(!user){
+        var err = new Error();
+        err.describe = 'updateCashVoucher() !user';
+        return callback(err);
+      }
+      if(user.cash < order.cashUse){
+        var err = new Error();
+        err.describe = 'updateCashVoucher() user.cash<order.cashUse';
+        return callback(err);
+      }
+      User.update({'openID' : order.openID}, {$inc : {cash : -order.cashUse}}, callback);
+    }],
+    _updateVoucher : ['_findUser', function(callback, results){
+      if(order.voucherUse <= 0){
+        return callback(null);
+      }
+      var user = results._findUser;
+      if(!user){
+        var err = new Error();
+        err.describe = 'updateCashVoucher() !user';
+        return callback(err);
+      }
+      var hasVoucher = false;
+      var deleteIndex = -1;
+      var userVoucher = user.voucher;
+      for(var i = 0; i < userVoucher.length; i++){
+        if(userVoucher[i].value == order.voucherUse && userVoucher[i].number >= 1){
+          hasVoucher = true;
+          userVoucher[i].number = userVoucher[i].number - 1;
+          if(userVoucher[i].number === 0){
+            deleteIndex = i;
+          }
+          break;
+        }
+      }
+      if(!hasVoucher){
+        var err = new Error();
+        err.describe = 'updateCashVoucher(),cannot find user.voucher equal order.voucher';
+        return callback(err);
+      }
+      //代金券已经用完，从数组中删除
+      if(deleteIndex !== -1){
+        userVoucher.splice(deleteIndex,1);
+      }
+      User.update({openID : order.openID},
+                    {$set : {voucher : userVoucher}},
+                    callback);
+    }]
+  },function(err, results){
+    if(err)
+      return cb(err);
+    cb(null);
+  })
 }
 
 exports.addAddress = function(openID,address,cb){

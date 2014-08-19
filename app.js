@@ -104,7 +104,7 @@ if (app.get('env') === 'development') {
      //  //err.date
      //  err.Time = new Date().toUTCString();
      //  errorLogfile.write(JSON.stringify(err));
-     console.log(err);
+     console.log(JSON.stringify(err));
      console.log(err.stack);
      errlog.error(err);
     });

@@ -97,7 +97,8 @@ exports.unSubscribe = function(openID,cb){
 
   async.auto({
     updateOpenID : function(callback){
-      User.update({openID : openID},{$set : {preOpenID : 'no',hasFollow : false,cash : 0,voucher : []}},callback);
+     // User.update({openID : openID},{$set : {preOpenID : 'no',hasFollow : false,cash : 0,voucher : []}},callback);
+      User.update({openID : openID},{$set : {preOpenID : 'no',hasFollow : false}},callback);
     },
     updatePreOpenID : function(callback){
       User.update({preOpenID : openID},{$set : { preOpenID : 'no'}},{ multi: true },callback);

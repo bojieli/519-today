@@ -17,7 +17,7 @@ var api = require('../common/api');
 exports.updateOrder = function (req, res, next) {
 
   Order.createOrder(req.session.openID,req.body,afterOrder);
-
+  console.log("req.body============"+JSON.stringify(req.body));
   function afterOrder(err,order){
     //更新用户的现金券
     if(err){
@@ -33,11 +33,13 @@ exports.updateOrder = function (req, res, next) {
       }
     });
     //更新用户的现金券
+
     User.updateCashVoucher(order,function(err){
         if(err){
           res.send({message : 'error', error : err.errCode}) ;
           return next(err);
         }
+        console.log('------------------------------');
         res.send({message : 'OK', error : 0});
     });
 
