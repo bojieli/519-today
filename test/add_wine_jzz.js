@@ -14,7 +14,7 @@ function addWine(id, name, marketPrice, wechatPrice, degree, volume){
     },
     bigPic : ["jzz_0" + id +"-1.jpg","jzz_0" + id +"-2.jpg"],
     tag : {
-      type : "白酒",
+      winetype : "白酒",
       isRecommend : true
     },
     visitNum : 0,
