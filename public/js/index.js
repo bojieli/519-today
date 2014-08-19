@@ -1,41 +1,6 @@
 require([
 	'./pro'
 ], function() {
-    //隐藏右上角按钮
-    //==============================
-    function onBridgeReady(){
-     WeixinJSBridge.call('hideOptionMenu');
-     alert("onBridgeReady");
-    }
-
-    if (typeof WeixinJSBridge == "undefined"){
-        alert('undefined');
-        if( document.addEventListener ){
-            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-        }else if (document.attachEvent){
-            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-        }
-    }else{
-        onBridgeReady();
-    }    
-    //隐藏底部栏
-    function onBridgeReady(){
-       WeixinJSBridge.call('hideToolbar');
-    }
-
-    if (typeof WeixinJSBridge == "undefined"){
-        if( document.addEventListener ){
-            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
-        }else if (document.attachEvent){
-            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
-            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
-        }
-    }else{
-        onBridgeReady();
-    }    
-
-
 	// 作临时全局变量使用
 	$.tempStorage = {};
 
