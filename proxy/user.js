@@ -89,6 +89,8 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
 * @param {Function} cb
 */
 exports.getCashVoucherByOpenID = function(openID,cb){
+  console.log('-----------------------getCashVoucherByOpenID---------------------------------');
+  console.log(openID);
   User.findOne({openID : openID},'cash voucher', cb);
 }
 /**
