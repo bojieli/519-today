@@ -13,21 +13,21 @@ require([
 		var tab = target.innerText.trim().toLowerCase();
 
 		if (target.inited) return;
-        
+
         if (tab == 'carousel') {
 
 			$('[data-ride="carousel"]').each(function() {
 				var $this = $(this);
 				$this.carousel($this.data());
 			});
-		} 
+		}
 
 		target.inited = true;
 
 	});
 
     $('[data-lazy]').lazyload({
-        container: $.os.ios > 5? $('#page5-container'): window 
+        container: $.os.ios > 5? $('#page5-container'): window
     });
 
 	//图片自动轮播
@@ -50,7 +50,7 @@ require([
     });
     //=======================my dialog=====================
     function myDialogAlert($this,content){
-       
+
         var self = $this[0] ;
         $(".dialoginuse").remove();
         var $target = $(".dialogTemplate").clone();
@@ -63,7 +63,7 @@ require([
         $this.data("target",".dialoginuse");
         var option  = $.extend({}, $target.data(), $this.data());
         var buttons = content.buttons;
-        buttons.forEach(function(b){ 
+        buttons.forEach(function(b){
             var button = '<a data-dismiss="dialog" role="button" class="ui-alert-button">'+b.name+'</a>';
             var $button = $(button);
             if(b.callback){
@@ -73,10 +73,10 @@ require([
         });
 
         if ($this.is('a')) e.preventDefault();
-        
+
         option.target = ".dialoginuse";
-        $target.dialog(option, self);        
-    }    
+        $target.dialog(option, self);
+    }
     //=======================show error====================
     function showError(msg){
         var button = '<button></button>';
@@ -113,7 +113,7 @@ require([
 		}
 		if(target=='page2'){
 			location.href = "/?r=shopcart" ;
-		}		
+		}
   	});
   	if(localStorage.cart && localStorage.cart!='{}'){
 		$("#topbar-cart-reddot").show();
@@ -129,14 +129,14 @@ require([
         // 远程获取购物车中的商品信息
         $.post("/getProduct",{r:arr},function(data,status){
             if(status != "success"){
-                // 请求失败  
+                // 请求失败
                 showError("获取购物车失败");
                 return;
             }
             $.uploadErrorLog(data);
             var products = data.list;
             cb(null,data);
-        });        
+        });
     } ;
 
 
@@ -155,7 +155,7 @@ require([
             if(err){
                 showError("获取商品详情失败");
             }else{
-                var list = data.list; 
+                var list = data.list;
                 var dir = data.s_dir;
                 var $ul = $("#order-list-container ul");
                 var $li = $ul.children("li.template");
@@ -169,7 +169,7 @@ require([
                 	addli.find(".order-list-num").text(cart[d.id]['num']);
                 	addli.find("img").attr('src',dir+d.littlePic);
                 	$ul.append(addli);
-                	addli.show();                	
+                	addli.show();
                 });
                 $li.hide();
                 $(".order-load-info").hide();
@@ -178,22 +178,22 @@ require([
                 updateTicket(cart);
                 cb();
             }
-        });  
+        });
     }
     getCartDetail(function(){
-        
+
     	$(".jiu-li .jiu-single").on('tap',function(){
     	    // $("#changeCartActionsheet").();
     	    $.tempStorage.cartListTap = $(this);
-    	}); 
+    	});
 
-    });  
- 
+    });
+
     $("#as_cart_change_num").on('tap',function(){
         // 修改数量
         // $target = $("#changeCartNumActionsheet");
         // $target.show() ;
-        // $target.show() ;       
+        // $target.show() ;
     });
     $("#as_cart_move_collect").on('tap',function(){
         // 移至收藏
@@ -222,7 +222,7 @@ require([
     			$.uploadErrorLog('fail to request /getTicket');
     			return cb("fail");
     		}
-    		cb(null,data); 
+    		cb(null,data);
     	});
     }
     function updateTicket(cart){
@@ -250,7 +250,7 @@ require([
 	    			$pay.text(cost-total);
 	    		}
 	    	}
-	    });    	
+	    });
     }
 
     //====================加载地址=====================
@@ -322,7 +322,7 @@ require([
                 $(".my-address-list").prepend(addr);
                 addr = r.pop();
             }
-            cb && cb();            
+            cb && cb();
         });
     }
     $(document).on('tap','.page4 .j-single',function(){
@@ -342,10 +342,10 @@ require([
                     if(status !== 'success'){
                         $.uploadErrorLog({r:"fail to set default address"},"delete_address");
                         return alert("网络故障，稍后重试");
-                    }   
+                    }
                     localStorage.defauleAddrIndex = $this.data('index');
                     $(".j-address-item.j-default").removeClass("j-default");
-                    $this.addClass("j-default");                                     
+                    $this.addClass("j-default");
                 });
             },
             'delete':function($this){
@@ -391,7 +391,7 @@ require([
                 return;
             }
             // 清空购物车
-            
+
             clearCart();
             // 更新购物车
             // 更新我的订单
@@ -401,7 +401,7 @@ require([
             // 跳转页面
             $('.ui-bottom-bar-button[data-target=".page3"]').trigger('tap');
             $('.ui-button[data-target="#page3-tab1"]').trigger('tap');
-        });        
+        });
     });
     $("#complete_cash_pay").on('tap',function(){
         var self = this;
@@ -440,7 +440,7 @@ require([
                             return;
                         }
                         // 清空购物车
-                        
+
                         clearCart();
                         // 更新购物车
                         // 更新我的订单
@@ -450,7 +450,7 @@ require([
                         // 跳转页面
                         $('.ui-bottom-bar-button[data-target=".page3"]').trigger('tap');
                         $('.ui-button[data-target="#page3-tab1"]').trigger('tap');
-                    });                     
+                    });
                 }
             },
             {
@@ -468,7 +468,7 @@ require([
         $(".order-load-info").show();
         $("#order-list-container ul .jiu-single").remove();
         $("#order-list-container").hide();
-        $("#order-confirm-container").hide();       
+        $("#order-confirm-container").hide();
     }
     //=======================显示券=========================
     function updateMyCash(){
@@ -476,10 +476,10 @@ require([
             if(status !== 'success'){
                 $.uploadErrorLog({r:"fail to get cash"},"cash_voucher");
                 return showError("网络故障，稍后重试");
-            } 
+            }
             var cash = data.cash;
             $("#my_cash_num").text(cash);
-            $("#my_cash_num").data('to',cash);        
+            $("#my_cash_num").data('to',cash);
         });
     }
     updateMyCash();
@@ -497,7 +497,7 @@ require([
         }else{
             $(".no-order-info").remove();
         }
-        
+
 
         arr.forEach(function(item){
             var $add = $complete.clone();
@@ -515,12 +515,12 @@ require([
                 var $addli = $li.clone();
                 $addli.find(".jiu-detail").text(wine.describe);
                 $addli.find(".order-list-price").text(wine.wechatPrice);
-                $addli.find(".order-list-num").text(wine.num);
+                $addli.find(".order-list-num").text(wine.number);
                 $addli.find("img").attr('src',wine.littlePic);
                 $ul.append($addli);
             });
             $li.remove();
-            $add.show();            
+            $add.show();
             if(item.status == 0){
                 list_process.push($add);
             }else{
@@ -537,7 +537,7 @@ require([
         while(a){
             $parent.prepend(a);
             a = list_process.pop();
-        }        
+        }
         $process.hide();
         $complete.hide();
     }
@@ -550,7 +550,7 @@ require([
                 return;
             }
             ininMyOrderUI(data);
-        });        
+        });
     }
     updateMyOrder();
 
@@ -562,7 +562,7 @@ require([
             ,area : $("#distinct_list").val()
             ,detail : $("#addr-detail-input").val()
             ,name : $("#addr-name-input").val()
-            ,tel : $("#addr-tel-input").val()          
+            ,tel : $("#addr-tel-input").val()
         };
         // 检查
         var mobilePattern = /^0?1[3|4|5|7|8][0-9]{9}$/;

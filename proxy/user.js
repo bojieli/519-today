@@ -20,7 +20,7 @@ exports.getUserByOpenID = function(openID,cb){
 /**
 * vertify:通过网络链接vertify,写入用户信息
 * callback:
-* - err 
+* - err
 */
 exports.afterVertify = function(openID,basicInfo,cb){
 
@@ -91,7 +91,7 @@ exports.updatePreCash = function (order, cb){
         return callback(new Error());
       }
       if(user.preOpenID&&user.preOpenID!='no'){
-        User.findOneAndUpdate({openID : user.preOpenID}, 
+        User.findOneAndUpdate({openID : user.preOpenID},
           {$inc : {cash : toDecimal(order.totalPrice * config.ratio_1)}}, callback);
       }else{
         return callback(null, 'no')
@@ -104,7 +104,7 @@ exports.updatePreCash = function (order, cb){
         return callback(null, 'no');
       }
       if(user.preOpenID&&user.preOpenID!='no'){
-        User.findOneAndUpdate({openID : user.preOpenID}, 
+        User.findOneAndUpdate({openID : user.preOpenID},
           {$inc : {cash : toDecimal(order.totalPrice * config.ratio_2)}}, callback);
       }else{
         return callback(null, 'no')
@@ -117,7 +117,7 @@ exports.updatePreCash = function (order, cb){
         return callback(null);
       }
       if(user.preOpenID&&user.preOpenID!='no'){
-        User.update({openID : user.preOpenID}, 
+        User.update({openID : user.preOpenID},
           {$inc : {cash : toDecimal(order.totalPrice * config.ratio_3)}}, callback);
       }else{
         return callback(null)
@@ -127,7 +127,7 @@ exports.updatePreCash = function (order, cb){
         return cb(err);
     });
     function toDecimal(x){
-      return ((x*100)>>0)/100;
+      return ((x*10)>>0)/10;
     }
 }
 
@@ -302,6 +302,6 @@ exports.setPreOpenIDtoNo = function(openID, cb){
     else
       cb(null);
   })
-  
+
 }
 

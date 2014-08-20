@@ -23,7 +23,7 @@ exports.createOrder = function(openID,info,cb){
     _getWineInfo : function(callback){
       var ids = [];
       for (var i = 0; i < info.shopOnce.length; i++) {
-        ids.push(order.shopOnce[i].id);
+        ids.push(info.shopOnce[i].id);
       };
       Wine.findByIDs(ids,callback);
     },
@@ -62,11 +62,11 @@ exports.createOrder = function(openID,info,cb){
         }
       }
     }]},
-    function (err,order){
+    function (err,results){
       if(err){
         return cb(err,null);
       }
-      cb(null,order);
+      cb(null,results._createorder);
     });
 }
 
