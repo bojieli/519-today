@@ -7,8 +7,8 @@ var Schema = mongoose.Schema;
 */
 
 var CollectSchema = new Schema({
-  openID : String,
-  collectList : [String]
+  openID : {type:String,default : ""},
+  collectList : {type:[String],default:[]}
 });
 
 mongoose.model('Collect',CollectSchema);

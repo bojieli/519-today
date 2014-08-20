@@ -12,36 +12,36 @@ var Schema = mongoose.Schema;
 */
 
 var UserSchema = new Schema({
-  openID : String,
-  preOpenID : String,
-  sceneID : Number,
+  openID : {type:String,default:""},
+  preOpenID : {type:String,default:""},
+  sceneID : {type:Number,default: -1},
   basicInfo : {
-    nickname : String,
-    sex : Number,
-    province : String,
-    city : String,
-    country : String,
-    headimgurl : String,
-    privilege : String
+    nickname : {type:String,default:""},
+    sex : {type:Number,default:0},
+    province : {type:String,default:""},
+    city : {type:String,default:""},
+    country : {type:String,default:""},
+    headimgurl : {type:String,default:""},
+    privilege : {type:String,default:""}
   },
-  hasFollow : Boolean,
-  cash : Number,
+  hasFollow : {type : Boolean,default:false},
+  cash : {type:Number,default:0},
   voucher : {type : [{
     value : Number,
     number : Number
   }], default : []},
   currentAddress : {
-    province : String,
-    city : String,
-    district : String
+    province : {type:String,default:""},
+    city : {type:String,default:""},
+    district : {type:String,default:""}
   },
   address : {type : [{
-    province : String,
-    city : String,
-    area : String,
-    detail : String,
-    name : String,  //收件人
-    tel : String
+    province : {type:String,default:""},
+    city : {type:String,default:""},
+    area : {type:String,default:""},
+    detail : {type:String,default:""},
+    name : {type:String,default:""},  //收件人
+    tel : {type:String,default:""}
   }], default : []}
 }, { autoIndex: false });
 
