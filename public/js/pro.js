@@ -2,9 +2,9 @@ define([
     './scrollfix',
     './tab',
     './dialog',
-    // './spinner',
+    './spinner',
     './carousel',
-    // './lazyload',
+    './lazyload',
     // './countable',
     // './deletable',
     './ajax'

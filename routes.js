@@ -39,6 +39,9 @@ module.exports = function (app) {
 
 //如果没有登录就直接登录
 	app.all('*', function (req, res,next){
+		if(config.testOpenID){
+			req.session.openID = config.testOpenID ;
+		}
 		if(req.session.openID){
 			if(!req.session.hasVisited){			//如果没有访问过我们的网站
 				req.session.hasVisited = true;		

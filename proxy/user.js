@@ -20,7 +20,7 @@ exports.getUserByOpenID = function(openID,cb){
 /**
 * vertify:通过网络链接vertify,写入用户信息
 * callback:
-* - err
+* - err 
 */
 exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
 

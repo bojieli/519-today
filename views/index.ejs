@@ -65,7 +65,7 @@
                     <% for(var i=0;i<recommendList.length;i++){ %>
                     <a class="item" href="/details?code=<%= recommendList[i].Code %>" data-code= <%= recommendList[i].Code %> >
                         <div class="item-inner">
-                            <img src= <%= recommendList[i].LittlePic %> alt="">
+                            <img data-lazy= <%= recommendList[i].LittlePic %> alt="">
                             <span class="name"><%= recommendList[i].name %></span>
                             <span class="market-sale">市场价：<%= recommendList[i].MarketPrice %></span>
                             <span class="wx-sale">微信价：<%= recommendList[i].WechatPrice %></span>
@@ -84,7 +84,7 @@
                     <% for(var i=0;i<baijiu.length;i++){ %>
                     <a class="item" href="/details?code=<%= baijiu[i].Code %>" data-code= <%= baijiu[i].Code %> >
                         <div class="item-inner">
-                            <img src= <%= baijiu[i].LittlePic %> alt="">
+                            <img data-lazy= <%= baijiu[i].LittlePic %> alt="">
                             <span class="name"><%= baijiu[i].name %></span>
                             <span class="market-sale">市场价：<%= baijiu[i].MarketPrice %></span>
                             <span class="wx-sale">微信价：<%= baijiu[i].WechatPrice %></span>
@@ -103,7 +103,7 @@
                     <% for(var i=0;i<hongjiu.length;i++){ %>
                     <a class="item" href="/details?code=<%= hongjiu[i].Code %>" data-code= <%= hongjiu[i].Code %> >
                         <div class="item-inner">
-                            <img src= <%= hongjiu[i].LittlePic %> alt="">
+                            <img data-lazy= <%= hongjiu[i].LittlePic %> alt="">
                             <span class="name"><%= hongjiu[i].name %></span>
                             <span class="market-sale">市场价：<%= hongjiu[i].MarketPrice %></span>
                             <span class="wx-sale">微信价：<%= hongjiu[i].WechatPrice %></span>
@@ -321,7 +321,7 @@
     </div>
 </div>
 
-<div class="dialogTemplate" role="alertdialog"  class="ui-dialog" aria-labelledby="myAlertLable" aria-hidden="true">
+<div class="dialogTemplate ui-dialog" role="alertdialog"  class="ui-dialog" aria-labelledby="myAlertLable" aria-hidden="true">
     <div class="js-dialog-content ui-alert">
         <div class="ui-alert-header"><h3 class="ui-alert-title"></h3></div>
         <div class="ui-alert-body" role="note"><p></p></div>
@@ -338,19 +338,6 @@
         <div class="ui-alert-footer">
             <!-- 尽量避免使用 button 元素，在小米上是会有点击高亮边框 -->
             <a data-dismiss="dialog" role="button" class="ui-alert-button">确定</a>
-        </div>
-    </div>
-</div>
-
-<div id="finalConfirmAlert" role="alertdialog"  class="ui-dialog" aria-labelledby="myAlertLable" aria-hidden="true">
-    <div class="js-dialog-content ui-alert">
-        <div class="ui-alert-header"><h3 class="ui-alert-title" class="myAlertLable">确认下单</h3></div>
-        <div class="ui-alert-body" role="note">
-            <p>快递人员即将免费送货上门，如有问题请与客服联系</p></div>
-        <div class="ui-alert-footer">
-            <!-- 尽量避免使用 button 元素，在小米上是会有点击高亮边框 -->
-            <a data-dismiss="dialog" id="finalConfirmButton" role="button" class="ui-alert-button">确定</a>
-            <a data-dismiss="dialog" id="finalConfirmButtonCancel" role="button" class="ui-alert-button">取消</a>
         </div>
     </div>
 </div>
@@ -376,16 +363,10 @@
         <a role="button" data-dismiss="dialog" class="ui-actionsheet-cancel">取消</a>
     </div>
 </div>
-<!-- <div class="popout-container" id="changeCartNumActionsheet" style="display:none">
-    <div class="popout-content">
-        <input type="number" value='1'>
-        <a role="button" class="ui-button">确定</a>
-    </div>
-</div> -->
 
 <!-- /对话类内容 -->
 
-<script data-main="build/index" src="js/require.js"></script>
+<script data-main="js/index" src="js/require.js"></script>
 <script type="text/javascript">
     //隐藏右上角按钮
     //==============================
@@ -418,6 +399,7 @@
     }else{
         onBridgeReady();
     }    
+
 
 
 </script>
