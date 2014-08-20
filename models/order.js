@@ -19,6 +19,9 @@ var OrderSchema = new Schema({
   openID : String,
   shopOnce : [{
     id : String,
+    wechatPrice : Number,
+    describe : String,
+    littlePic : String,//小图路径，config.small_dir + Wines[index].littlePic
     number : Number
   }],
   address : {
@@ -66,4 +69,6 @@ status:
 5 已收货订单
 
 */
+
+
 mongoose.model('Order',OrderSchema);

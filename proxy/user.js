@@ -22,7 +22,7 @@ exports.getUserByOpenID = function(openID,cb){
 * callback:
 * - err 
 */
-exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
+exports.afterVertify = function(openID,basicInfo,cb){
 
   User.findOne({openID : openID},afterFind);
 
@@ -30,21 +30,8 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
     if(err)
       return cb(err);
     if(user){
-      if(preOpenID && basicInfo){
-        User.update({openID : openID},
-                    {$set: {preOpenID : preOpenID,basicInfo:basicInfo}},
-                    afterUpdate);
-      }else if(preOpenID && !basicInfo){
-        User.update({openID : openID},
-                    {$set: {preOpenID : preOpenID}},
-                    afterUpdate);
-      }else if(!preOpenID && basicInfo){
-        User.update({openID : openID},
-                    {$set: {basicInfo:basicInfo}},
-                    afterUpdate);
-      }
+        User.update({openID : openID},{$set: {basicInfo:basicInfo}},cb);
     }else{
-
       var sceneID = getSceneID();
       var newUser = {
         openID : openID,
@@ -57,25 +44,15 @@ exports.afterVertify = function(openID,preOpenID,basicInfo,cb){
         currentAddress :{},
         address : []
       }
-
-      User.create(newUser,afterCreate);
+      User.create(newUser,function(err, user){
+        if(err) {
+          return cb(err);
+        }else if(user){
+          global.sceneID_web_count++;
+        }
+      });
     }
   }
-
-  function afterUpdate(err){
-    if(err)
-      return cb(err);
-  }
-
-  function afterCreate(err,user){
-  if(err) {
-      return cb(err);
-    }else if(user){
-      global.sceneID_web_count++;
-    }
-
-  }
-
   function getSceneID(){
     return config.SCENEID_BASE + global.sceneID_web_count + 1;
   }
@@ -103,55 +80,55 @@ exports.getAddressByOpenID = function(openID,cb){
   User.findOne({openID : openID}, 'address', cb);
 }
 
-function toDecimal(x){
-  return ((x*100)>>0)/100;
-}
+
 exports.updatePreCash = function (order, cb){
-  User.findOne({openID : order.openID}, userFind1);
-
-  function userFind1 (err, user){
-    if(err) {
-      return cb(err);
+  async.waterfall([
+    function getUserbyOpenID(callback){
+      User.findOne({openID : order.openID}, callback);
+    },
+    function userFind1 (user, callback){
+      if(!user){
+        return callback(new Error());
+      }
+      if(user.preOpenID&&user.preOpenID!='no'){
+        User.findOneAndUpdate({openID : user.preOpenID}, 
+          {$inc : {cash : toDecimal(order.totalPrice * config.ratio_1)}}, callback);
+      }else{
+        return callback(null, 'no')
+      }
+    },
+    function userFind2 (user, callback){
+      if(!user){
+        return callback(new Error());
+      }else if(user == 'no'){
+        return callback(null, 'no');
+      }
+      if(user.preOpenID&&user.preOpenID!='no'){
+        User.findOneAndUpdate({openID : user.preOpenID}, 
+          {$inc : {cash : toDecimal(order.totalPrice * config.ratio_2)}}, callback);
+      }else{
+        return callback(null, 'no')
+      }
+    },
+    function userFind3(user, callback){
+      if(!user){
+        return callback(new Error());
+      }else if(user == 'no'){
+        return callback(null);
+      }
+      if(user.preOpenID&&user.preOpenID!='no'){
+        User.update({openID : user.preOpenID}, 
+          {$inc : {cash : toDecimal(order.totalPrice * config.ratio_3)}}, callback);
+      }else{
+        return callback(null)
+      }
+    }],function(err){
+      if(err)
+        return cb(err);
+    });
+    function toDecimal(x){
+      return ((x*100)>>0)/100;
     }
-
-    if(user.preOpenID){
-      User.update({openID : user.preOpenID},
-                  {$inc : {cash : toDecimal(order.totalPrice * config.ratio_1)}},
-                  afterUpdate);
-      User.findOne({openID : user.preOpenID}, userFind2);
-    }
-  }
-
-  function userFind2 (err,user){
-    if(err) {
-      return cb(err);
-    }
-    if(user.preOpenID){
-      User.update({openID : user.preOpenID},
-                  {$inc : {cash : toDecimal(order.totalPrice * config.ratio_2)}},
-                  afterUpdate);
-      User.findOne({openID : user.preOpenID}, userFind3);
-    }
-  }
-  function userFind3 (err,user){
-    if(err) {
-      return cb(err);
-    }
-    if(user.preOpenID){
-      User.update({openID : user.preOpenID},
-                  {$inc : {cash : toDecimal(order.totalPrice * config.ratio_3)}},
-                  afterUpdate);
-    }
-  }
-
-  function afterUpdate(err){
-    if(err) {
-      return cb(err);
-    }else{
-      cb(err);
-    }
-  }
-
 }
 
 /**提交购物订单以后更新现金券和代金券的数量
@@ -171,14 +148,10 @@ exports.updateCashVoucher = function(order,cb){
       }
       var user = results._findUser;
       if(!user){
-        var err = new Error();
-        err.describe = 'updateCashVoucher() !user';
-        return callback(err);
+        return callback(new Error());
       }
       if(user.cash < order.cashUse){
-        var err = new Error();
-        err.describe = 'updateCashVoucher() user.cash<order.cashUse';
-        return callback(err);
+        return callback(new Error());
       }
       User.update({'openID' : order.openID}, {$inc : {cash : -order.cashUse}}, callback);
     }],
@@ -188,9 +161,7 @@ exports.updateCashVoucher = function(order,cb){
       }
       var user = results._findUser;
       if(!user){
-        var err = new Error();
-        err.describe = 'updateCashVoucher() !user';
-        return callback(err);
+        return callback(new Error());
       }
       var hasVoucher = false;
       var deleteIndex = -1;
@@ -206,9 +177,7 @@ exports.updateCashVoucher = function(order,cb){
         }
       }
       if(!hasVoucher){
-        var err = new Error();
-        err.describe = 'updateCashVoucher(),cannot find user.voucher equal order.voucher';
-        return callback(err);
+        return callback(new Error());
       }
       //代金券已经用完，从数组中删除
       if(deleteIndex !== -1){
@@ -226,29 +195,18 @@ exports.updateCashVoucher = function(order,cb){
 }
 
 exports.addAddress = function(openID,address,cb){
-
   User.findOne({openID : openID},"address",afterFind);
-
   function afterFind(err,user){
     if(err){
       return cb(err);
     }
-
     if(user){
       var userAddress = user.address;
       userAddress.unshift(address);
-
-      User.update({openID : openID} , {$set : {address : userAddress}},afterUpdate);
+      User.update({openID : openID} , {$set : {address : userAddress}},cb);
     }
   }
 
-  function afterUpdate(err){
-   if(err){
-      return cb(err);
-    }else{
-      cb(err);
-    }
-  }
 }
 
 exports.deleteAddress = function(openID,index,cb){
@@ -261,11 +219,8 @@ exports.deleteAddress = function(openID,index,cb){
     if(user){
       var userAddress = user.address;
       if(index < 0 ||index >= userAddress.length){
-          var err =new Error();
-          err.describe = 'deleteAddress(),index < 0 ||index >= userAddress.length';
-          return cb(err);
+          return cb(new Error());
       }
-
       userAddress.splice(index,1);
       User.update({openID : openID} , {$set : {address : userAddress}},cb);
     }
@@ -283,14 +238,11 @@ exports.setDefault = function(openID,index,cb){
     if(user){
       var userAddress = user.address;
       if(index < 0 ||index >= userAddress.length){
-        var err =new Error();
-        err.describe = 'setDefault(),index < 0 ||index >= userAddress.length';
-        return cb(err);
+        return cb(new Error());
       }
       var defaultAddress = userAddress[index];
       userAddress.splice(index,1);
       userAddress.unshift(defaultAddress);
-
       User.update({openID : openID} , {$set : {address : userAddress}},cb);
     }
   }
@@ -323,18 +275,20 @@ exports.updatePreOpenIDbyShareID = function(openID, shareID, cb){
       User.findOne({'openID' : openID},'preOpenID',callback);
     },
     function findPreOpenIDbyshareID(user, callback){
-      if(user.preOpenID)
-        return callback(null,null)
+      if(!user) return callback(new Error());
+      if(user.preOpenID) {
+        return callback(null,null);
+      }
       User.findOne({'sceneID' : shareID}, 'openID', callback);
     }
     ],function(err, user){
       if(err){
-        cb(err);
+        return cb(err);
       }
-      if(!user)
+      if(!user||!user.openID){
+        throw new Error();
         return cb(null);
-      if(!user.openID)
-        return cb(null);
+      }
       User.update({'openID' : openID}, {$set : {'preOpenID' : user.openID}}, cb);
     })
 }
