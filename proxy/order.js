@@ -16,16 +16,32 @@ var config = require('../config');
 exports.createOrder = function(openID,info,cb){
   var orderID = getOrderID();
   var order = {};
-  async.waterfall([
-    function _isFirst (callback){
+  async.auto({
+    _isFirst : function(callback){
       Order.findOne({'address.tel' : info.address.tel}, callback);
     },
-    function createorder(order, callback){
+    _getWineInfo : function(callback){
+      var ids = [];
+      for (var i = 0; i < info.shopOnce.length; i++) {
+        ids.push(order.shopOnce[i].id);
+      };
+      Wine.findByIDs(ids,callback);
+    },
+    _createorder :["_isFirst","_getWineInfo", function(callback,results){
       var isFirst;
-      if(order)
+      if(results._isFirst)
         isFirst = false;
       else
         isFirst = true;
+      var wines = results._getWineInfo;
+
+      for (var i = 0; i < info.shopOnce.length; i++) {
+        var index = findWinebyid(info.shopOnce[i].id);
+        info.shopOnce[i].describe = wines[index].describe;
+        info.shopOnce[i].wechatPrice = wines[index].wechatPrice;
+        info.shopOnce[i].littlePic = config.small_dir + wines[index].littlePic;    
+      }
+
       order = {
         orderID : orderID,
         openID : openID,
@@ -38,13 +54,19 @@ exports.createOrder = function(openID,info,cb){
         totalPrice : info.totalPrice,
       };
       Order.create(order, callback);
-    }],
-    function afterCreate(err,order){
+
+      function findWinebyid(id){
+        for (var i = 0; i < wines.length; i++) {
+          if(id == wines[i].id)
+            return i;
+        }
+      }
+    }]},
+    function (err){
       if(err){
         return cb(err);
-      }else{
-        cb(err,order);
       }
+      cb(null);
     }
   );
 }
@@ -55,46 +77,23 @@ exports.findbyOrderID = function(orderID, cb){
 
 exports.generateDetail = function (order, cb){
   var data = {};
-  var ids = [];
-  for (var i = 0; i < order.shopOnce.length; i++) {
-    ids.push(order.shopOnce[i].id);
-  };
-
-  Wine.findByIDs(ids, afterFind);
-  function afterFind(err, _wines){
-    if(err)
-      return cb(err);
-    //var _wines = results._findWineByIDs;
-    for (var i = 0; i < order.shopOnce.length; i++) {
-      var index = findWinebyid(order.shopOnce[i].id);
-      order.shopOnce[i].describe = _wines[index].describe;
-      order.shopOnce[i].wechatPrice = _wines[index].wechatPrice;
-      delete order.shopOnce[i].id;
-    };
-    function findWinebyid(id){
-      for (var i = 0; i < _wines.length; i++) {
-        if(id ==_wines[i].id)
-          return i;
-      };
-    }
-    data.orderID = order.orderID;
-    data.status = order.status;
-    data.date = formatDate(order.date);
-    data.shipDate = formatDate(order.shipDate);
-    data.receiveDate = formatDate(order.receiveDate);
-    data.isFirst = order.isFirst;
-    data.address = order.address;
-    data.notes = order.notes||'';
-    data.cashNeeded = order.totalPrice;
-    data.cashTotal = order.cashUse + order.voucherUse + order.totalPrice;
-    data.coupon = order.cashUse;
-    data.voucher = order.voucherUse;
-    data.shopOnce = order.shopOnce;
-    data.dispatchCenter = order.dispatchCenter;
-    data.shipStaff = order.shipStaff;
-    data.customerService = order.customerService;
-    cb(null, data);
-  }
+  data.orderID = order.orderID;
+  data.status = order.status;
+  data.date = formatDate(order.date);
+  data.shipDate = formatDate(order.shipDate);
+  data.receiveDate = formatDate(order.receiveDate);
+  data.isFirst = order.isFirst;
+  data.address = order.address;
+  data.notes = order.notes||'';
+  data.cashNeeded = order.totalPrice;
+  data.cashTotal = order.cashUse + order.voucherUse + order.totalPrice;
+  data.coupon = order.cashUse;
+  data.voucher = order.voucherUse;
+  data.shopOnce = order.shopOnce;
+  data.dispatchCenter = order.dispatchCenter;
+  data.shipStaff = order.shipStaff;
+  data.customerService = order.customerService;
+  cb(null, data);
 }
 
 exports.setStatus = function (orderID, status, cb){
@@ -156,22 +155,16 @@ exports.getUserOrder = function (openID, cb){
           }
         }
         Wine.findByIDs (Wineids, callback);
-      }
-    ],
+    }],
     function GenerateOrderInfos(err, Wines){
       if(err)
         cb(err);
-      console.log(JSON.stringify(Wines));
       for (var i = 0; i < returnOrders.length; i++) {
-
         for (var j = 0; j < returnOrders[i].wines.length; j++) {
           var index = findWinebyid(returnOrders[i].wines[j].id);
-          console.log('id:' + returnOrders[i].wines[j].id);
-          console.log('index:' + index);
           returnOrders[i].wines[j].describe = Wines[index].describe;
           returnOrders[i].wines[j].wechatPrice = Wines[index].wechatPrice;
           returnOrders[i].wines[j].littlePic = config.small_dir + Wines[index].littlePic;
-
           delete returnOrders[i].wines[j].id;
         }
       }
@@ -183,8 +176,7 @@ exports.getUserOrder = function (openID, cb){
             return i;
         }
       }
-    }
-  );
+    });
 }
 
 
