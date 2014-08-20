@@ -26,6 +26,10 @@ require([
 
 	});
 
+    $('[data-lazy]').lazyload({
+        container: $.os.ios > 5? $('#page5-container'): window 
+    });
+
 	//图片自动轮播
 	$(document).ready(function(e){
         var target = e.target // activated tab
@@ -45,43 +49,48 @@ require([
         $(this).tab('show');
     });
     //=======================my dialog=====================
-    function myDialogAlert($this,target){
-        var self = $this[0];
-        $this.data("target",target);
-        var $target = $(target);
-        var option  = $target.data('dialog') ? 'toggle' : $.extend({}, $target.data(), $this.data());
+    function myDialogAlert($this,content){
+       
+        var self = $this[0] ;
+        $(".dialoginuse").remove();
+        var $target = $(".dialogTemplate").clone();
+        $target.removeClass("dialogTemplate");
+        $target.addClass("dialoginuse");
+        $(".dialogTemplate").after($target);
+        $target = $(".dialoginuse");
+        $target.find(".ui-alert-title").text(content.title);
+        $target.find(".ui-alert-body p").text(content.body);
+        $this.data("target",".dialoginuse");
+        var option  = $.extend({}, $target.data(), $this.data());
+        var buttons = content.buttons;
+        buttons.forEach(function(b){ 
+            var button = '<a data-dismiss="dialog" role="button" class="ui-alert-button">'+b.name+'</a>';
+            var $button = $(button);
+            if(b.callback){
+                $button.on('tap',b.callback);
+            }
+            $target.find(".ui-alert-footer").append($button);
+        });
 
         if ($this.is('a')) e.preventDefault();
-
-        $target.dialog(option, self);        
-        // var self = $this[0] ;
-        // $(".dialoginuse").remove();
-        // var $target = $(".dialogTemplate").clone();
-        // $target.removeClass("dialogTemplate");
-        // $target.addClass("dialoginuse");
-        // $(".dialogTemplate").after($target[0]);
-        // $target = $(".dialoginuse");
-        // alert($target.length);
-        // $target.find(".ui-alert-title").text(content.title);
-        // $target.find(".ui-alert-body p").text(content.body);
-        // $this.data("target",".dialoginuse");
-        // var option  = $.extend({}, $target.data(), $this.data());
-        // var buttons = content.buttons;
-        // buttons.forEach(function(b){
-        //     var button = '<a data-dismiss="dialog" role="button" class="ui-alert-button">'+b.name+'</a>';
-        //     var $button = $(button);
-        //     if(b.callback){
-        //         $button.on('tap',b.callback);
-        //     }
-        //     $target.find(".ui-alert-footer").append(button);
-        // });
-
-        // if ($this.is('a')) e.preventDefault();
         
-        // option.target = ".dialoginuse";
-        // alert(JSON.stringify(option));
-        // $target.dialog(option, self);        
+        option.target = ".dialoginuse";
+        $target.dialog(option, self);        
+    }    
+    //=======================show error====================
+    function showError(msg){
+        var button = '<button></button>';
+        myDialogAlert($(button),{
+            title : "出错了555……",
+            body : msg ,
+            buttons : [
+            {
+                name : "确定"
+            }
+            ]
+        });
     }
+    //=======================check network=================
 
 	//=======================css fix=======================
 	function autoResize(){
@@ -121,6 +130,7 @@ require([
         $.post("/getProduct",{r:arr},function(data,status){
             if(status != "success"){
                 // 请求失败  
+                showError("获取购物车失败");
                 return;
             }
             $.uploadErrorLog(data);
@@ -143,7 +153,7 @@ require([
         }
         $.getProductDetail(cartArr,function(err,data){
             if(err){
-                alert(err);
+                showError("获取商品详情失败");
             }else{
                 var list = data.list; 
                 var dir = data.s_dir;
@@ -217,6 +227,9 @@ require([
     }
     function updateTicket(cart){
 	    getTicket(function(err,data){
+            if(err){
+                showError("更新我的现金券失败");
+            }
 	    	if(data){
 	    		var $left = $("#cart-ticket-left");
 	    		var $use = $("#cart-ticket-use");
@@ -256,14 +269,16 @@ require([
         var $li = $(".cart-address-list li.j-address-item-template");
         var $myli = $(".my-address-list li.j-address-item-template");
         getAddr(function(err,data){
-
+            if(err){
+                showError("获取我的地址失败");
+            }
             if(!data)
                 return;
             var r = [];
             localStorage.address = JSON.stringify(data);
             localStorage.defauleAddrIndex = 0;
 
-            for(var i=0 ; i < data.length ; i++){ //------
+            for(var i=0 ; i < data.length ; i++){
                 var item = data[i];
                 var addli = $li.clone();
                 addli.removeClass("j-address-item-template").addClass("j-address-item");
@@ -389,34 +404,63 @@ require([
         });        
     });
     $("#complete_cash_pay").on('tap',function(){
-
+        var self = this;
         var addresses = localStorage.address ? JSON.parse(localStorage.address) : [];
         if(!addresses || addresses.length==0){
-            return myDialogAlert($(this),"#emptyAddressAlert");
+            return myDialogAlert($(this),{
+                title : "地址不能为空",
+                body : "您还没有添加地址，请先添加地址",
+                buttons : [
+                {
+                    name : "确定",
+                }
+                ]
+            });
         }
-        myDialogAlert($(this),"#finalConfirmAlert");
         $(this).attr('disabled','disabled');
-        // myDialogAlert($(this),{
-        //     title : "确认下单",
-        //     body : "确认下单吗 下单后如有问题请与客服联系",
-        //     buttons : [
-        //     {
-        //         name : "确认",
-        //         callback : function(){
-        //             alert("确认");
-        //         }
-        //     },
-        //     {
-        //         name : "取消",
-        //         callback : function(){
-        //             $("#complete_cash_pay").removeAttr('disabled','disabled');
-        //         }
-        //     }
-        //     ]
-        // });
-    });
-    $("#finalConfirmButtonCancel").on('tap',function(){
-        $("#complete_cash_pay").removeAttr('disabled','disabled');
+        myDialogAlert($(this),{
+            title : "确认下单",
+            body : "快递即将免费送货上门，如有问题请与客服联系",
+            buttons : [
+            {
+                name : "确认",
+                callback : function(){
+                    var purchase = JSON.parse(localStorage.purchase);
+                    var addresses = JSON.parse(localStorage.address);
+                    var index = parseInt(localStorage.defauleAddrIndex);
+                    purchase.address = addresses[index];
+                    purchase.confirmTel = "";
+                    localStorage.purchase = JSON.stringify(purchase);
+                    $('body').spinner('show');
+                    $.post("/purchase",purchase,function(data,status){
+                        $('body').spinner('hide');
+                        if(status!='success'){
+                            $.uploadErrorLog("post /purchase error");
+                            showError("下单失败，请重试");
+                            return;
+                        }
+                        // 清空购物车
+                        
+                        clearCart();
+                        // 更新购物车
+                        // 更新我的订单
+                        updateMyOrder();
+                        // 更新我的现金券
+                        updateMyCash();
+                        // 跳转页面
+                        $('.ui-bottom-bar-button[data-target=".page3"]').trigger('tap');
+                        $('.ui-button[data-target="#page3-tab1"]').trigger('tap');
+                    });                     
+                }
+            },
+            {
+                name : "取消",
+                callback : function(){
+                    $(self).removeAttr('disabled','disabled');
+                }
+            }
+            ]
+        });
     });
     function clearCart(){
         localStorage.cart = '{}';
@@ -431,7 +475,7 @@ require([
         $.post('/cash_voucher',function(data,status){
             if(status !== 'success'){
                 $.uploadErrorLog({r:"fail to get cash"},"cash_voucher");
-                return alert("网络故障，稍后重试");
+                return showError("网络故障，稍后重试");
             } 
             var cash = data.cash;
             $("#my_cash_num").text(cash);
@@ -521,7 +565,7 @@ require([
             ,tel : $("#addr-tel-input").val()          
         };
         // 检查
-        var mobilePattern = /^1[3|4|5|7|8][0-9]{9}$/;
+        var mobilePattern = /^0?1[3|4|5|7|8][0-9]{9}$/;
         if(address.detail.length==0){
             return alert("详细地址不能为空");
         }else if(address.name.length==0){
@@ -531,11 +575,11 @@ require([
         }
         $.post('/add_address',{address:address},function(data,status){
             if(status!='success'){
-                alert("添加地址出错:(");
+                showError("添加地址出错:(");
                 return;
             }
             if(data.error){
-                alert(data.message);
+                showError(data.message);
             }else{
                 $(".ui-tab.page5 a").trigger('tap');
                 updateAddrUI();
