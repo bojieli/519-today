@@ -33,21 +33,18 @@ exports.visitHome = function(req,res,next){
 			if(wine.tag.isRecommend){
 				recommendList.push(wine);
 			}
-			//console.log(JSON.stringify(allwines[i]));
-			// console.log(JSON.stringify(allwines[i].tag.type))
 			if(wine.tag.winetype == "白酒"){
 				baijiu.push(wine);
 			}else if(wine.tag.winetype == "红酒"){
 				hongjiu.push(wine);
 			}
 		}
-			console.log(JSON.stringify(hongjiu));
-			res.render('index',{
-			title : "安徽1919",
-			r:r,
-			recommendList : recommendList,
-			baijiu : baijiu,
-			hongjiu : hongjiu
-		});
+
+	res.render('index',{
+	title : "安徽1919",
+	r:r,
+	recommendList : recommendList,
+	baijiu : baijiu,
+	hongjiu : hongjiu});
 	});
 }

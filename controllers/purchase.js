@@ -24,11 +24,11 @@ exports.updateOrder = function (req, res, next) {
   Validate.winesInfoVerify(req.body.shopOnce,function(flag){
     if(!flag){
       res.send({message : "vertify error!"});
-      return next(new Error());   
+      return next(new Error());
     }
     Order.createOrder(req.session.openID,req.body,afterOrder);
   });
- 
+
   function afterOrder(err,order){
     //更新用户的现金券
     if(err){
@@ -47,7 +47,7 @@ exports.updateOrder = function (req, res, next) {
 
     User.updateCashVoucher(order,function(err){
         if(err){
-          res.send({message : 'error'}) ;
+          res.send({message : 'update cash voucher error'}) ;
           return next(err);
         }
         res.send({message : 'ok'});

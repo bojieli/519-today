@@ -38,7 +38,6 @@ exports.load = function (req, res, next){
 
 //当快递点击确认发货和收货的动作，注意确认收货时需要给上线返现
 exports.operate = function(req,res,next){
-
   var postData = req.body;
   ShipStaff.findByOpenID(req.session.openID,function(err,shipstaff){
     if(err){
@@ -75,7 +74,6 @@ exports.operate = function(req,res,next){
           Order.findbyOrderID(postData.orderID, callback);
         },
       },function(err,results){
-      console.log('shipstaff');        
       var order = results._getOrder;
         if(err || !order){
           res.send({code:"error"});
@@ -85,7 +83,6 @@ exports.operate = function(req,res,next){
         if(postData.method == 'ship'){
           message = "您的订单" + order.orderID + "已发货，预计到达时间为" + postData.arrivetime + "以内，如有特殊情况,请与快递员联系,联系电话：" + shipstaff.tel;
         }else if(postData.method == 'receive'){
-          console.log('click receive!');
           message = "您的订单" + order.orderID + "已收货，如出现问题,请联系客服！联系电话：" + "51951919";
            //更新用户上线的现金券
           //现金券应该在收到钱，确认收款后才能收款
@@ -100,7 +97,6 @@ exports.operate = function(req,res,next){
             next(err);
           }
           res.send({code: "ok"});
-          console.log("send message");
         });
 
       });
