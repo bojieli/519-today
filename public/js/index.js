@@ -48,6 +48,11 @@ require([
         // e.preventDefault();
         $(this).tab('show');
     });
+    //=======================utils=========================
+    function formatFloat(num){
+        return ((num*10)>>0)/10 ;
+    }
+
     //=======================my dialog=====================
     function myDialogAlert($this,content){
 
@@ -241,13 +246,13 @@ require([
 	    		}
                 $.uploadErrorLog({cost:cost},'cost');
 	    		if(total>=cost){
-	    			$use.text(cost);
-	    			$left.text(total-cost);
+	    			$use.text(formatFloat(cost));
+	    			$left.text(formatFloat(total-cost));
 	    			$pay.text(0);
 	    		}else{
-	    			$use.text(total);
+	    			$use.text(formatFloat(total));
 	    			$left.text(0);
-	    			$pay.text(cost-total);
+	    			$pay.text(formatFloat(cost-total));
 	    		}
 	    	}
 	    });
@@ -478,7 +483,7 @@ require([
                 return showError("网络故障，稍后重试");
             }
             var cash = data.cash;
-            $("#my_cash_num").text(cash);
+            $("#my_cash_num").text(formatFloat(cash));
             $("#my_cash_num").data('to',cash);
         });
     }
