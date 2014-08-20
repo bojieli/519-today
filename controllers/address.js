@@ -44,7 +44,7 @@ exports.deleteAddress = function (req, res) {
   });
 };
 
-exports.defaultAddress = function (req, res) {
+exports.setDefaultAddress = function (req, res) {
   User.setDefault(req.session.openID,req.query.index,function(err){
     if(err) return next(err);
      res.send({message : 'OK', error : 0});

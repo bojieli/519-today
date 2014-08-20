@@ -4,8 +4,8 @@ var config = require('../config');
 exports.getProduct = function(req, res, next){
 	var wines = [];
 	var wines_length = 0;
-	var query_length = req.query.r.length;
-	Wine.findByIDs(req.query.r, afterfind);
+	var query_length = req.body.r.length;
+	Wine.findByIDs(req.body.r, afterfind);
 	function afterfind (err, wines){
 		if(err){
 			return next(err);

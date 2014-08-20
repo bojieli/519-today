@@ -18,6 +18,7 @@ module.exports = function(req, res, next){
 			marketPrice : wine.marketPrice,
 			wechatPrice : wine.wechatPrice,
 			code : code	,
+			detail : wine.detail,
 			num : req.query.num || 1
 		});
 	})

@@ -103,13 +103,13 @@ module.exports = function (app) {
 	app.post('/address',address.getAddressByOpenID);
 	app.post('/add_address',address.addAddress);
 	app.post('/delete_address',address.deleteAddress);
-	app.get('/default_address',address.defaultAddress);
+	app.post('/set_default_address',address.setDefaultAddress);
 
 //修改收藏
 	app.post('/collect',collect.modifyCollect);
 
 //获取券
-	app.get('/cash_voucher',cashVoucher.getCashVoucherByOpenID);
+	app.post('/cash_voucher',cashVoucher.getCashVoucherByOpenID);
 
 //下单购买
 	app.post('/purchase',purchase.updateOrder);
@@ -118,7 +118,7 @@ module.exports = function (app) {
   app.post('/getuserorder',userOrder.getUserOrder);
 
 //根据id获取酒
-	app.get('/getProduct',product.getProduct);
+	app.post('/getProduct',product.getProduct);
 	app.get('/details',details);
 	app.post('/errlog',errlog);
 

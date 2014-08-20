@@ -28,6 +28,13 @@
 .item-inner{
 	margin: 12px 11px 7px;
 }
+.item-inner .name{
+	display: block;
+	height: 14px;
+	overflow: hidden;
+	font-size: 12px;
+	text-align: center;
+}
 .item img{
 	display: block;
 	width: 82px;

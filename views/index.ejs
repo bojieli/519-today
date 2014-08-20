@@ -5,7 +5,7 @@
         <ul class="ui-groupbutton" role="tablist">
             <li class="ui-button js-active" data-toggle="tab" data-target="#page1-tab1" aria-controls="tab1" role="tab">推荐</li>
             <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab2" role="tab">白酒</li>
-            <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab3" role="tab">红酒</li>
+            <li class="ui-button" data-toggle="tab" data-target="#page1-tab3" aria-controls="tab3" role="tab">红酒</li>
 <!--             <li class="ui-button" data-toggle="tab" data-target="#page1-tab2" aria-controls="tab4" role="tab">啤酒</li> -->
         </ul>
     </div>
@@ -66,8 +66,9 @@
                     <a class="item" href="/details?code=<%= recommendList[i].Code %>" data-code= <%= recommendList[i].Code %> >
                         <div class="item-inner">
                             <img src= <%= recommendList[i].LittlePic %> alt="">
-                            <span class="market-sale">市场价：<%= recommendList[i].MarketPrice %>元</span>
-                            <span class="wx-sale">微信价：<%= recommendList[i].WechatPrice %>元</span>
+                            <span class="name"><%= recommendList[i].name %></span>
+                            <span class="market-sale">市场价：<%= recommendList[i].MarketPrice %></span>
+                            <span class="wx-sale">微信价：<%= recommendList[i].WechatPrice %></span>
                         </div>
                     </a>
                     <% } %>
@@ -84,8 +85,9 @@
                     <a class="item" href="/details?code=<%= baijiu[i].Code %>" data-code= <%= baijiu[i].Code %> >
                         <div class="item-inner">
                             <img src= <%= baijiu[i].LittlePic %> alt="">
-                            <span class="market-sale">市场价：<%= baijiu[i].MarketPrice %>元</span>
-                            <span class="wx-sale">微信价：<%= baijiu[i].WechatPrice %>元</span>
+                            <span class="name"><%= baijiu[i].name %></span>
+                            <span class="market-sale">市场价：<%= baijiu[i].MarketPrice %></span>
+                            <span class="wx-sale">微信价：<%= baijiu[i].WechatPrice %></span>
                         </div>
                     </a>
                     <% } %>
@@ -93,17 +95,18 @@
             </div>
         </div>
 
-        <div class="ui-tab" id="page1-tab2" role="tabpanel">
+        <div class="ui-tab" id="page1-tab3" role="tabpanel">
            <!-- 红酒 -->
             <div class="page1-tab1-bot">
-                <p class="tab-info">全部白酒</p>
+                <p class="tab-info">全部红酒</p>
                 <ul class="item-wrapper">
                     <% for(var i=0;i<hongjiu.length;i++){ %>
                     <a class="item" href="/details?code=<%= hongjiu[i].Code %>" data-code= <%= hongjiu[i].Code %> >
                         <div class="item-inner">
                             <img src= <%= hongjiu[i].LittlePic %> alt="">
-                            <span class="market-sale">市场价：<%= hongjiu[i].MarketPrice %>元</span>
-                            <span class="wx-sale">微信价：<%= hongjiu[i].WechatPrice %>元</span>
+                            <span class="name"><%= hongjiu[i].name %></span>
+                            <span class="market-sale">市场价：<%= hongjiu[i].MarketPrice %></span>
+                            <span class="wx-sale">微信价：<%= hongjiu[i].WechatPrice %></span>
                         </div>
                     </a>
                     <% } %>
@@ -383,5 +386,40 @@
 <!-- /对话类内容 -->
 
 <script data-main="build/index" src="js/require.js"></script>
+<script type="text/javascript">
+    //隐藏右上角按钮
+    //==============================
+    function onBridgeReady(){
+     WeixinJSBridge.call('hideOptionMenu');
+    }
+
+    if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    }else{
+        onBridgeReady();
+    }    
+    //隐藏底部栏
+    function onBridgeReady(){
+       WeixinJSBridge.call('hideToolbar');
+    }
+
+    if (typeof WeixinJSBridge == "undefined"){
+        if( document.addEventListener ){
+            document.addEventListener('WeixinJSBridgeReady', onBridgeReady, false);
+        }else if (document.attachEvent){
+            document.attachEvent('WeixinJSBridgeReady', onBridgeReady); 
+            document.attachEvent('onWeixinJSBridgeReady', onBridgeReady);
+        }
+    }else{
+        onBridgeReady();
+    }    
+
+
+</script>
 
 <% include layoutBottom %>

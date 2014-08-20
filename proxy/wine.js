@@ -64,5 +64,5 @@ exports.findRecommend = function(cb){
 }
 
 exports.findAllWines = function(cb){
-  Wine.find({},cb);
+  Wine.find(cb);
 }
