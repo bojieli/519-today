@@ -15,12 +15,16 @@ var app = express();
 //error handle
 
 var fs = require('fs');
-var bunyan = require("bunyan");
-var errlog = bunyan.createLogger({
-  name : "519-today",
-  level : "error",
-  path : '../log/error.log'
-});
+// var bunyan = require("bunyan");
+// var log = bunyan.createLogger({
+//   name : "519-today",
+//   streams : [
+//     {
+//       level : "info",
+//       path : '../log/error.log'
+//   }
+//   ]
+// });
 
 
 //更新globalSceneID
@@ -30,15 +34,15 @@ Error.stackTraceLimit = Infinity;
 
 
 
-// var errorLogfile = fs.createWriteStream('../log/error.log',{flags : 'a'});
-// var exceptionLogfile = fs.createWriteStream('../log/exception_error.log',{flags : 'a'});
-// process.on('uncaughtException', function(err) {
-//   err.Time = new Date().toUTCString();
-//   err.Stack = err.stack;
-//   exceptionLogfile.write(JSON.stringify(err) + ',\n');
+var errorLogfile = fs.createWriteStream('../log/error.log',{flags : 'a'});
+var exceptionLogfile = fs.createWriteStream('../log/exception_error.log',{flags : 'a'});
+process.on('uncaughtException', function(err) {
+  err.Time = new Date().toUTCString();
+  err.Stack = err.stack;
+  exceptionLogfile.write(JSON.stringify(err) + ',\n');
 
-//   console.log(err);
-// });
+  console.log(err);
+});
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -76,37 +80,37 @@ MongoClient.connect(config.db_native, function(err, session_store) {
 
   /// catch 404 and forward to error handler
   /// this should be executed after any other app.use() as this is a catch-all fallback
-  app.use(function(req, res, next) {
-      var err = new Error('Not Found');
-      err.status = 404;
-      next(err);
-  });
+
 
   /// listen after everything is ready...
   /// do not expose inconsistent startup states to user
   app.listen(config.port, function (err) {
     console.log("519Today listening on port %d", config.port);
     console.log("God bless love....");
-    //throw new Error('dgjalsjgldjslgasljgldsjgldasj');
-    //test.test();
   });
 });
-
-/// error handlers
-
-// development error handler
-// will print stacktrace
-
+  app.use(function(req, res, next) {
+      var err = new Error('Not Found');
+      err.status = 404;
+      next(err);
+  });
 if (app.get('env') === 'development') {
     app.use(function(err, req, res, next) {
-
-     // // err.Stack = err.stack;
-     //  //err.date
-     //  err.Time = new Date().toUTCString();
-     //  errorLogfile.write(JSON.stringify(err));
-     console.log(JSON.stringify(err));
+     var errinfo = {
+      date : new Date().toLocaleString(),
+      err : err,
+      session : req.session,
+      path : req.path,
+      body : req.body,
+      query : req.query
+     }
+     console.log('-----------------------error-----------------------------');
+     console.log(JSON.stringify(errinfo));
      console.log(err.stack);
-     errlog.error(err);
+
+     errorLogfile.write('\r\n-----------------------error-----------------------------\r\n');
+     errorLogfile.write(JSON.stringify(errinfo) + '\r\n');
+     errorLogfile.write(err.stack + '\r\n');
     });
 }
 
@@ -114,14 +118,10 @@ if (app.get('env') === 'development') {
 // no stacktraces leaked to user
 app.use(function(err, req, res, next) {
 
-   /* res.status(err.status || 500);
-    res.render('error', {
-        message: err.message,
-        error: {}
-    });*/
 });
+/// error handlers
 
+// development error handler
+// will print stacktrace
 
 module.exports = app;
-
-
