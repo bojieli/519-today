@@ -13,7 +13,7 @@ function action1(){
     };
   })
 }
-  setTimeout(action1, 500);
+ setTimeout(action1, 500);
 
 
 function addWine(id, name, marketPrice, wechatPrice, degree, volume){
@@ -39,9 +39,8 @@ function addWine(id, name, marketPrice, wechatPrice, degree, volume){
   })
   wine.save();
 }
-// setTimeout(action, 500);
+ // setTimeout(action, 500);
 function action(){
-  addWine(26, '老窖池龙窖', 268, 268, 53, 460);
   addWine(20, '金种子一坛好酒', 1680, 65, 1500);
   addWine(21, '徽蕴金种子十年', 588, 588, 46, 500);
   addWine(22, '徽蕴金种子六年', 268, 268, 42, 460);
