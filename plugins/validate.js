@@ -27,6 +27,8 @@
       wineIDs.push(wines[i].id);
     }
     Wine.findByIDs(wineIDs,function(err,wines_result){
+      //console.log("wines.length"+wineIDs.length+"wines_result"+wines_result.length);
+      console.log(JSON.stringify(wines_result.id));
       return cb(!err && wines_result.length == wines.length);
     })
   }

@@ -72,8 +72,6 @@ module.exports = function (app) {
   
   if(message.Event === 'subscribe'){
     if(message.EventKey){
-      console.log('QRcode subscribe!');
-      console.log(message.EventKey);
       var sceneID_String = message.EventKey;
       sceneID_String = sceneID_String.replace('qrscene_','');
       User.getOpenIDbySceneID(Number(sceneID_String), afterGet);
@@ -86,7 +84,6 @@ module.exports = function (app) {
       }
 
     }else{
-      console.log('Subscribe!');
       User.addByRecommend(message.FromUserName , null, afterAdd);
         function afterAdd (err){
           return err;
@@ -109,15 +106,11 @@ module.exports = function (app) {
     res.reply(r);
 
   }else if(message.Event === 'unsubscribe'){
-    console.log('unsubscribe!');
     User.unSubscribe(message.FromUserName, function(err){
       return err;
     });
   }else if(message.Event === 'SCAN'){
-    console.log('SCAN!');
-    console.log(message.EventKey);
   }else if(message.Event === 'LOCATION'){
-    console.log('LOCATION');
   }
   res.end();
   // message为事件内容
@@ -140,14 +133,12 @@ module.exports = function (app) {
       sceneIDurl = "<button onclick ="+ '"' +sceneIDurl+  '"' +"><b>分享到朋友圈</b></button>";
       if(req.session.qrCode && req.session.qrCode.expireTime > new Date().getTime()){
         var url = req.session.qrCode.url;
-        console.log(url);
         return res.render('promote',{qrCodeurl : url, sceneID : sceneID});
       }
       createTmpQRCode();
       function createTmpQRCode(){
         api.createTmpQRCode(sceneID,1800,function(err,result){
           if(err){
-            console.log(err);
             throw err;
             return createTmpQRCode();
           }

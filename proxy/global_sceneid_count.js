@@ -26,7 +26,6 @@ global.formatDate = function(date){
 module.exports = function () {
   User.find({sceneID : {$gt : config.SCENEID_BASE,$lte : config.SCENEID_MAX}},function(err,users){
       if(err){
-        console.error("Get global sceneID error!");
 	      throw err;
       }else{
       	if(users){

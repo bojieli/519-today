@@ -11,7 +11,6 @@ var config = require('../config');
 var User = require('../proxy').User;
 
 exports.getAddressByOpenID = function (req, res, next) {
-  console.log('getAddressByOpenID');
   User.getAddressByOpenID(req.session.openID,function(err, user){
   	if(err) return next(err);
     if(!user){
@@ -19,7 +18,6 @@ exports.getAddressByOpenID = function (req, res, next) {
       _err.describe = 'getAddressByOpenID !user';
       return next(_err);
     }
-    console.log(JSON.stringify(user.address));
   	res.send(user.address);
   })
 };
@@ -32,7 +30,7 @@ exports.addAddress = function (req, res) {
 };
 
 exports.deleteAddress = function (req, res) {
-  User.deleteAddress(req.session.openID,req.body.index,function(err){
+  User.deleteAddress(req.session.openID,Number(req.body.index),function(err){
     if(err){
       if(err.errCode == config.errorCode_index)
         res.send({message : 'index error', error : config.errorCode_index});
@@ -45,7 +43,7 @@ exports.deleteAddress = function (req, res) {
 };
 
 exports.setDefaultAddress = function (req, res) {
-  User.setDefault(req.session.openID,req.query.index,function(err){
+  User.setDefault(req.session.openID,Number(req.body.index),function(err){
     if(err) return next(err);
      res.send({message : 'OK', error : 0});
   });
