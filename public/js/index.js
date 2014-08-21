@@ -616,5 +616,5 @@ require([
     $(".addr-form").on('change',function(){
         $(".address-btn-ok").prop('disabled', false);
     });
-
+   
 })
