@@ -3,7 +3,7 @@
  var addressDetail_maxLength = 40;
  
  exports.nameVertify = function(username){
-    return username.length > 0 && username.length <= username_maxLength;
+    return (typeof username == 'string')&&username.length > 0 && username.length <= username_maxLength;
   }
 
  exports.telVertify = function(usertel){
@@ -12,11 +12,11 @@
   }
 
   exports.addressDetailVertify = function(detail){
-    return detail.length > 0 && detail.length <= addressDetail_maxLength;
+    return (typeof detail == 'string')&&detail.length > 0 && detail.length <= addressDetail_maxLength;
   }
 
   exports.winesInfoVerify = function(wines,cb){
-    if(wines.length == 0){
+    if(!wines.length||wines.length == 0){
       return cb(false);
     }
     var wineIDs = [];

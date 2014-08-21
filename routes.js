@@ -68,8 +68,6 @@ module.exports = function (app) {
 			next();
 		}else if(req.path === '/logout'){
 			next();
-		}else if(req.path === '/orderaction'){
-			next();
 		}else{
 			login(req,res);
 		}

@@ -241,8 +241,8 @@ exports.setDefault = function(openID,index,cb){
         return cb(new Error());
       }
       var defaultAddress = userAddress[index];
-      userAddress.splice(index,1);
       userAddress.unshift(defaultAddress);
+      userAddress.splice(index+1,1);
       User.update({openID : openID} , {$set : {address : userAddress}},cb);
     }
   }
