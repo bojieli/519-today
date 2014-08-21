@@ -584,7 +584,9 @@ require([
         };
         // 检查
         var mobilePattern = /^0?1[3|4|5|7|8][0-9]{9}$/;
-        if(address.detail.length==0){
+        if(address.area.length==0){
+            return alert("请选择一个区");
+        }else if(address.detail.length==0){
             return alert("详细地址不能为空");
         }else if(address.name.length==0){
             return alert("姓名不能为空");
