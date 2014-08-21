@@ -53,6 +53,16 @@ require([
         return ((num*10)>>0)/10 ;
     }
 
+    function isObjEmpty(obj)
+    {
+        for (var name in obj) 
+        {
+            return false;
+        }
+        return true;
+    };
+
+
     //=======================my dialog=====================
     function myDialogAlert($this,content){
 
@@ -210,6 +220,9 @@ require([
         delete cart[$.tempStorage.cartListTap.data('code')];
         localStorage.cart = JSON.stringify(cart);
         $.tempStorage.cartListTap.remove();
+        if(!isObjEmpty(cart)){
+            return;
+        }
         $("#order-confirm-container").hide();
         $("#order-list-container").hide();
         $(".order-load-info p").text("购物车中没有商品");
