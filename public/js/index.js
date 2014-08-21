@@ -27,7 +27,7 @@ require([
 	});
 
     $('[data-lazy]').lazyload({
-        container: $.os.ios > 5? $('#page5-container'): window
+        container: $.os.ios > 5? $('.ui-page.page1'): window
     });
 
 	//图片自动轮播
@@ -278,7 +278,7 @@ require([
                 showError("获取我的地址失败");
             }
             if(!data)
-                return;
+                return showError("获取我的地址失败");
             var r = [];
             localStorage.address = JSON.stringify(data);
             localStorage.defauleAddrIndex = 0;
