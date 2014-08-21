@@ -30,7 +30,6 @@ module.exports = function (app) {
 		req.setEncoding('utf8');
    		req.on('data', function(chunk){ buf += chunk });
     	req.on('end', function(){
-    		console.log(buf);
     	});
 
 		res.write('');
