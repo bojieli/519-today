@@ -40,7 +40,6 @@ process.on('uncaughtException', function(err) {
   err.Time = new Date().toUTCString();
   err.Stack = err.stack;
   exceptionLogfile.write(JSON.stringify(err) + ',\n');
-
   console.log(err);
 });
 
