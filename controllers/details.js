@@ -3,7 +3,7 @@ var config = require('../config');
 
 
 module.exports = function(req, res, next){
-	// console.log(req.session);
+
 	var code = req.query && req.query.code;
 	Wine.findByID(code,function(err,wine){
 		if(err) return next(err);
