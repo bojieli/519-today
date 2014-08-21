@@ -221,6 +221,7 @@ require([
         localStorage.cart = JSON.stringify(cart);
         $.tempStorage.cartListTap.remove();
         if(!isObjEmpty(cart)){
+            updateTicket(cart);
             return;
         }
         $("#order-confirm-container").hide();
