@@ -15,34 +15,34 @@ var Schema = mongoose.Schema;
 */
 
 var OrderSchema = new Schema({
-  orderID : String,
-  openID : String,
+  orderID : {type:String,default : ""},
+  openID : {type:String,default : ""},
   shopOnce : [{
-    id : String,
-    wechatPrice : Number,
-    describe : String,
-    littlePic : String,//小图路径，config.small_dir + Wines[index].littlePic
-    number : Number
+    id : {type:String,default : ""},
+    wechatPrice :{type:Number,default:0},
+    describe : {type:String,default : ""},
+    littlePic : {type:String,default : ""},//小图路径，config.small_dir + Wines[index].littlePic
+    number : {type:Number,default:0}
   }],
   address : {
-    province : String,
-    city : String,
-    area : String,
-    detail : String,
-    name : String,  //收件人
-    tel : String
+    province : {type:String,default : ""},
+    city : {type:String,default : ""},
+    area : {type:String,default : ""},
+    detail : {type:String,default : ""},
+    name : {type:String,default : ""},  //收件人
+    tel : {type:String,default : ""}
   },
   date : { type : Date, default : Date.now }, //下单时间
   shipDate : { type : Date, default : Date.now }, //派送时间
   receiveDate : { type : Date, default : Date.now }, //收货时间
 
-  cashUse : Number,
-  voucherUse : Number,
+  cashUse : {type:Number,default:0},
+  voucherUse : {type:Number,default:0},
 
-  status : Number,  //订单状态，状态码见下面
+  status : {type:Number,default:1},  //订单状态，状态码见下面
 
-  isFirst : Boolean, // 是否是首次下单
-  totalPrice : Number, //指的是货到付款时需要支付的现金
+  isFirst : {type:Boolean,default:true}, // 是否是首次下单
+  totalPrice : {type:Number,default:0}, //指的是货到付款时需要支付的现金
 
   customerService : {type : String, default : ''}, // 处理该订单的客服
   shipStaff: {type : String, default : ''},// 派送该订单的快递

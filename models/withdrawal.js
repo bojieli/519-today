@@ -8,10 +8,10 @@ var Schema = mongoose.Schema;
 */
 
  var withdrawalSchema = new Schema({
-  openID : String,
+  openID : {type:String,default:""},
   date : {type : Date, default : Date.now},
-  cash : Number,
-  useDate : Date,
+  cash : {type:Number,default:0},
+  useDate :{type:Date,default : Date.now},
   isUsed : {type : Boolean, default : false}
  });
 

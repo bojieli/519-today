@@ -5,7 +5,6 @@ var ShipStaff = require('../proxy').ShipStaff;
 var wechatAPI = require('../common/api');
 
 exports.load = function (req, res, next){
-  console.log('order_action');
   ShipStaff.findByOpenID(req.session.openID,function(err,shipstaff){
     if(err){
       return next(err);
@@ -79,6 +78,10 @@ exports.operate = function(req,res,next){
           res.send({code:"error"});
           return next(err);
         }
+        if(order.openID == "createdByCS"){
+          return next(null);
+        }
+        //如果不是客服创建的订单,则会发送微信消息
         var message;
         if(postData.method == 'ship'){
           message = "您的订单" + order.orderID + "已发货，预计到达时间为" + postData.arrivetime + "以内，如有特殊情况,请与快递员联系,联系电话：" + shipstaff.tel;
@@ -91,7 +94,6 @@ exports.operate = function(req,res,next){
             }
           });
         }
-
         wechatAPI.sendText(order.openID,message,function(err){
           if(err){
             next(err);

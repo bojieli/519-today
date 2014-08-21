@@ -5,10 +5,10 @@ var Schema = mongoose.Schema;
 
 
 var DispatchCenterSchema = new Schema({
-  address : String,
-  shipHeadID : String,
-  orderNumToday : Number,
-  orderNumTotal : Number
+  address : {type:String,default : ""},
+  shipHeadID : {type:String,default : ""},
+  orderNumToday :{type:Number,default : 0},
+  orderNumTotal : {type:Number,default : 0}
 },{autoindex :  false});
 
 

@@ -4,7 +4,7 @@ var config = require('../config');
 
  var AccessTokenSchema = new Schema({
   id : {type: Number, default : 1919},
-  accessToken : String
+  accessToken : {type:String,default : ""}
  });
 
 mongoose.model(config.accessToken,AccessTokenSchema);

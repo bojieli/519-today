@@ -120,7 +120,7 @@ exports.getUserOrder = function (openID, cb){
   var returnOrders = [];
   async.waterfall([
       function findOrdersbyOpenID (callback){
-        Order.find({openID: openID}, callback);
+        Order.find({openID: openID},null,{sort:{date : -1}}, callback);
       },
       function findWinesbyOrders(orders, callback){
         if(orders.length==0)
@@ -150,7 +150,6 @@ exports.getUserOrder = function (openID, cb){
     function(err){
       if(err)
         return cb(err,[]);
-      returnOrders.reverse();
       cb(null,returnOrders);
     });
 }
