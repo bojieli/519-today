@@ -91,8 +91,8 @@
                 <option>60分钟</option>
             </select>
             <center>
-                <button id="start" <% if(order.status != 3){%> disabled = "disabled"<%}%>><%=order.status == 3 ? "开始配送" : "配送中" %></button>
-                <button id="complete" <% if(order.status != 4){%> disabled = "disabled"<%}%>><%=order.status == 4 ? "完成配送" : "已完成"%></button>
+                <button id="start" <% if(order.status != 3){%> disabled = "disabled"<%}%>><%=order.status != 4 ? "开始配送" : "配送中" %></button>
+                <button id="complete" <% if(order.status != 4){%> disabled = "disabled"<%}%>><%=order.status != 5 ? "完成配送" : "已完成"%></button>
             </center>
 
         </p>
