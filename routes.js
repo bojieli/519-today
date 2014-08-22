@@ -122,7 +122,7 @@ module.exports = function (app) {
 	app.get('/details',details);
 	app.post('/errlog',errlog);
 
-	app.get('/ruleintroduction',ruleintroduction.index);
+	app.get('/rule',ruleintroduction.index);
 
 	app.get('/orderaction', OrderAction.load);//快递点击订单链接进入
 

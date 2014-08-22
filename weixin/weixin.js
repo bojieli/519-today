@@ -160,7 +160,7 @@ module.exports = function (app) {
         res.end();
       });
     }else if(message.EventKey === "v0_custom_service"){
-      res.reply("客服电话为："+05582610888);
+      res.reply("客服电话为："+"05582610888");
       res.end();
     }
   }

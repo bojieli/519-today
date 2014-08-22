@@ -31,7 +31,7 @@ var createMenuData = {
 		{
 			"name":"返钱规则",
 			"type":"view" ,
-			"key" :config.host+"/ruleintroduction"
+			"url" :config.host+"/rule"
 		},
 		{
 			"name":"客服电话",
