@@ -149,7 +149,7 @@ module.exports = function (app) {
   }else if(message.Event === 'SCAN'){
   }else if(message.Event === 'LOCATION'){
   }else if(message.Event === 'CLICK'){
-    if(message.EventKey === 'v0_ziliao'){
+    if(message.EventKey === 'v0_cash'){
       var openID = message.FromUserName;
       User.getCashByOpenID(openID,function(err,cash){
         if(err){
@@ -159,6 +159,9 @@ module.exports = function (app) {
         res.reply("您当前剩余现金券"+cash+"元,回复[提现]申请提现");
         res.end();
       });
+    }else if(message.EventKey === "v0_custom_service"){
+      res.reply("客服电话为："+05582610888);
+      res.end();
     }
   }
   
