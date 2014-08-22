@@ -2,22 +2,41 @@ var config = require('../config');
 var models = require('../models');
 var Crypto = require('cryptojs').Crypto;
 var Withdrawal = models.Withdrawal;
+var User = models.User;
 var mode = new Crypto.mode.ECB (Crypto.pad.pkcs7);
 
-
-exports.createWithdrawal = function (openID, cash, cb){
-	var _withdrawal = {
-		openID : openID,
-		cash : cash,
-	};
-	Withdrawal.create(_withdrawal, function (err, withdrawal){
-		if(err)
+exports.findWithDrawlNotUsed = function(openID,cb){
+	Withdrawal.findOne({openID:openID,isUsed : false},function(err,withdrawal){
+		if(err){
 			return cb(err);
-		
+		}
+		if(!withdrawal){
+			return cb(null,null);
+		}
 		var ub = Crypto.charenc.UTF8.stringToBytes (withdrawal._id);
 		var eb = Crypto.DES.encrypt (ub, config.withdrawalKey, {asBytes: true, mode: mode});
 		var ehs = Crypto.util.bytesToHex (eb);
-		cb(null, ehs);
+		return cb(null,ehs);
+	});
+}
+
+exports.createWithdrawal = function(openID, cash, cb){
+	var _withdrawal = {
+				openID : openID,
+				cash : cash,
+			};
+	Withdrawal.create(_withdrawal, function (err, withdrawal){
+		if(err)
+			return cb(err);
+		var ub = Crypto.charenc.UTF8.stringToBytes (withdrawal._id);
+		var eb = Crypto.DES.encrypt (ub, config.withdrawalKey, {asBytes: true, mode: mode});
+		var ehs = Crypto.util.bytesToHex (eb);
+		User.update({openID:openID},{$set:{cash:0}},function(err){
+			if(err){
+				return cb(err);
+			}
+			return cb(null, ehs);	
+		});
 	});
 }
 

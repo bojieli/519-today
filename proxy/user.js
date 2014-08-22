@@ -82,6 +82,18 @@ exports.getAddressByOpenID = function(openID,cb){
 
 
 exports.updatePreCash = function (order, cb){
+  function findAndUpdate(openID,cashAdded,callback){
+    User.findOne({openID:openID},function(err,user){
+      if(err){
+        return callback(err);
+      }
+      var cash =toDecimal(user.cash + cashAdded);
+       User.update({openID:openID},{$set :{cash : cash}},function(err){ 
+        return callback(err,user);
+      });
+    });
+  }
+
   async.waterfall([
     function getUserbyOpenID(callback){
       User.findOne({openID : order.openID}, callback);
@@ -91,8 +103,7 @@ exports.updatePreCash = function (order, cb){
         return callback(new Error());
       }
       if(user.preOpenID&&user.preOpenID!='no'){
-        User.findOneAndUpdate({openID : user.preOpenID},
-          {$inc : {cash : toDecimal(order.totalPrice * config.ratio_1)}}, callback);
+        findAndUpdate(user.preOpenID,order.totalPrice * config.ratio_1,callback);
       }else{
         return callback(null, 'no')
       }
@@ -104,8 +115,7 @@ exports.updatePreCash = function (order, cb){
         return callback(null, 'no');
       }
       if(user.preOpenID&&user.preOpenID!='no'){
-        User.findOneAndUpdate({openID : user.preOpenID},
-          {$inc : {cash : toDecimal(order.totalPrice * config.ratio_2)}}, callback);
+       findAndUpdate(user.preOpenID,order.totalPrice * config.ratio_2,callback);
       }else{
         return callback(null, 'no')
       }
@@ -117,8 +127,7 @@ exports.updatePreCash = function (order, cb){
         return callback(null);
       }
       if(user.preOpenID&&user.preOpenID!='no'){
-        User.update({openID : user.preOpenID},
-          {$inc : {cash : toDecimal(order.totalPrice * config.ratio_3)}}, callback);
+       findAndUpdate(user.preOpenID,order.totalPrice * config.ratio_3,callback);
       }else{
         return callback(null)
       }

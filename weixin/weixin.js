@@ -1,7 +1,7 @@
 var wechat = require("wechat");
 var api = require('../common/api');
-
 var User = require('./proxy');
+var Withdrawal = require('../proxy').Withdrawal;
 
 
 
@@ -14,7 +14,37 @@ module.exports = function (app) {
   // MsgType: 'text',
   // Content: 'http',
   // MsgId: '5837397576500011341' }
-  res.reply(message.MsgType);
+  if(message.Content == "提现"){
+     Withdrawal.findWithDrawlNotUsed(message.FromUserName,function(err,ehs){
+          if(err)
+            return next(err);
+          if(ehs){
+            res.reply("您的提现码为：["+ehs+"].\n请加微信号\'ah1919\'为好友,并将提现码发给该微信号！");
+            res.end();
+          }else{
+            User.getCashByOpenID(message.FromUserName,function(err,cash){
+            if(err){
+              return next(err);
+            }
+            if(cash < 100){
+              res.reply("您当前的现金券不足100元，暂时不能提现！");
+              return res.end();
+            }else{
+                Withdrawal.createWithdrawal(message.FromUserName,cash,function(err,ehs){
+                  if(err){
+                    return next(err);
+                  }
+                  res.reply("您的提现码为：["+ehs+"].\n请加微信号\'ah1919\'为好友,并将提现码发给该微信号！");
+                  res.end();
+                });
+              }
+            });
+          };
+      });
+  }else{
+    res.reply(message.MsgType);
+    res.end();
+  }
 }).image(function (message, req, res, next) {
   // message为图片内容
   // { ToUserName: 'gh_d3e07d51b513',
@@ -25,6 +55,7 @@ module.exports = function (app) {
   // MediaId: 'media_id',
   // MsgId: '5837397301622104395' }
   res.reply(message.MsgType);
+  res.end();
 }).voice(function (message, req, res, next) {
   // message为音频内容
   // { ToUserName: 'gh_d3e07d51b513',
@@ -35,6 +66,7 @@ module.exports = function (app) {
   // Format: 'amr',
   // MsgId: '5837397520665436492' }
   res.reply(message.MsgType);
+  res.end();
 }).video(function (message, req, res, next) {
   // message为视频内容
   // { ToUserName: 'gh_d3e07d51b513',
@@ -45,6 +77,7 @@ module.exports = function (app) {
   // ThumbMediaId: 'media_id',
   // MsgId: '5837397520665436492' }
   res.reply(message.MsgType);
+  res.end();
 }).location(function (message, req, res, next) {
   // message为位置内容
   // { ToUserName: 'gh_d3e07d51b513',
@@ -57,6 +90,7 @@ module.exports = function (app) {
   // Label: {},
   // MsgId: '5837398761910985062' }
   res.reply(message.MsgType);
+  res.end();
 }).link(function (message, req, res, next) {
   // message为链接内容
   // { ToUserName: 'gh_d3e07d51b513',
@@ -68,6 +102,7 @@ module.exports = function (app) {
   // Url: 'http://1024.com/',
   // MsgId: '5837397520665436492' }
   res.reply(message.MsgType);
+  res.end();
 }).event(function (message, req, res, next) {
   
   if(message.Event === 'subscribe'){
@@ -104,6 +139,7 @@ module.exports = function (app) {
         url : process.env.HOST+"/ruleintroduction"
       }];
     res.reply(r);
+    res.end();
 
   }else if(message.Event === 'unsubscribe'){
     User.unSubscribe(message.FromUserName, function(err){
@@ -111,8 +147,20 @@ module.exports = function (app) {
     });
   }else if(message.Event === 'SCAN'){
   }else if(message.Event === 'LOCATION'){
+  }else if(message.Event === 'CLICK'){
+    if(message.EventKey === 'v0_ziliao'){
+      var openID = message.FromUserName;
+      User.getCashByOpenID(openID,function(err,cash){
+        if(err){
+          res.reply("查询现金券失败，请重新尝试！");
+          return next(err);
+        }
+        res.reply("您当前剩余现金券"+cash+"元,回复[提现]申请提现");
+        res.end();
+      });
+    }
   }
-  res.end();
+  
   // message为事件内容
   // { ToUserName: 'gh_d3e07d51b513',
   // FromUserName: 'oPKu7jgOibOA-De4u8J2RuNKpZRw',
