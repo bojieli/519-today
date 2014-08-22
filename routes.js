@@ -77,6 +77,7 @@ module.exports = function (app) {
 //用户访问推荐页面
 	app.get('/promote',promote.index);
 
+
 //当用户访问主页的时候
 	app.get('/',site.visitHome);
 //当用户访问其他用户分享的界面的时候
