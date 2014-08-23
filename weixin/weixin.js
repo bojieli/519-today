@@ -159,8 +159,8 @@ module.exports = function (app) {
   });
 
   app.get('/about1919',function(req,res){
-    //var url = "http://mp.weixin.qq.com/s?__biz=MzA4MTg3MzYwMQ==&mid=200581729&idx=1&sn=693fbe867361594f44781c9af8a24cc5#rd";
-    var url = "http://519.today";
+    var url = "http://mp.weixin.qq.com/s?__biz=MzA4MTg3MzYwMQ==&mid=200581729&idx=1&sn=693fbe867361594f44781c9af8a24cc5#rd";
+    // var url = "http://519.today";
     if(config.aboutUrl){
       url = config.aboutUrl ;
     }
@@ -168,7 +168,7 @@ module.exports = function (app) {
   });
 
   app.get('/followus',function(req,res){
-    var url = "http://mp.weixin.qq.com/s?__biz=MzA4MTg3MzYwMQ==&mid=200422243&idx=1&sn=323a15f62ccfd7d8296e99db4b44057a#rd";
+    var url = "http://mp.weixin.qq.com/s?__biz=MjM5ODM0MzY0NQ==&mid=201382475&idx=1&sn=a51ea81a60eefb180200c2f3ddb35dbc#rd";
     if(config.followUrl){
       url = config.followUrl ;
     }
