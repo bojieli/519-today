@@ -42,12 +42,12 @@ var createMenuData = {
 			"name":"关于我们",
 			"type":"view",
 			"url":config.host+"/about1919"
-		},
-		{
-			"type":"view", 
-			"name":"登出",
-			"url":config.host + "/logout"
 		}
+		// {
+		// 	"type":"view", 
+		// 	"name":"登出",
+		// 	"url":config.host + "/logout"
+		// }
 		]
 	}]
 }
