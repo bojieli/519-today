@@ -26,17 +26,17 @@ var createMenuData = {
 		{
 			"name":"现金券",
 			"type":"click",
-			"key":"v0_ziliao"
+			"key":"v0_cash"
 		},
 		{
 			"name":"返钱规则",
-			"type":"click" ,
-			"key" :"v0_shudong"
+			"type":"view" ,
+			"url" :config.host+"/rule"
 		},
 		{
 			"name":"客服电话",
 			"type":'click',
-			"key":'v0_help'
+			"key":'v0_custom_service'
 		},
 		{
 			"name":"关于我们",

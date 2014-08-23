@@ -77,6 +77,7 @@ module.exports = function (app) {
 //用户访问推荐页面
 	app.get('/promote',promote.index);
 
+
 //当用户访问主页的时候
 	app.get('/',site.visitHome);
 //当用户访问其他用户分享的界面的时候
@@ -122,7 +123,7 @@ module.exports = function (app) {
 	app.get('/details',details);
 	app.post('/errlog',errlog);
 
-	app.get('/ruleintroduction',ruleintroduction.index);
+	app.get('/rule',ruleintroduction.index);
 
 	app.get('/orderaction', OrderAction.load);//快递点击订单链接进入
 

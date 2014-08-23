@@ -111,5 +111,19 @@ exports.unSubscribe = function(openID,cb){
 
 }
 
+exports.getCashByOpenID = function(openID,cb){
+  User.findOne({openID:openID},"cash",function(err,user){
+    if(err){
+      return cb(err);
+    }
+    if(!user){
+      var err = new Error();
+      err.describe = openID;
+      return cb(err,null);
+    }
+    return cb(null,user.cash);
+  });
+}
+
 
 
