@@ -137,7 +137,7 @@ module.exports = function (app) {
         title:"查看返钱规则" ,
         pic : process.env.HOST+"/images/fanqian.jpg",
         description : "",
-        url : process.env.HOST+"/ruleintroduction"
+        url : process.env.HOST+"/rule"
       }];
     res.reply(r);
     res.end();
