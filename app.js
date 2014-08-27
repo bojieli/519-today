@@ -15,16 +15,6 @@ var app = express();
 //error handle
 
 var fs = require('fs');
-// var bunyan = require("bunyan");
-// var log = bunyan.createLogger({
-//   name : "519-today",
-//   streams : [
-//     {
-//       level : "info",
-//       path : '../log/error.log'
-//   }
-//   ]
-// });
 
 
 //更新globalSceneID
