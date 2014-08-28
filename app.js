@@ -100,9 +100,6 @@ app.use(function(err, req, res, next) {
 // will print stacktrace
   /// we should initialize the session store before declaring routes
 
-  /// catch 404 and forward to error handler
-  /// this should be executed after any other app.use() as this is a catch-all fallback
-
   /// listen after everything is ready...
   /// do not expose inconsistent startup states to user
   app.listen(config.port, function (err) {
