@@ -43,7 +43,7 @@ module.exports = function (app) {
           };
       });
   }else{
-    res.reply(message.MsgType);
+    // res.reply(message.MsgType);
     res.end();
   }
 }).image(function (message, req, res, next) {
@@ -55,7 +55,7 @@ module.exports = function (app) {
   // PicUrl: 'http://mmsns.qpic.cn/mmsns/bfc815ygvIWcaaZlEXJV7NzhmA3Y2fc4eBOxLjpPI60Q1Q6ibYicwg/0',
   // MediaId: 'media_id',
   // MsgId: '5837397301622104395' }
-  res.reply(message.MsgType);
+  // res.reply(message.MsgType);
   res.end();
 }).voice(function (message, req, res, next) {
   // message为音频内容
@@ -66,7 +66,7 @@ module.exports = function (app) {
   // MediaId: 'OMYnpghh8fRfzHL8obuboDN9rmLig4s0xdpoNT6a5BoFZWufbE6srbCKc_bxduzS',
   // Format: 'amr',
   // MsgId: '5837397520665436492' }
-  res.reply(message.MsgType);
+  // res.reply(message.MsgType);
   res.end();
 }).video(function (message, req, res, next) {
   // message为视频内容
@@ -77,7 +77,7 @@ module.exports = function (app) {
   // MediaId: 'OMYnpghh8fRfzHL8obuboDN9rmLig4s0xdpoNT6a5BoFZWufbE6srbCKc_bxduzS',
   // ThumbMediaId: 'media_id',
   // MsgId: '5837397520665436492' }
-  res.reply(message.MsgType);
+  // res.reply(message.MsgType);
   res.end();
 }).location(function (message, req, res, next) {
   // message为位置内容
@@ -90,7 +90,7 @@ module.exports = function (app) {
   // Scale: '15',
   // Label: {},
   // MsgId: '5837398761910985062' }
-  res.reply(message.MsgType);
+  // res.reply(message.MsgType);
   res.end();
 }).link(function (message, req, res, next) {
   // message为链接内容
@@ -102,7 +102,7 @@ module.exports = function (app) {
   // Description: '公众平台官网链接',
   // Url: 'http://1024.com/',
   // MsgId: '5837397520665436492' }
-  res.reply(message.MsgType);
+  // res.reply(message.MsgType);
   res.end();
 }).event(function (message, req, res, next) {
   
