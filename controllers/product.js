@@ -20,7 +20,7 @@ exports.getProduct = function(req, res, next){
 	}
 }
 
-exports.getRecommend = function(req,res){
+exports.getRecommend = function(req,res,next){
 	res.send('getRecommend');
 }
 

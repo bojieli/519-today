@@ -10,7 +10,7 @@
 
 var Wine = require('../proxy').Wine;
 
-exports.addVisit = function (req, res) {
+exports.addVisit = function (req, res,next) {
 
   	Wine.addVisit(req.body['id'],function(err){
   		if(err) return next(err);

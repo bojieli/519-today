@@ -22,14 +22,14 @@ exports.getAddressByOpenID = function (req, res, next) {
   })
 };
 
-exports.addAddress = function (req, res) {
+exports.addAddress = function (req, res,next) {
   User.addAddress(req.session.openID, req.body.address,function(err){
   	if(err) return next(err);
     res.send({message : 'OK', error : 0});
   });
 };
 
-exports.deleteAddress = function (req, res) {
+exports.deleteAddress = function (req, res,next) {
   User.deleteAddress(req.session.openID,Number(req.body.index),function(err){
     if(err){
       if(err.errCode == config.errorCode_index)
@@ -42,7 +42,7 @@ exports.deleteAddress = function (req, res) {
   });
 };
 
-exports.setDefaultAddress = function (req, res) {
+exports.setDefaultAddress = function (req, res,next) {
   User.setDefault(req.session.openID,Number(req.body.index),function(err){
     if(err) return next(err);
      res.send({message : 'OK', error : 0});

@@ -9,6 +9,6 @@
  */
 var User = require('../proxy').User;
 var User_wechat = require('../weixin/proxy');
-exports.visitShare = function (req, res) {
+exports.visitShare = function (req, res,next) {
 	res.render('share');
 };
